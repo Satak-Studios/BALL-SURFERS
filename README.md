@@ -6,8 +6,8 @@ A Cross-platform offline and multiplayer racing game
 
 ## Game Mechanism
 * Core
- * You have to change your direction using "A" and "D" or left and right arrow keys to **avoid obstacles**
+  * You have to change your direction using "A" and "D" or left and right arrow keys to **avoid obstacles**
 * Multiplayer
- * Connect to the **Lobby**
- * Enter or create a **Room**
- * Select **GameMode(in Upcoming update)**
+  * Connect to the **Lobby**
+  * Enter or create a **Room**
+  * Select **GameMode(in Upcoming update)**
