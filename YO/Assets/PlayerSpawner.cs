@@ -8,15 +8,11 @@ using UnityEngine.SceneManagement;
 
 public class PlayerSpawner : MonoBehaviourPunCallbacks
 {
-    //public GameObject SpecCam;
     public Restart rs;
-
-    // public PhotonView FakePV;
     public PhotonView PV;
     public Timer timer;
 
     public GameObject[] playerPrefabs;
-    public GameObject FakeplayerPrefabs;
     public Transform[] spawnPoints;
     int randPlayer;
 
@@ -27,30 +23,21 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 
     public ScoreOnline sco;
 
-    //public int timesKatam = 0;
     public GameObject Hearts1;
     public GameObject Hearts2;
     public GameObject Hearts3;
-    //public Player _player;
 
 
     public GameObject NOINTERNET;
-    //public GameObject Hearts5;
     public GameObject GameOver;
     public GameObject AddNoHearts;
 
     public player SCO;
-    public CheckPointTrigger cpt;
     public PlayerOnline pso;
 
     //==MAIN==
     public int Hearts = 3;
 
-    public GameObject HeartsReward;
-    public GameObject noAD;
-
-    //public Transform _spawnPoint;
-    //public Vector3 playerPos;
 
     // Start is called before the first frame update
     public void SpawnOrg()
@@ -68,16 +55,6 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         //PhotonNetwork.Instantiate(playerPrefabs.name, Point.position, Quaternion.identity);
     }
 
-   public void SpawnCheckPoint()
-   {
-        int rand = Random.Range(0, spawnPoints.Length);
-        Transform Point = spawnPoints[rand];
-        GameObject playertoSpawn = playerPrefabs[randPlayer];
-        PhotonNetwork.Instantiate(playertoSpawn.name, Point.position, Quaternion.identity);
-        Debug.Log("Spawned Player = " + playertoSpawn.name);
-        cpt.LoadFromPreviousCheckpoint();
-        //SCO.StartTimer();
-   }
 
     public void Start()
     {
@@ -90,13 +67,6 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
          randPlayer = Random.Range(0, playerPrefabs.Length);
          _player.SetHearts(3);
          GameOver.SetActive(false);
-         ExitGames.Client.Photon.Hashtable gameStarted = new ExitGames.Client.Photon.Hashtable();
-         if ((int)gameStarted["Started"] == 1)
-         {
-             gameStarted["Started"] = 0;
-            // _player.SetHearts(3);
-             PhotonNetwork.SetPlayerCustomProperties(gameStarted);
-         }
          if (_player.GetHearts() == 0)
          {
              _player.SetHearts(3);
@@ -125,21 +95,6 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         {
             Destroy(pso);
         }
-
-      /* if (!PlayerPrefs.HasKey("Hearts"))
-        {
-            _player.SetHearts(3);
-            Debug.Log("You are a noob, hah; hah;");
-        }
-        int rand = Random.Range(0, spawnPoints.Length);
-        Transform Point = spawnPoints[rand];
-        //Vector3 Playerpos = new Vector3(Posx, Posy, Posz);
-        //GameObject playerToSpawn = playerPrefabs;
-        FakeObj.SetActive(true);
-        //spawnPoints[rand] = FakeObj.transform;
-            
-        //PhotonNetwork.Instantiate(FakeObj.name, Point.position, Quaternion.identity);
-        */
        SpawnOrg();
     }
 
@@ -206,18 +161,6 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
                 Hearts2.SetActive(true);
                 Hearts3.SetActive(true);
                 GameOver.SetActive(false);
-                //sco.IncreaseScore();
-            }
-
-            if (SystemInfo.deviceType == DeviceType.Desktop)
-            {
-                HeartsReward.SetActive(false);
-                noAD.SetActive(true);
-            }
-            else
-            {
-                HeartsReward.SetActive(true);
-                noAD.SetActive(false);
             }
         }
     }
@@ -227,63 +170,11 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         //PhotonNetwork.Destroy(FakePV);
     }
 
-    ///*
-    public void Retry()
+      public void Wait()
     {
-        /* RECAM.SetActive(true);
-         Controlls.SetActive(false);
-         Score.SetActive(false);
-         //hScore.SetActive(false);
-         REMENU.SetActive(false);
-         timer.Start();*/
-        /*PhotonNetwork.Instantiate(RECAM.name, gameObject.transform.position, Quaternion.identity);
-        if (!PV.IsMine)
-        {
-            PhotonNetwork.Destroy(RECAM);
-        }*/
-        //sco.HighScore.text = PlayerPrefs.GetFloat("HighScore").ToString();*/
-        if (Hearts == 2)
-        {
-            SpawnOrg();
-        }
-
-        if (Hearts == 1)
-        {
-            SpawnOrg();
-        }
-
-        if (Hearts == 0)
-        {
-            REMENU.SetActive(false);
-            Hearts1.SetActive(false);
-            Hearts2.SetActive(false);
-            Hearts3.SetActive(false);
-            AddNoHearts.SetActive(false);
-            GameOver.SetActive(true);
-        }
-        REMENU.SetActive(false);
-        SCO.cScore = 0;
-    }
-    //*/
-
-
-    public void Wait()
-    {
-        /* if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
-         {
-             //RetryObj.SetActive(false);
-             Lobby();
-         }
-
-         if (PhotonNetwork.CurrentRoom.PlayerCount > 1)
-         {
-             Spectacte();
-         }*/
-        //SceneManager.LoadScene("Lobby 1");
         if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount >= 2)
         {
             NOINTERNET.SetActive(true);
-            //playerrr.SetHearts(3);
         }
         else
         {

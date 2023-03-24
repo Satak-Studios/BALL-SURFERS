@@ -15,8 +15,6 @@ public class connecttoserver : MonoBehaviourPunCallbacks
     private const string PlayerPrefsNameKey = "PlayerName";
     public string[] Names;
 
-    public PlayerManager bdrm;
-
     #region Connect-To-Region
 
     //DropdownBox For Regions
@@ -50,7 +48,6 @@ public class connecttoserver : MonoBehaviourPunCallbacks
 
     public void OnClick()
     {
-        bdrm.word = username.text;
         if (username.text.Length >= 1)
         {
             PlayerPrefs.SetString(PlayerPrefsNameKey, username.text);
@@ -224,8 +221,6 @@ public class connecttoserver : MonoBehaviourPunCallbacks
         {
             NameError.SetActive(false);
         }
-
-        bdrm.word = username.text;
 
 
         #region BSU 2.0

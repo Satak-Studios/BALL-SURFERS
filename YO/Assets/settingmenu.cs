@@ -19,14 +19,7 @@ public class settingmenu : MonoBehaviour
     float bolume;
     bool _volume;
 
-    //public PauseMenu pm = null;
-
-    public Dropdown lang;
-    //public Language lg;
-    int val;
     public GameObject Score;
-    public Hindi h;
-    public Dropdown language;
 
     public Toggle FPST;
     public Toggle fsn;
@@ -64,25 +57,8 @@ public class settingmenu : MonoBehaviour
         {
             sRun.isOn = false;
         }
-
-        //Language Selection
-        val = lang.value;
-
-        // Full Screen
-        if (Screen.fullScreen == true)
-        {
-            fsn.isOn = true;
-        }
-        else
-        {
-            fsn.isOn = false;
-        }
-
+        
         //Getting Value
-        //FPS = PlayerPrefs.GetInt("fps");
-        //qIndex = PlayerPrefs.GetInt("fps");
-
-        val = PlayerPrefs.GetInt("lang");
         bolume = PlayerPrefs.GetFloat("volume");
         res = PlayerPrefs.GetInt("index");
         /*qIndex*/ Qindex.value = PlayerPrefs.GetInt("qIndex");
@@ -233,53 +209,6 @@ public class settingmenu : MonoBehaviour
 
         //SpeedRun
         PlayerPrefs.SetInt("sdrn", Srun);
-
-        //Language Selection
-        val = lang.value;
-
-        // Full Screen
-        /*if (Screen.fullScreen == true)
-        {
-            fsn.isOn = true;
-        }
-        else
-        {
-            fsn.isOn = false;
-        }
-
-        /*PlayerPrefs.SetInt("lang", val);
-        PlayerPrefs.SetFloat("volume", bolume);
-        PlayerPrefs.Save();*/
-    }
-
-    public void SetLang()
-    {
-        //Language.SetLang(languageIndex);
-        //languageIndex = PlayerPrefs.GetInt("lang", languageIndex);
-        // PlayerPrefs.SetInt("lang", languageIndex);
-        //PlayerPrefs.Save();
-        
-        val = PlayerPrefs.GetInt("lang", val);
-        val = language.value;
-
-
-        if (val == 0)
-        {
-            h.LangEnglish();
-            Debug.Log("ENGLISH");
-        }
-
-        if (val == 1)
-        {
-            h.LangHindi();
-            Debug.Log("HINDI");
-        }
-
-        if (val == 2)
-        {
-            h.LangTelugu();
-            Debug.Log("TELUGU");
-        }
     }
 
     public void SetDMode()
@@ -365,8 +294,6 @@ public class settingmenu : MonoBehaviour
     //Saving
     public void SaveSettings()
     {
-        //PlayerPrefs.SetInt("index", resolutionIndex);
-        PlayerPrefs.SetInt("lang", val);
         PlayerPrefs.SetFloat("volume", bolume);
         PlayerPrefs.SetInt("index", res);
         PlayerPrefs.SetInt("qIndex", qIndex);

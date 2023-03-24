@@ -9,27 +9,19 @@ public class PauseMenu : MonoBehaviour
     public static bool GameIsPaused = false;
     public bool test = false;
     public GameObject pauseMenuUI = null;
-    //public GameObject optionPrefab;
     public GameObject option = null;
 
     public GameObject Score = null;
-    //public bool isPrefab = false;
 
     public static bool isOptions = false;
 
-    bool _instantiated = false;
-
     void Start()
     {
-        //Red();
         GameIsPaused = false;
         Score = FindObjectOfType<Score>().gameObject;
         option = FindObjectOfType<settingmenu>().gameObject;
-        /*if(option == null){
-           option = optionPrefab;
-           _instantiated = true;
-        }*/
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -42,72 +34,9 @@ public class PauseMenu : MonoBehaviour
             {
             Red();
             }
-        test = GameIsPaused;
-        //if (/*isPrefab == false &&*/ Input.GetKey(KeyCode.Escape))
-        /*{
-            if (GameIsPaused)
-            {
-                Red();
-                Debug.Log("Game Resumed");
-            }
-            else
-            {
-                _instantiated = true;
-                blad();
-                Debug.Log("Game Paused");
-            }
-            //Debug.Log("Game Paused");
-            //blad();
-        }
-
-        if (GameIsPaused)
-        {
-            Red();
-        }
-        else
-        {
-            blad();
-        }
-        /*  if(GameIsPaused == true && Input.GetKey(KeyCode.Escape))
-          {
-              Red();
-              print("You Are Resuming");
-          }*/
-
-
-        void Resume()
-        {
-            pauseMenuUI.SetActive(false);
-            Time.timeScale = 1f;
-            GameIsPaused = false;
-        }
-        void Pause()
-        {
-            pauseMenuUI.SetActive(true);
-            Time.timeScale = 0f;
-            GameIsPaused = true;
-        }
-        void LoadMenu()
-        {
-            Time.timeScale = 1f;
-            SceneManager.LoadScene("Menu 1");
-        }
-
-        void QuitGame()
-        {
-            Application.Quit();
-        }
-        void Options()
-        {
-            SceneManager.LoadScene("options");
-        }
-
-        void Restart()
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-
+        test = GameIsPaused; 
     }
+
     public void blad()
     {
         if (isOptions == false)
@@ -117,6 +46,7 @@ public class PauseMenu : MonoBehaviour
             GameIsPaused = true;
             Score.SetActive(false);
         }
+
         if (isOptions == true)
         {
             pauseMenuUI.SetActive(false);
