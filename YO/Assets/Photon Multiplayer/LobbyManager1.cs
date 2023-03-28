@@ -224,38 +224,33 @@ public class LobbyManager1 : MonoBehaviourPunCallbacks
         SceneManager.LoadScene("Menu 1");
     }
 
-
     #region Displaying Errors
-    public override void OnCreateRoomFailed(short returnCode, string message)
+
+    public void ThrowError(string returnCode, string message)
     {
         errorObj.SetActive(true);
         errorCode.text = returnCode.ToString();
-        errorText.text = message + " " + errorCode;
-        //base.OnCreateRoomFailed(returnCode, message);
+        errorText.text = message;
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        ThrowError(returnCode.ToString(), message);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        errorObj.SetActive(true);
-        errorCode.text = returnCode.ToString();
-        errorText.text = message + " " + errorCode;
-        //base.OnJoinRoomFailed(returnCode, message);
+        ThrowError(returnCode.ToString(), message);
     }
 
     public override void OnErrorInfo(ErrorInfo errorInfo)
     {
-        errorObj.SetActive(true);
-        errorCode.text = "0x0000";
-        errorText.text = errorInfo.ToString() + " " + errorCode;
-        //base.OnErrorInfo(errorInfo);
+        ThrowError("0x0000", errorInfo.ToString());
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        errorObj.SetActive(true);
-        errorCode.text = "0x4231";
-        errorText.text = cause.ToString() + " " + errorCode;
-        //base.OnDisconnected(cause);
+        ThrowError("0x4231", "Disconnected, Make sure you have proper internet connection.");
     }
     #endregion
 }

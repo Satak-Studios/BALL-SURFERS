@@ -89,11 +89,6 @@ public class playermovement : MonoBehaviour
         }
 
 
-        if (rb.position.y < -1f)
-        {
-            FindObjectOfType<GameManager>().EndGame();
-        }
-
         if (isgoingleft)
         {
             Debug.Log("Is Going Left");

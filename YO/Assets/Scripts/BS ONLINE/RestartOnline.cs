@@ -23,7 +23,6 @@ public class RestartOnline : MonoBehaviour
         ResMenu = FindObjectOfType<Restart>().Restartmenu;
         rs = FindObjectOfType<Restart>();
         psoo = FindObjectOfType<PlayerSpawner>();
-        _SCO = FindObjectOfType<player>();
     }
     //Restart Script
     //public void EndGaming(Player _player)
@@ -38,29 +37,14 @@ public class RestartOnline : MonoBehaviour
                 rs.controls.SetActive(true);
 
                 Time.timeScale = 1f;
-                //new WaitForSeconds(5f);
-                //rs.Restartmenu.SetActive(true);
-                //new WaitForSeconds(1);
-                //rs.sco.SaveHScore();
 
                 if (gameHasEnded == true)
                 {
-                    //_player.AddHearts(-1);
-                    //PhotonNetwork.LocalPlayer.AddHearts(-1);
                     psoo.Hearts -= 1;
                     Debug.Log("katam");
-                    //rs.Restartmenu.SetActive(true);
                     ResMenu.SetActive(true);
-                    //pso.sco.SaveHScore();
-                    //Debug.Log("Setting Highscore");
-                    //PhotonNetwork.Destroy(Char);
                     pso.katam();
                     Debug.Log("Current Hearts = " + psoo.Hearts);
-                    //Debug.Log("Current HighScore is " + rs.sco.HighScoreFloat);
-                    //rs.sco.ResetPlayer();
-                    _SCO.stopwatchActive = false;
-                    _SCO.currentTime = 0;
-                    //gm.Check();
                 }
             }
         }

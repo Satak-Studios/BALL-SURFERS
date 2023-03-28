@@ -2,127 +2,21 @@
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
-using Utilities;
+using Satak.Utilities;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
-using Photon.Pun.UtilityScripts;
 
 public class ScoreOnline  : MonoBehaviourPunCallbacks
-{
-    #region old code
-    /*private Transform playertp;
-    public Text scoreText;
-    public Text PING;
-    public float number;
-    //public Text HighScore;
-    //public Text hscore;
-    public int HighScoreFloat;
-    public float Score;
-    //public RestartOnline RSO;
-    //public Player _player;
-    private PhotonView PV;
-    public bool isMine;
-
-    private void Start()
-    {
-        //HighScore.text = PlayerPrefs.GetFloat("HighScore", 0).ToString("0");
-        //HighScore.text = HighScoreFloat.ToString("0");
-        PV = FindObjectOfType<PlayerOnline>().PV;
-    }
-
-    // Update is called once per frame
-    public void Update()
-    {
-        if (isMine == true)
-        {
-            playertp = FindObjectOfType<RestartOnline>().transform;
-            //RSO = FindObjectOfType<RestartOnline>();
-            number = playertp.position.z;
-            //_player.SetRealScore(number);
-            scoreText.text = number.ToString("0");
-            //scoreText.text = PhotonNetwork.LocalPlayer.GetRealScore().ToString("0");
-            PING.text = "PING : " + PhotonNetwork.GetPing();
-        }
-        //SaveHScore();
-
-        //HighScore.text = PlayerPrefs.GetFloat("hiScore").ToString("00:00");
-
-        if (Score > PlayerPrefs.GetFloat("hiScore", 0))
-        {
-            PlayerPrefs.SetFloat("hiScore", Score);
-            //PlayerPrefs.SetFloat("high", Score);
-            //hscore.text = PlayerPrefs.GetFloat("hiScore", number).ToString("0");
-            //HighScoreFloat = Mathf.RoundToInt(PlayerPrefs.SetFloat("hiScore", number));
-            //PlayerPrefs.Save();
-            //IncreaseScore();
-            //DecreaseScore();
-            //Score = PlayerPrefs.GetFloat("hiScore", 0); 
-            //IncreaseScore();
-            Debug.Log("HighScore =  " + HighScoreFloat);
-        }
-        //HighScoreFloat = Mathf.RoundToInt(PlayerPrefs.GetFloat("hiScore", number));
-        //Debug.Log(HighScoreFloat);
-        // Debug.Log(Score);
-        /*if (RSO.psoo.timesKatam == 1)
-         {
-             SaveHScore();
-             //Debug.Log("Saving H SCORE");
-         }
-
-         if (RSO.psoo.timesKatam == 2)
-         {
-             SaveHScore();
-             //Debug.Log("Saving H SCORE");
-         }
-
-         if (RSO.psoo.timesKatam == 3)
-         {
-             SaveHScore();
-             //Debug.Log("Saving H SCORE");
-         }
-        SaveHScore();
-    }
-
-    public void ResetPlayer()
-    {
-        PlayerPrefs.DeleteKey("hiScore");
-        PhotonNetwork.LocalPlayer.SetScore(0);
-        Debug.Log("HighScore Deleted");
-    }
-    
-    public void SaveHScore()
-    {
-        //PlayerPrefs.SetFloat("hiScore", playertp.position.z);
-        Score = playertp.position.z;
-        //Debug.Log("Score is " + Score);
-        IncreaseScore();
-    }
-    /*
-     public void CheckH()
-     {
-         if (playertp.position.z > /*PlayerPrefs.GetFloat("HighScore") HighScoreFloat)
-         {
-             //PlayerPrefs.SetFloat("HighScore", playertp.position.z);
-             // HighScore.text = PlayerPrefs.GetFloat("HighScore", 0).ToString("0");
-             // HighScore.text = HighScoreFloat.ToString("0");
-             //Debug.Log("Setting Highscore");
-             SaveHScore();
-         }
-     }
-
-    public void IncreaseScore()
-    {
-        HighScoreFloat = (int)PlayerPrefs.GetFloat("hiScore");
-        PhotonNetwork.LocalPlayer.SetScore(HighScoreFloat);
-        //Debug.Log("Score saved in ScoreBoard");
-        //Debug.Log("hScore = " + HighScoreFloat);
-    }*/
-    #endregion
+{ 
     public GameObject cRoomPanel;
     public GameObject fRoomPanel;
     public GameObject mainPanel;
     public InputField roomIF;
     public InputField pName;
     public Text GM_txt;
+
+    public InputField NameField;
+    public string[] names;
+    public LobbyManager1 lManager;
 
     //Room Options
     public Dropdown GM;
@@ -148,7 +42,7 @@ public class ScoreOnline  : MonoBehaviourPunCallbacks
         mainPanel.SetActive(false);
     }
 
-    public void OnClickCreate(Player kataS)
+    public void OnClickCreate()
     {
         if (roomIF.text.Length >= 1)
         {
@@ -156,9 +50,21 @@ public class ScoreOnline  : MonoBehaviourPunCallbacks
                 MaxPlayers = players, 
                 BroadcastPropsChangeToAll = true 
             });
-            SatakExtensions.SetGM(kataS, gameMode);
-            SatakExtensions.SetLives(kataS, life);
+            SatakExtensions.SetGM(PhotonNetwork.LocalPlayer, gameMode);
+            SatakExtensions.SetLives(PhotonNetwork.LocalPlayer, life);
         }
+        else
+        {
+            lManager.ThrowError("0x1234", "Make sure that you have entered Room Name");
+        }
+    }
+
+    public void RandName()
+    {
+        int rand = Random.Range(0, names.Length);
+        int Rand = Random.Range(0, 9999);
+        NameField.text = names[rand] + Rand.ToString();
+        SaveName();
     }
 
     private void Update()
@@ -166,15 +72,15 @@ public class ScoreOnline  : MonoBehaviourPunCallbacks
         pName.text = PhotonNetwork.NickName;
         if (SatakExtensions.GetGM(PhotonNetwork.LocalPlayer) == 1)
         {
-            GM_txt.text = "Default";
+            GM_txt.text = "GameMode: Default";
         }
         if (SatakExtensions.GetGM(PhotonNetwork.LocalPlayer) == 2)
         {
-            GM_txt.text = "Competition";
+            GM_txt.text = "GameMode: Competition";
         }
         if (SatakExtensions.GetGM(PhotonNetwork.LocalPlayer) == 3)
         {
-            GM_txt.text = "Custom";
+            GM_txt.text = "GameMode: Custom";
         }
 
         #region GM
@@ -242,23 +148,40 @@ public class ScoreOnline  : MonoBehaviourPunCallbacks
         {
             life = 3;
         }
+
+        if (!PlayerPrefs.HasKey("PlayerName"))
+        {
+            RandName();
+        }
+    }
+
+    public void SaveName()
+    {
+        PlayerPrefs.SetString("PlayerName", NameField.text);
+        PhotonNetwork.NickName = NameField.text;
+    }
+
+    void Start()
+    {
+        NameField.text = PlayerPrefs.GetString("PlayerName");
     }
 }
-namespace Photon.Pun.UtilityScripts
+
+namespace Satak.Utilities
 {
-    /// <summary>
-    /// Scoring system for PhotonPlayer
-    /// </summary>
     public class SatakOnline : MonoBehaviour
     {
         public const string GM_Prop = "gMode";
-        public const string Lives_Prop = "Lives";
-        public const string PlayerLevelProp = "Level";
+        public const string LifeProp = "Lives";
+        public const string LevelProp = "Level";
+        public const string highScore = "hScore";
+        public const string badge = "badge";
     }
 
     public static class SatakExtensions
     {
         //GameMode
+        #region GameMode
         public static void SetGM(this Player player, int newGM)
         {
             Hashtable score = new Hashtable();  // using PUN's implementation of Hashtable
@@ -277,13 +200,36 @@ namespace Photon.Pun.UtilityScripts
 
             return 0;
         }
-
+        #endregion
 
         //Levels Completed
+        #region Levels Completed
+        public static void SetLevel(this Player player, int newLevel)
+        {
+            Hashtable score = new Hashtable();  // using PUN's implementation of Hashtable
+            score[SatakOnline.LevelProp] = newLevel;
+
+            player.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
+        }
+
+        public static int GetLevel(this Player player)
+        {
+            object Lives;
+            if (player.CustomProperties.TryGetValue(SatakOnline.LevelProp, out Lives))
+            {
+                return (int)Lives;
+            }
+
+            return 0;
+        }
+        #endregion
+
+        //Lives
+        #region Lives
         public static void SetLives(this Player player, int newLife)
         {
             Hashtable score = new Hashtable();  // using PUN's implementation of Hashtable
-            score[PunPlayerScores.PlayerLevelProp] = newLife;
+            score[SatakOnline.LifeProp] = newLife;
 
             player.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
         }
@@ -291,33 +237,58 @@ namespace Photon.Pun.UtilityScripts
         public static int GetLives(this Player player)
         {
             object Lives;
-            if (player.CustomProperties.TryGetValue(PunPlayerScores.PlayerLevelProp, out Lives))
+            if (player.CustomProperties.TryGetValue(SatakOnline.LifeProp, out Lives))
             {
                 return (int)Lives;
             }
 
             return 0;
         }
+        #endregion
 
-        #region Device
-        public static void SetDevice(this Player player, string deviceName)
+        //Score
+        #region Score
+        public static void SetScore(this Player player, int amount)
         {
-            Hashtable device = new Hashtable();  // using PUN's implementation of Hashtable
-            device[PunPlayerScores.PlayerDeviceProp] = deviceName;
+            Hashtable score = new Hashtable();  // using PUN's implementation of Hashtable
+            score[SatakOnline.highScore] = amount;
 
-            player.SetCustomProperties(device);  // this locally sets the score and will sync it in-game asap.
+            player.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
         }
 
-        public static string GetDevice(this Player player)
+        public static int GetScore(this Player player)
         {
-            object device;
-            if (player.CustomProperties.TryGetValue(PunPlayerScores.PlayerDeviceProp, out device))
+            object Score;
+            if (player.CustomProperties.TryGetValue(SatakOnline.highScore, out Score))
             {
-                return device.ToString(); //(string)device;
+                return (int)Score;
             }
 
-            return "Unknown";
+            return 0;
         }
+        #endregion
+
+        //Badge
+        #region Badge
+        public static void SetBadge(this Player player, string WhatBadge)
+        {
+            Hashtable score = new Hashtable();  // using PUN's implementation of Hashtable
+            score[SatakOnline.badge] = WhatBadge;
+
+            player.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
+        }
+
+        public static string GetBadge(this Player player)
+        {
+            object Badge;
+            if (player.CustomProperties.TryGetValue(SatakOnline.badge, out Badge))
+            {
+                return Badge.ToString();
+            }
+
+            return "";
+        }
+
         #endregion
     }
 }

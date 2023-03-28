@@ -2,7 +2,6 @@
 
 public class collistion : MonoBehaviour  
 {
-    public playermovement movement;
     public Restart rs;
    
     
@@ -13,7 +12,6 @@ public class collistion : MonoBehaviour
     {
         if (collisionInfo.collider.tag == "Obsticle")
         {
-            movement.enabled = false;
             rs.EndGames();
             FindObjectOfType<Restart>().EndGames();
            
