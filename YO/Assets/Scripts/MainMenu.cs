@@ -7,39 +7,48 @@ using Photon.Pun;
 
 public class MainMenu : MonoBehaviour
 {
+    public GameObject hi;    
+
+    public Text name;
     public Text version;
-    public GameObject Credit;
 
-    public void satak()
-    {
-        SceneManager.LoadScene("levelmanager");
-    }
-
-    public void SHOP()
-    {
-        SceneManager.LoadScene("SHOP");
-    }
-    
     public void Start()
     {
         if (PlayerPrefs.HasKey("sk"))
         {
-            version.text = "v" + Application.version + " (Sathvik Edition)";
+            version.text = "." + Application.version + " (Sathvik Edition)";
         }
         else
         {
-            version.text = "v" + Application.version;
+            version.text = "." + Application.version;
         }
-        PlayerPrefs.DeleteKey("cyber");
     }
 
-    public void StartGame(string index)
+    public void SinglePlayer()
     {
-        SceneManager.LoadScene(index);
+        SceneManager.LoadScene("levelmanager");
     }
 
-    public void Credits()
+    public void Multiplayer()
     {
-        Credit.SetActive(true);
+        SceneManager.LoadScene("Start");
+    }
+
+    public void Profile()
+    {
+        SceneManager.LoadScene("CH");
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
+    }
+    
+    public void Update()
+    {
+        if (PlayerPrefs.HasKey("PlayerName"))
+           name.text = PlayerPrefs.GetString("PlayerName");
+        else
+           hi.SetActive(true);
     }
 }

@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: 7e6708b3432f3bc46ab8ff969ff276c1
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Anek Telugu
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 7115a16afca8bf44c99f646186fe5ff8, type: 3}
+  - {fileID: 12800000, guid: 0353b7041cb3a7f4f9c6d756c5a56aef, type: 3}
+  - {fileID: 12800000, guid: 73fa8c38dcd73dd42b5b28bac73f97a3, type: 3}
+  - {fileID: 12800000, guid: e0dad0dc16f3c3c4884a060bcc267929, type: 3}
+  - {fileID: 12800000, guid: 04006d74f17e73645b944e2754b09200, type: 3}
+  - {fileID: 12800000, guid: 3a6d8a05c59809947bf1b9c6f22f9e54, type: 3}
+  - {fileID: 12800000, guid: 777f795932da3e64c804d871e596f48d, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
