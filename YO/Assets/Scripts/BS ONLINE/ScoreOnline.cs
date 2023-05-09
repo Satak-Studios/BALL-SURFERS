@@ -111,7 +111,7 @@ public class ScoreOnline  : MonoBehaviourPunCallbacks
         //Main
         if (gameMode == 1)
         {
-
+            
         }
         if (gameMode == 2)
         {
@@ -176,6 +176,8 @@ namespace Satak.Utilities
         public const string LevelProp = "Level";
         public const string highScore = "hScore";
         public const string badge = "badge";
+        public const string PlayerPosition = "PlayerPosition";
+        public const string Time = "Time";
     }
 
     public static class SatakExtensions
@@ -289,6 +291,52 @@ namespace Satak.Utilities
             return "";
         }
 
+        #endregion
+
+        //PlayerPosition
+        #region PlayerPosition
+
+        public static void SetPlayerPosition(this Player player, string WhatPlayerPosition)
+        {
+            Hashtable score = new Hashtable();  // using PUN's implementation of Hashtable
+            score[SatakOnline.PlayerPosition] = WhatPlayerPosition;
+
+            player.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
+        }
+
+        public static string GetPlayerPosition(this Player player)
+        {
+            object PlayerPosition;
+            if (player.CustomProperties.TryGetValue(SatakOnline.PlayerPosition, out PlayerPosition))
+            {
+                return PlayerPosition.ToString();
+            }
+
+            return "";
+        }
+
+        #endregion
+
+        //Time
+        #region Time
+        public static void SetTime(this Player player, float time)
+        {
+            Hashtable _time = new Hashtable();  // using PUN's implementation of Hashtable
+            _time[SatakOnline.Time] = time;
+
+            player.SetCustomProperties(_time);  // this locally sets the score and will sync it in-game asap.
+        }
+
+        public static float GetTime(this Player player)
+        {
+            object Time;
+            if (player.CustomProperties.TryGetValue(SatakOnline.Time, out Time))
+            {
+                return (float)Time;
+            }
+
+            return 0;
+        }
         #endregion
     }
 }

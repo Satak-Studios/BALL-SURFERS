@@ -321,6 +321,9 @@ EditorBuildSettings:
     path: Assets/Photon Multiplayer/Game.unity
     guid: e6c37327932857146b952d64cbb7cc55
   - enabled: 1
+    path: Assets/Photon Multiplayer/Comp.unity
+    guid: 3a682c4e5e13b0d4c9657e38d7b2e55b
+  - enabled: 1
     path: Assets/BS ONLINE/Trailer.unity
     guid: de4cc5fab63009147a690414c8bb10d5
   - enabled: 1

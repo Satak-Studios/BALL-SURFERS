@@ -1,10 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
+using Satak.Utilities;
 
 public class LobbyManager1 : MonoBehaviourPunCallbacks
 {
@@ -33,8 +33,6 @@ public class LobbyManager1 : MonoBehaviourPunCallbacks
 
     public GameObject HScorePanel;
     public GameObject LoadingCanvas;
-
-    ExitGames.Client.Photon.Hashtable gameStarted = new ExitGames.Client.Photon.Hashtable();
 
     //Errors
     public GameObject errorObj;
@@ -140,7 +138,6 @@ public class LobbyManager1 : MonoBehaviourPunCallbacks
         foreach (KeyValuePair<int, Player> player_ in PhotonNetwork.CurrentRoom.Players)
         {
             PlayerItem1 newPlayerItem1 = Instantiate(playerItemPrefab, playerItemParent);
-            //PlayerItem1 newPlayerItem1 = Instantiate(playerItem_prefab_1_retry_, playerItemParent);
             newPlayerItem1.SetPlayerInfo(player_.Value);
 
             if (player_.Value == PhotonNetwork.LocalPlayer)
@@ -168,7 +165,7 @@ public class LobbyManager1 : MonoBehaviourPunCallbacks
             PhotonNetwork.Instantiate(PlayingPrefab.name, Playing.position, Quaternion.identity);
         }
 
-        if (PhotonNetwork.IsMasterClient)// && PhotonNetwork.CurrentRoom.PlayerCount >= 2)
+        if (PhotonNetwork.IsMasterClient)
         {
             StartButton.SetActive(true);
         }
@@ -188,30 +185,44 @@ public class LobbyManager1 : MonoBehaviourPunCallbacks
         else
         {
             roomPanel.SetActive(false);
-            //lobbyPanel.SetActive(true);
             BackButton.SetActive(true);
         }
-        //ExitGames.Client.Photon.Hashtable gameStarted = new ExitGames.Client.Photon.Hashtable();
-       /* if ((int)gameStarted["Started"] == 1)
-        {
-            LoadingCanvas.SetActive(true);
-            PhotonNetwork.Instantiate(PlayingPrefab.name, Playing.position, Quaternion.identity);
-        }*/
     }
 
     public void OnClickStartButton()
     {
+        int gameMode = SatakExtensions.GetGM(PhotonNetwork.LocalPlayer);
+        if (gameMode == 1)
+        {
+            LoadDefault();
+        }
+        if (gameMode == 2)
+        {
+            LoadComp();
+        }
+        if (gameMode == 3)
+        {
+            LoadCustom();
+        }
+    }
+
+    public void LoadDefault()
+    {
         PhotonNetwork.LoadLevel("Game");
-        //isPlaying = true;
-        //ExitGames.Client.Photon.Hashtable gameStarted = new ExitGames.Client.Photon.Hashtable();
-        gameStarted["Started"] = 1;
-        print(gameStarted["Started"]);
-        PhotonNetwork.SetPlayerCustomProperties(gameStarted);
+    }
+
+    public void LoadComp()
+    {
+        PhotonNetwork.LoadLevel("Comp");
+    }
+
+    public void LoadCustom()
+    {
+        PhotonNetwork.LoadLevel("Custom");
     }
 
     public void LeaderBoard()
     {
-        //SceneManager.LoadScene("Scoreboard");
         HScorePanel.SetActive(true);
         roomPanel.SetActive(false);
         lobbyPanel.SetActive(false);

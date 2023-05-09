@@ -60,47 +60,5 @@ namespace Photon.Pun.UtilityScripts
 
             return 0;
         }
-
-
-        //Levels Completed
-        public static void SetLevel(this Player player, int newScore)
-        {
-            Hashtable score = new Hashtable();  // using PUN's implementation of Hashtable
-            score[PunPlayerScores.PlayerLevelProp] = newScore;
-
-            player.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
-        }
-
-        public static int GetLevel(this Player player)
-        {
-            object score;
-            if (player.CustomProperties.TryGetValue(PunPlayerScores.PlayerLevelProp, out score))
-            {
-                return (int)score;
-            }
-
-            return 0;
-        }
-
-        #region Device
-        public static void SetDevice(this Player player, string deviceName)
-        {
-            Hashtable device = new Hashtable();  // using PUN's implementation of Hashtable
-            device[PunPlayerScores.PlayerDeviceProp] = deviceName;
-
-            player.SetCustomProperties(device);  // this locally sets the score and will sync it in-game asap.
-        }
-
-        public static string GetDevice(this Player player)
-        {
-            object device;
-            if (player.CustomProperties.TryGetValue(PunPlayerScores.PlayerDeviceProp, out device))
-            {
-                return device.ToString(); //(string)device;
-            }
-
-            return "Unknown";
-        }
-        #endregion
     }
 }

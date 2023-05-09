@@ -7,9 +7,9 @@ using Photon.Pun;
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject hi;    
+    /*public GameObject hi;    
 
-    public Text name;
+    public Text name;*/
     public Text version;
 
     public void Start()
@@ -44,11 +44,11 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
     
-    public void Update()
+    /*public void Update()
     {
         if (PlayerPrefs.HasKey("PlayerName"))
            name.text = PlayerPrefs.GetString("PlayerName");
         else
            hi.SetActive(true);
-    }
+    }*/
 }
