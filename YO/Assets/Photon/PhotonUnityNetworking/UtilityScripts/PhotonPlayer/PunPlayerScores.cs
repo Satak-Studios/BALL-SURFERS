@@ -25,8 +25,6 @@ namespace Photon.Pun.UtilityScripts
     public class PunPlayerScores : MonoBehaviour
     {
         public const string PlayerScoreProp = "score";
-        public const string PlayerDeviceProp = "device";
-        public const string PlayerLevelProp = "Level";
     }
 
     public static class ScoreExtensions

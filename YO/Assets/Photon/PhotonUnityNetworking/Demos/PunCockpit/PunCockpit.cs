@@ -424,7 +424,7 @@ namespace Photon.Pun.Demo.Cockpit
 		public void LoadLevel(string level)
 		{
 			if (debug) Debug.Log("PunCockpit:LoadLevel(" +level+")");
-			PhotonNetwork.LoadLevel("Level01 multi");
+			PhotonNetwork.LoadLevel(level);
 		}
 
         public void SetRoomCustomProperty(string value)
@@ -611,7 +611,6 @@ namespace Photon.Pun.Demo.Cockpit
 
             this.UserId = this.FriendsList[dropdownIndex].UserId;
             PlayerPrefs.SetString(UserIdUiForm.UserIdPlayerPref, this.UserId);
-            PhotonNetwork.NickName = this.UserId;
 
             StartCoroutine(OnDropdownConnectAs_CB());
         }

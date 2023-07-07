@@ -24,6 +24,11 @@ public class CompManager : MonoBehaviour
     void Start()
     {
         SpawnPlayer();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            CountdownTimer countdownTimer = GetComponent<CountdownTimer>();
+            countdownTimer.isTimerRunning = true;
+        }
     }
 
     // Update is called once per frame

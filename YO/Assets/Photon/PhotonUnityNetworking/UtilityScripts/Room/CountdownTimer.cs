@@ -44,7 +44,7 @@ namespace Photon.Pun.UtilityScripts
         [Header("Countdown time in seconds")] 
         public float Countdown = 5.0f;
 
-        public  bool isTimerRunning;
+        public bool isTimerRunning;
 
         private int startTime;
 
@@ -60,8 +60,22 @@ namespace Photon.Pun.UtilityScripts
 
         public void Start()
         {
+            if (this.Text == null) Debug.LogError("Reference to 'Text' is not set. Please set a valid reference.", this);
+        }
+
+        public override void OnEnable()
+        {
+            Debug.Log("OnEnable CountdownTimer");
+            base.OnEnable();
+
+            // the starttime may already be in the props. look it up.
             Initialize();
-            isTimerRunning = true;
+        }
+
+        public override void OnDisable()
+        {
+            base.OnDisable();
+            Debug.Log("OnDisable CountdownTimer");
         }
 
 
@@ -80,16 +94,17 @@ namespace Photon.Pun.UtilityScripts
 
         private void OnTimerRuns()
         {
-            isTimerRunning = true;
-            enabled = true;
+            this.isTimerRunning = true;
+            this.enabled = true;
         }
 
         private void OnTimerEnds()
         {
-            isTimerRunning = false;
-            enabled = false;
+            this.isTimerRunning = false;
+            this.enabled = false;
 
             Debug.Log("Emptying info text.", this.Text);
+            this.Text.text = string.Empty;
 
             if (OnCountdownTimerHasExpired != null) OnCountdownTimerHasExpired();
         }
