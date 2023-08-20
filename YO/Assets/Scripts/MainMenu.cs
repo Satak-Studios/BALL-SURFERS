@@ -14,13 +14,14 @@ public class MainMenu : MonoBehaviour
 
     public void Start()
     {
+        string _version = Application.version;
         if (PlayerPrefs.HasKey("sk"))
         {
-            version.text = "." + Application.version + " (Sathvik Edition)";
+            version.text = "." + _version.Substring(1) + " (Sathvik Edition)";
         }
         else
         {
-            version.text = "." + Application.version;
+            version.text = "." + _version.Substring(1);
         }
     }
 

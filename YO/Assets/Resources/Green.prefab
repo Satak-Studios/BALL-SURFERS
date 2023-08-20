@@ -579,8 +579,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerCam: {fileID: 5051064691873562458}
-  PlayerKatamExplosion: {fileID: 4199231663014919091, guid: 1e119d2c6c775284f95b42a09ff74587,
-    type: 3}
   RSO: {fileID: 4790892172882001359}
   Char: {fileID: 5051064691404771409}
   rb: {fileID: 3243727180431584094}

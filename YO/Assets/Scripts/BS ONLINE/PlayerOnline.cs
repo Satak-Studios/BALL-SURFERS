@@ -19,8 +19,8 @@ using Utilities;
         public PlayerOnline movement;
 
         //Code From PlayerMovement Script
-        public float forwardForce;
-        public float sidewaysForce;
+        private float forwardForce = 300f;
+        private float sidewaysForce = 35f;
         public bool isgoingleft;
         public bool isgoingright;
 

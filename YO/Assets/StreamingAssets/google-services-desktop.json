@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "507834271914",
+    "firebase_url": "https://ball-surfers-2-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "ball-surfers-2",
+    "storage_bucket": "ball-surfers-2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:507834271914:android:a6c15d6f84d390dafb28d3",
+        "android_client_info": {
+          "package_name": "com.SatakStudios.BALLSURFERS"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "507834271914-ktp37p39nqj6ekpkbks67oip563lfv5o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwNoaeFOb0hT87pYU-QUDcjfqE0vAppE0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "507834271914-ktp37p39nqj6ekpkbks67oip563lfv5o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -178,6 +178,7 @@ namespace Satak.Utilities
         public const string badge = "badge";
         public const string PlayerPosition = "PlayerPosition";
         public const string Time = "Time";
+        public const string CD_Time = "CD_Time";
     }
 
     public static class SatakExtensions
@@ -333,6 +334,28 @@ namespace Satak.Utilities
             if (player.CustomProperties.TryGetValue(SatakOnline.Time, out Time))
             {
                 return (float)Time;
+            }
+
+            return 0;
+        }
+        #endregion
+
+        //CountDownTime
+        #region CountDownTime
+        public static void SetCountDownTime(this Player player, int cdTime)
+        {
+            Hashtable cd_time_ = new Hashtable();  // using PUN's implementation of Hashtable
+            cd_time_[SatakOnline.CD_Time] = cdTime;
+
+            player.SetCustomProperties(cd_time_);  // this locally sets the score and will sync it in-game asap.
+        }
+
+        public static int GetCountDownTime(this Player player)
+        {
+            object CD_Time;
+            if (player.CustomProperties.TryGetValue(SatakOnline.CD_Time, out CD_Time))
+            {
+                return (int)CD_Time;
             }
 
             return 0;
