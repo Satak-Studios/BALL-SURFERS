@@ -44,6 +44,7 @@ MonoBehaviour:
   - SendMessage
   - StartTimerRPC
   - UpdateWaypoint
+  - UpdatePlacements
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

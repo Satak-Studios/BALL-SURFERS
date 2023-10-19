@@ -6,7 +6,7 @@ using Photon.Pun;
 public class LevelGenerator : MonoBehaviour
 {
     public GameObject[] objects;
-    public Transform PLayer;
+    //public Transform PLayer;
 
     public void Start()
     {
@@ -14,14 +14,14 @@ public class LevelGenerator : MonoBehaviour
         if (PhotonNetwork.InRoom== false)
         {
             Instantiate(objects[rand], transform.position, Quaternion.identity);
-            Debug.Log("Offline mode enabled");
+            //Debug.Log("Offline mode enabled");
         }
 
         if (PhotonNetwork.InRoom == true)
         {
             if(PhotonNetwork.IsMasterClient == true)
             PhotonNetwork.Instantiate(objects[rand].name, transform.position, Quaternion.identity);
-            Debug.Log("Online mode enabled");
+            //Debug.Log("Online mode enabled");
         }
     }
 }

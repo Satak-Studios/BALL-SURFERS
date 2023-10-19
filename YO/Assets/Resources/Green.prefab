@@ -172,6 +172,7 @@ MonoBehaviour:
   player: {fileID: 3243727180431584093}
   isOnline: 0
   offset: {x: 0, y: 1, z: 0}
+  Comp: 0
 --- !u!1 &3243727179492339217
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,12 +584,9 @@ MonoBehaviour:
   Char: {fileID: 5051064691404771409}
   rb: {fileID: 3243727180431584094}
   movement: {fileID: 1215800645479557108}
-  forwardForce: 400
-  sidewaysForce: 45
   isgoingleft: 0
   isgoingright: 0
   PV: {fileID: 7490287685031848735}
-  qs: {fileID: 0}
 --- !u!114 &3291414506089002072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -981,6 +979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e47afa66d662ae49b3bc4cc21f2ef1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WherAmI: 0
 --- !u!114 &6962477856795929082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1097,3 +1096,4 @@ MonoBehaviour:
   player: {fileID: 3243727180431584093}
   isOnline: 0
   offset: {x: 0, y: 1, z: -5}
+  Comp: 0

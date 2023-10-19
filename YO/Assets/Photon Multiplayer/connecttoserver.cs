@@ -54,7 +54,7 @@ public class connecttoserver : MonoBehaviourPunCallbacks
             PhotonNetwork.NickName = username.text;
             buttonText.text = "Connecting....";
             Network();
-            PhotonNetwork.AutomaticallySyncScene = true;
+            //PhotonNetwork.AutomaticallySyncScene = true;
             //PhotonNetwork.ConnectToRegion(region);
             PhotonNetwork.ConnectUsingSettings();
             //RegionChanger();

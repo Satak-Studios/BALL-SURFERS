@@ -8,7 +8,7 @@ using Utilities;
 
     public class OnlinePlayer : MonoBehaviourPunCallbacks
     {
-     public Camera PlayerCam;
+    public Camera PlayerCam;
     public GameObject Char;
 
     public Rigidbody rb;
@@ -23,7 +23,13 @@ using Utilities;
     public bool isgoingright;    
 
     //Photon View    
-    public PhotonView PV;      
+    public PhotonView PV;     
+
+    //Animator
+    Animator explosion;
+
+    //Magic
+    public bool Magic = false;
 
     private void Start()
     {
@@ -51,7 +57,14 @@ using Utilities;
     {
         if (PV.IsMine)
         {
-            Movement();
+            if (Magic == false)
+            {
+                Movement();
+            }
+            else{
+                transform.position = new Vector3(0, 0, -256);
+                Freeze();
+            }
         }
     }
 
@@ -85,7 +98,7 @@ using Utilities;
 
         if (rb.position.y < -1f)
         {
-            katam();
+            KatamOnCollision();
         }
 
         if (isgoingleft)
@@ -137,7 +150,7 @@ using Utilities;
             if (collisionInfo.collider.tag == "Obsticle")
             {
                 movement.enabled = false;
-                katam();
+                KatamOnCollision();
             }
         }
     }
@@ -147,7 +160,7 @@ using Utilities;
         {
             if (PV.IsMine)
             {
-                katam();
+                KatamOnCollision();
             }
         }
 
@@ -160,14 +173,22 @@ using Utilities;
         {
             
         }
+
+        compManager = FindObjectOfType<CompManager>();
     }
 
-    public void katam()
+    public void KatamOnCollision()
     {   
         if (PV.IsMine)
         {
-            PhotonNetwork.Destroy(Char);
-            compManager.EndGame();
+            if (compManager._GodMod == true)
+            {
+                
+            }else
+            {
+                PhotonNetwork.Destroy(Char);
+                compManager.EndGame();
+            }
         }
     }
 }

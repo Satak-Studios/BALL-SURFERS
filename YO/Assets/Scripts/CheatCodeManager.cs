@@ -44,8 +44,15 @@ public class CheatCodeManager : MonoBehaviour
     //Update 
     void Update()
     {
-        gm = FindObjectOfType<GameManager>();
-        rs = FindObjectOfType<Restart>();
+        if (gm == null == false)
+        {
+            gm = FindObjectOfType<GameManager>();
+        }
+
+        if (rs == null == false)
+        {
+            rs = FindObjectOfType<Restart>();
+        }
 
         if (Input.GetKeyDown(KeyCode.Return))
         {

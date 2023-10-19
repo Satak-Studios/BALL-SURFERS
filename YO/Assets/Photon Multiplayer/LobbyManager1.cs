@@ -11,6 +11,7 @@ public class LobbyManager1 : MonoBehaviourPunCallbacks
     public InputField roomInputField;
     public GameObject lobbyPanel;
     public GameObject roomPanel;
+    public GameObject roomFPanel; //Only for RoomItem
     public Text roomName;
 
     public RoomItem roomItemPrfab;
@@ -48,7 +49,7 @@ public class LobbyManager1 : MonoBehaviourPunCallbacks
     {
         //isPlaying = false;
         PhotonNetwork.JoinLobby();
-
+        SatakExtensions.SetGameStatus(PhotonNetwork.LocalPlayer, 0);
     }
 
     public void OnClickCreate()
@@ -186,11 +187,23 @@ public class LobbyManager1 : MonoBehaviourPunCallbacks
         {
             roomPanel.SetActive(false);
             BackButton.SetActive(true);
+            //lobbyPanel.SetActive(true);
+        }
+
+        if (!PhotonNetwork.IsMasterClient && SatakExtensions.GetGameStatus(PhotonNetwork.LocalPlayer) == 1)
+        {
+            OnClickStartButton();
+            Debug.Log("Message Recieved that we have to start game");
         }
     }
 
     public void OnClickStartButton()
     {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            SatakExtensions.SetGameStatus(PhotonNetwork.LocalPlayer, 1);
+        }
+        
         int gameMode = SatakExtensions.GetGM(PhotonNetwork.LocalPlayer);
         if (gameMode == 1)
         {

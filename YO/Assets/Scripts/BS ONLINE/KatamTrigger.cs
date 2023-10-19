@@ -23,6 +23,11 @@ public class KatamTrigger : MonoBehaviour
         {
             Heart.SetActive(false);
         }
+
+        if (SceneManager.GetActiveScene().buildIndex == 105)
+        {
+            Heart.SetActive(false);
+        }
     }
 	void OnTriggerEnter()
 	{

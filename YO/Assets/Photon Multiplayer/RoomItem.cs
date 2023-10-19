@@ -23,6 +23,7 @@ public class RoomItem : MonoBehaviour
     public void OnClickItem()
     {
         manager.JoinRoom(roomName.text);
+        manager.roomFPanel.SetActive(false);
     }
 }
 

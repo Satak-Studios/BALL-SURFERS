@@ -6,6 +6,8 @@ using Photon.Pun;
 
 public class QuitScreen : MonoBehaviour
 {
+    public bool WherAmI;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,5 +18,13 @@ public class QuitScreen : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void CompleteCompReal()
+    {
+        if (!WherAmI)
+        {
+            FindObjectOfType<CompManager>().CompleteComp();
+        }
     }
 }

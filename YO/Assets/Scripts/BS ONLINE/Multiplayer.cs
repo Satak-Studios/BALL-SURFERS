@@ -16,6 +16,7 @@ public class Multiplayer : MonoBehaviourPunCallbacks
             PhotonNetwork.ConnectUsingSettings();
             status.text = "Connecting....";
             PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerName");
+            PhotonNetwork.AutomaticallySyncScene = true;
 
             Touch touch = Input.GetTouch(0);
             pointer.position = touch.position;

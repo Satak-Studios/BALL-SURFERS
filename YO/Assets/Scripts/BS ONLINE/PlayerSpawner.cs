@@ -63,7 +63,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 
     public void Update()
     {
-        PV = FindObjectOfType<QuitScreen>().GetComponent<PhotonView>();
+        PV = pso.PV;
         pso = FindObjectOfType<PlayerOnline>();
         if (PV == null)
         {

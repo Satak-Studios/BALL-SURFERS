@@ -333,6 +333,9 @@ EditorBuildSettings:
     path: Assets/LevelS/Game 01.unity
     guid: eaa39e46120e44f4ebbec81dcd612625
   - enabled: 1
+    path: Assets/Scenes/Stats.unity
+    guid: 3197514735ec36f40b14c9c3f2b22cfd
+  - enabled: 1
     path: Assets/Scenes/CH.unity
     guid: 7d93c1db25025c747a389bfc8b3b71f5
   - enabled: 1

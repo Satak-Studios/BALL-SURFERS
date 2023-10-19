@@ -26,7 +26,7 @@ using Utilities;
 
         //Photon View
         public PhotonView PV;
-        public QuitScreen qs;
+        //public QuitScreen qs;
 
         private void Start()
         {
@@ -168,12 +168,12 @@ using Utilities;
 
 
         //[PunRPC]
-         public void katam()
-         {   
+        public void katam()
+        {   
            if (PV.IsMine)
            {
             PhotonNetwork.Destroy(Char);
+           }
         }
-         }
 
     }

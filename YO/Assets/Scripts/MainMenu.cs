@@ -35,9 +35,9 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Start");
     }
 
-    public void Profile()
+    public void Stats()
     {
-        SceneManager.LoadScene("CH");
+        SceneManager.LoadScene("Stats");
     }
 
     public void Exit()

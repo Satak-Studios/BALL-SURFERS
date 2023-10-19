@@ -12,7 +12,7 @@ namespace Chat
 	[RequireComponent(typeof(PhotonView))]
 	public class RoomChat : MonoBehaviourPunCallbacks, IPointerDownHandler
 	{
-		[SerializeField] private KeyCode m_sendKey = KeyCode.Return;
+		//[SerializeField] private KeyCode m_sendKey = KeyCode.Return;
 		[SerializeField] private Text m_message = null;
 		[SerializeField] private Transform m_content = null;
 		[SerializeField] private InputField m_messageInput = null;
