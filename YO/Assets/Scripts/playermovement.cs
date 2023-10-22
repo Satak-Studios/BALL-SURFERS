@@ -18,7 +18,7 @@ public class playermovement : MonoBehaviour
     public GameObject[] playerPrefabs;
     public Transform sp;
 
-    public bool gameStarted = false;
+    public bool gameStarted = true;
 
     private void Start()
     {
@@ -108,7 +108,7 @@ public class playermovement : MonoBehaviour
             Right();
         }
     }
-    
+
     public void Left()
     {
         rb.AddForce(-sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);

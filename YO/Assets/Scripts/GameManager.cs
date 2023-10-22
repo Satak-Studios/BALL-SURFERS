@@ -8,13 +8,6 @@ public class GameManager : MonoBehaviour
 	public int level;
 	public LevelScript ls;
 
-	public Animator _transition;
-	public void Start()
-    {
-		_transition.SetBool("fade_end", true);
-		_transition.SetBool("fade_start", false);
-	}
-
 	public void CompleteLevel()
 	{
 		completeLevelUI.SetActive(true);

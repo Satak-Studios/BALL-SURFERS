@@ -34,6 +34,7 @@ public class Restart : MonoBehaviour
     private void Start()
     {
         movement = FindObjectOfType<playermovement>();
+		rb = movement.rb;
 	}
 
 

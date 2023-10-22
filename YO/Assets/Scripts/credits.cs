@@ -19,10 +19,4 @@ public class credits : MonoBehaviour
     {
         SceneManager.LoadScene("levelmanager");
     }
-
-    public void Appear()
-    {
-        FindObjectOfType<Restart>()._disapper = false;
-        FindObjectOfType<playermovement>().gameStarted = true;
-    }
 }

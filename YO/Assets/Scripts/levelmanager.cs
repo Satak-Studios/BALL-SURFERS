@@ -10,7 +10,6 @@ public class levelmanager : MonoBehaviour
 {
     public GameObject Credits;
     public int levelsUnlocked;
-    int levelIndexMain = 1;
     public Button[] buttons;
     public GameObject Next_btn;
     public GameObject Back_btn;
@@ -22,13 +21,9 @@ public class levelmanager : MonoBehaviour
     public GameObject LoadWarn;
     public GameObject LoadError;
 
-    public Animator _transition;
-    public GameObject MainPanel;
-
     // Start is called before the first frame update
     void Start()
     {
-        _transition.SetBool("fade_end", false); 
         levelsUnlocked = PlayerPrefs.GetInt("levelsUnlocked", 1);
         for (int i = 0; i < buttons.Length; i++)
         {
@@ -54,16 +49,9 @@ public class levelmanager : MonoBehaviour
         //LevelPanels[currentPanel].SetActive(true);
     }
 
-    public void Transition()
-    {
-        SceneManager.LoadScene(levelIndexMain);
-    }
-
     public void LoadLevel(int levelIndex)
     {
-        levelIndexMain = levelIndex; 
-        MainPanel.SetActive(false);
-        _transition.SetBool("fade_start", true);      
+        SceneManager.LoadScene(levelIndex);   
     }
 
     public void LoadMenu()
