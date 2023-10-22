@@ -18,7 +18,10 @@ public class PauseMenu : MonoBehaviour
     void Start()
     {
         GameIsPaused = false;
-        Score = FindObjectOfType<Score>().gameObject;
+        if(Score == null)
+        {
+            Score = FindObjectOfType<Score>().gameObject;
+        }
         option = FindObjectOfType<settingmenu>().gameObject;
     }
 
@@ -53,7 +56,7 @@ public class PauseMenu : MonoBehaviour
             Time.timeScale = 0f;
             GameIsPaused = true;
             Score.SetActive(false);
-            Debug.LogError("Back Yo");
+            //Debug.LogError("Back Yo");
         }
     }
     public void LoadMenu()

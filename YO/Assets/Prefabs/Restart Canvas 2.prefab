@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 2389311637761771236}
   - component: {fileID: 2389311638047029451}
   - component: {fileID: 2389311637761771160}
-  - component: {fileID: 405037629811633462}
   m_Layer: 5
   m_Name: Restart Canvas 2
   m_TagString: Untagged
@@ -115,7 +114,7 @@ CanvasRenderer:
   m_CullTransparentMesh: 1
 --- !u!95 &2389311637761771160
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -128,28 +127,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &405037629811633462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2389311637761771237}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfbc08d04f9118c4bb043570260650cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isMenu: 0
-  isLevelS: 0
-  level: 0
-  go: {fileID: 2389311638753450799}
-  retry: {fileID: 2389311639685275369}
-  mainmenu: {fileID: 2389311639045000117}
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2389311638487943979
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,7 +281,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   test: 0
   pauseMenuUI: {fileID: 8010511905607158499}
-  pauseMenuUIPrefab: {fileID: 0}
   option: {fileID: 0}
   Score: {fileID: 0}
 --- !u!1 &2389311638753450793
@@ -782,7 +764,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2389311639183020796
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -795,10 +777,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8010511905607158499
 GameObject:
   m_ObjectHideFlags: 0

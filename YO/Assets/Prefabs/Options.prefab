@@ -5340,7 +5340,6 @@ GameObject:
   - component: {fileID: 6986483396998839865}
   - component: {fileID: 6986483396998839866}
   - component: {fileID: 6986483396998839867}
-  - component: {fileID: 467981515728209450}
   m_Layer: 5
   m_Name: Options
   m_TagString: Untagged
@@ -5454,32 +5453,12 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: b78a7f594005f784c8f3f9f1cebb6982, type: 2}
   reslutionDropdown: {fileID: 9221007165292500417}
   path: options
-  lang: {fileID: 6870830096665474722}
   Score: {fileID: 0}
-  h: {fileID: 0}
-  language: {fileID: 6870830096665474722}
   FPST: {fileID: 4488995083789233117}
   fsn: {fileID: 9221007164953154339}
   sRun: {fileID: 6906586400178886383}
   DMode: {fileID: 1474053395473176836}
   Qindex: {fileID: 9221007163733134618}
---- !u!114 &467981515728209450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6986483396998839844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6b5b01ca290f664c9d160d40d2612af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  h: {fileID: 0}
-  english: 
-  _tel: TELUGU
-  _eng: ENGLISH
-  langDrop: {fileID: 0}
 --- !u!1 &7117257822589365713
 GameObject:
   m_ObjectHideFlags: 0

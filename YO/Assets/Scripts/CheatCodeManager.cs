@@ -26,6 +26,11 @@ public class CheatCodeManager : MonoBehaviour
     public GameManager gm;
     public Restart rs;
 
+    void Start()
+    {
+        rs = FindObjectOfType<Restart>();
+        gm = FindObjectOfType<GameManager>();
+    }
 
     private bool CheckCheat(string _input)
     {

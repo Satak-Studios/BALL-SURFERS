@@ -8,14 +8,17 @@ public class GameManager : MonoBehaviour
 	public int level;
 	public LevelScript ls;
 
+	public Animator _transition;
 	public void Start()
     {
-		//level = PlayerPrefs.GetInt("levelsUnlocked");
+		_transition.SetBool("fade_end", true);
+		_transition.SetBool("fade_start", false);
 	}
 
 	public void CompleteLevel()
 	{
 		completeLevelUI.SetActive(true);
+		rs._disapper = true;
 		PlayerPrefs.SetInt("sdrn", 0);
 		rs.cl = true;
 	}
@@ -23,8 +26,7 @@ public class GameManager : MonoBehaviour
     public void Pass()
     {
 		PlayerPrefs.SetInt("sdrn", 0);
-		ls.Pass();
-		SceneManager.LoadScene("levelmanager");
+		ls.PassLevel();
 	}
     public void EndGame()
     {

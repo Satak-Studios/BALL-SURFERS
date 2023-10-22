@@ -980,7 +980,7 @@ MonoBehaviour:
     m_Bits: 4294967295
 --- !u!95 &1722817662236956086
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -993,10 +993,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1722817662236956087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1006,7 +1008,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1722817662236956080}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97373ec3afafe97408f4b1b4dc1c0e6c, type: 3}
+  m_Script: {fileID: 11500000, guid: 37bb72d1f7f30ff429c4747cb38a6e04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1722817662254135843
@@ -1257,7 +1259,6 @@ GameObject:
   - component: {fileID: 1722817662578336425}
   - component: {fileID: 1722817662578336430}
   - component: {fileID: 1722817662578336431}
-  - component: {fileID: 1722817662578336424}
   m_Layer: 5
   m_Name: Quit Text
   m_TagString: Untagged
@@ -1326,18 +1327,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: QUIT
---- !u!114 &1722817662578336424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1722817662578336426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97373ec3afafe97408f4b1b4dc1c0e6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1722817662734307769
 GameObject:
   m_ObjectHideFlags: 0
@@ -1746,7 +1735,6 @@ GameObject:
   - component: {fileID: 1722817662913923890}
   - component: {fileID: 1722817662913923891}
   - component: {fileID: 1722817662913923788}
-  - component: {fileID: 1722817662913923789}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -1883,18 +1871,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.4627451}
   m_EffectDistance: {x: 0, y: -2}
   m_UseGraphicAlpha: 1
---- !u!114 &1722817662913923789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1722817662913923791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97373ec3afafe97408f4b1b4dc1c0e6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1722817662952511811
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,6 +18,8 @@ public class playermovement : MonoBehaviour
     public GameObject[] playerPrefabs;
     public Transform sp;
 
+    public bool gameStarted = false;
+
     private void Start()
     {
         /*if (!isTestLevel)
@@ -60,10 +62,15 @@ public class playermovement : MonoBehaviour
     // Update is called once per frame
     public void FixedUpdate()
      {
-       // forwardForce = lg.fd;
-        // sidewaysForce = lg.sf;
+        if (gameStarted)
+        {
+            Movement();
+        }
+    }
 
-        // Add a forward force
+    public void Movement()
+    {
+                // Add a forward force
         rb.AddForce(0, 0, forwardForce * Time.deltaTime);
 
         //Controls for A & D
@@ -101,6 +108,7 @@ public class playermovement : MonoBehaviour
             Right();
         }
     }
+    
     public void Left()
     {
         rb.AddForce(-sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);

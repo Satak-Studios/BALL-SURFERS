@@ -10,19 +10,25 @@ public class levelmanager : MonoBehaviour
 {
     public GameObject Credits;
     public int levelsUnlocked;
+    int levelIndexMain = 1;
     public Button[] buttons;
-    public GameObject Nxetten;
+    public GameObject Next_btn;
+    public GameObject Back_btn;
 
-    int slPanel = 0;
+    public int slPanel = 0;
     public GameObject[] LevelPanels;
 
     public GameObject SaveWarn;
     public GameObject LoadWarn;
     public GameObject LoadError;
 
+    public Animator _transition;
+    public GameObject MainPanel;
+
     // Start is called before the first frame update
     void Start()
     {
+        _transition.SetBool("fade_end", false); 
         levelsUnlocked = PlayerPrefs.GetInt("levelsUnlocked", 1);
         for (int i = 0; i < buttons.Length; i++)
         {
@@ -32,11 +38,37 @@ public class levelmanager : MonoBehaviour
         {
             buttons[i].interactable = true;
         }
+
+        int currentPanel = levelsUnlocked/3;
+        if(currentPanel / 3 == Mathf.RoundToInt(currentPanel / 3))
+        {
+            slPanel = currentPanel-2;
+            NextPanel();
+        }else
+        {
+            slPanel = currentPanel-1;
+            NextPanel();
+        }
+        LevelPanels[0].SetActive(false);
+        //Debug.Log("Current Level Panel = " + currentPanel);
+        //LevelPanels[currentPanel].SetActive(true);
+    }
+
+    public void Transition()
+    {
+        SceneManager.LoadScene(levelIndexMain);
     }
 
     public void LoadLevel(int levelIndex)
     {
-        SceneManager.LoadScene(levelIndex);
+        levelIndexMain = levelIndex; 
+        MainPanel.SetActive(false);
+        _transition.SetBool("fade_start", true);      
+    }
+
+    public void LoadMenu()
+    {
+        SceneManager.LoadScene("Menu 1");
     }
 
     public void SavePlayerCheck()
@@ -90,26 +122,49 @@ public class levelmanager : MonoBehaviour
     private void Update()
     {
         PlayerPrefs.SetInt("levelsUnlocked", levelsUnlocked);
-        Start();
+        
+        //Start Begin
+        levelsUnlocked = PlayerPrefs.GetInt("levelsUnlocked", 1);
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].interactable = false;
+        }
+        for (int i = 0; i < levelsUnlocked; i++)
+        {
+            buttons[i].interactable = true;
+        }
+        //end
+
         if (levelsUnlocked == 10)
         {
             if (PlayerPrefs.HasKey("credits") == false)
             {
                 Credits.SetActive(true);
                 PlayerPrefs.SetString("credits", "credits");
-                Nxetten.SetActive(true);
+                Next_btn.SetActive(true);
                 Debug.Log("Showing Credits");
             }
 
             if (PlayerPrefs.HasKey("credits") == true)
             {
                 //Debug.Log("Doing Nothing");
-                Nxetten.SetActive(true);
+                Next_btn.SetActive(true);
             }
         }
-        else
+        else if(slPanel == 2)
         {
-            Nxetten.SetActive(false);
+            Next_btn.SetActive(false);
+        }else
+        {
+            Next_btn.SetActive(true);
+        }
+
+        if (slPanel == 0)
+        {
+            Back_btn.SetActive(false);
+        }else
+        {
+            Back_btn.SetActive(true);
         }
     }
 

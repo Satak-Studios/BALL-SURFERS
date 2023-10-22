@@ -6,15 +6,22 @@ using UnityEngine.UI;
 
 public class LevelScript : MonoBehaviour
 {
-    public void Pass()
+    public void PassLevel()
     {
         int currentLevel = SceneManager.GetActiveScene().buildIndex;
-
-        if(currentLevel >= PlayerPrefs.GetInt("levelsUnlocked"))
+        if (currentLevel == 6)
         {
-            PlayerPrefs.SetInt("levelsUnlocked", currentLevel + 1);
+            int cLevel = PlayerPrefs.GetInt("levelsUnlocked");
+            PlayerPrefs.SetInt("levelsUnlocked", cLevel + 1);
+        }else
+        {
+            if(currentLevel >= PlayerPrefs.GetInt("levelsUnlocked"))
+            {
+                PlayerPrefs.SetInt("levelsUnlocked", currentLevel + 1);
+            }
         }
         Debug.Log("LEVEL" + PlayerPrefs.GetInt("levelsUnlocked") + "UNLOCKED");
+        SceneManager.LoadScene("levelmanager");
     }
 
 }
