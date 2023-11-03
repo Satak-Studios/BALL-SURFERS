@@ -17,10 +17,6 @@ public class levelmanager : MonoBehaviour
     public int slPanel = 0;
     public GameObject[] LevelPanels;
 
-    public GameObject SaveWarn;
-    public GameObject LoadWarn;
-    public GameObject LoadError;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -34,19 +30,14 @@ public class levelmanager : MonoBehaviour
             buttons[i].interactable = true;
         }
 
-        int currentPanel = levelsUnlocked/3;
-        if(currentPanel / 3 == Mathf.RoundToInt(currentPanel / 3))
+        int currentPanel = (levelsUnlocked - 1) / 3;
+        currentPanel = Mathf.Clamp(currentPanel, 0, LevelPanels.Length - 1);
+
+        slPanel = currentPanel;
+        for (int i = 0; i < LevelPanels.Length; i++)
         {
-            slPanel = currentPanel-2;
-            NextPanel();
-        }else
-        {
-            slPanel = currentPanel-1;
-            NextPanel();
+            LevelPanels[i].SetActive(i == currentPanel);
         }
-        LevelPanels[0].SetActive(false);
-        //Debug.Log("Current Level Panel = " + currentPanel);
-        //LevelPanels[currentPanel].SetActive(true);
     }
 
     public void LoadLevel(int levelIndex)
@@ -57,54 +48,6 @@ public class levelmanager : MonoBehaviour
     public void LoadMenu()
     {
         SceneManager.LoadScene("Menu 1");
-    }
-
-    public void SavePlayerCheck()
-    {
-        string path = Application.persistentDataPath + "/Player.satak";
-        if (File.Exists(path) == false)
-        {
-            SavePlayer();
-        }
-        else
-        {
-            SaveWarn.SetActive(true);
-        }
-    }
-
-    public void SavePlayer()
-    {
-        ResumeSystem.SaveFile(this);
-    }
-
-    public void LoadPlayerCheck()
-    {
-        string path = Application.persistentDataPath + "/Player.satak";
-        if (File.Exists(path) == true)
-        {
-            LoadWarn.SetActive(true);
-        }
-        else
-        {
-            LoadError.SetActive(true);
-        }
-    }
-    public void LoadPlayer()
-    {
-        string path = Application.persistentDataPath + "/Player.satak";
-        if (File.Exists(path) == true)
-        {
-            ResumeData data = ResumeSystem.LoadFile();
-
-            levelsUnlocked = data.Level;
-            //float HighScore = data.HighScore;
-            PlayerPrefs.SetFloat("hiScore", data.HighScore);
-            PlayerPrefs.SetString("PlayerName", data.PlayerName);
-        }
-        else
-        {
-            LoadWarn.SetActive(true);
-        }
     }
 
     private void Update()
@@ -123,59 +66,60 @@ public class levelmanager : MonoBehaviour
         }
         //end
 
-        if (levelsUnlocked == 10)
+        if (levelsUnlocked >= 10)
         {
             if (PlayerPrefs.HasKey("credits") == false)
             {
                 Credits.SetActive(true);
                 PlayerPrefs.SetString("credits", "credits");
-                Next_btn.SetActive(true);
-                Debug.Log("Showing Credits");
-            }
-
-            if (PlayerPrefs.HasKey("credits") == true)
+            }else
             {
-                //Debug.Log("Doing Nothing");
                 Next_btn.SetActive(true);
             }
         }
-        else if(slPanel == 2)
+        else
         {
-            Next_btn.SetActive(false);
-        }else
-        {
-            Next_btn.SetActive(true);
+            switch (slPanel)
+            {
+                case 2 : Next_btn.SetActive(false);break;
+                case 34: Next_btn.SetActive(false);break; 
+                default: Next_btn.SetActive(true);break;
+            }
         }
 
-        if (slPanel == 0)
+        if (slPanel <= 0)
         {
             Back_btn.SetActive(false);
+            slPanel = 0;
         }else
         {
             Back_btn.SetActive(true);
         }
     }
 
-    public void NextPanel()
+   public void NextPanel()
     {
-        
-        //int allLevelPanel = LevelPanels.Length;
-        LevelPanels[slPanel].SetActive(false);
-        slPanel += 1;
-        //slPanel = (slPanel + 1) & LevelPanels.Length;
+        if (slPanel < LevelPanels.Length)
+        {
+            LevelPanels[slPanel].SetActive(false);
+            slPanel++;
+            LevelPanels[slPanel].SetActive(true);
+        }
+    }
+
+    public void GoToPanel(int index)
+    {
+        slPanel = index;
         LevelPanels[slPanel].SetActive(true);
-        Debug.Log("Your Panel is " + slPanel);
     }
 
     public void PreviousPanel()
     {
-        //int allLevelPanel = LevelPanels.Length;
-        LevelPanels[slPanel].SetActive(false);
-        slPanel --;
-        if (slPanel < 0)
+        if (slPanel > 0)
         {
-            slPanel += LevelPanels.Length;
+            LevelPanels[slPanel].SetActive(false);
+            slPanel--;
+            LevelPanels[slPanel].SetActive(true);
         }
-        LevelPanels[slPanel].SetActive(true);
     }
 }

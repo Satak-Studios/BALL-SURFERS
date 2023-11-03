@@ -10,28 +10,7 @@ using Photon.Pun.UtilityScripts;
 using System.IO;
 
 public class Intro : MonoBehaviour
-{
-    /*
-     public float videoTime;
-     public int MenuSceneIndex;
-
-     // Start is called before the first frame update
-     void Start()
-     {
-        if(isIntro == true)
-         Invoke("waitforintro", videoTime);
-     }
-
-     void waitforintro()
-     {
-        if (isIntro == true)
-        {
-            SceneManager.LoadScene(MenuSceneIndex);
-            Debug.Log("Loading Menu");
-        }
-     }*/
-    
-
+{ 
     public GameObject EndCanvas;
     public bool isIntro;
 

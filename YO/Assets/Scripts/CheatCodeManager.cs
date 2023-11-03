@@ -92,31 +92,50 @@ public class CheatCodeManager : MonoBehaviour
     ///////////CHEATS CODESSSSSS 
     public void cheating()
     {
-        Debug.Log("You Are Really A Good Cheater");
+        FindObjectOfType<Achiever>().Notify("Cheat Activated", "Cheating?");
+        if(FindObjectOfType<Achiever>().achIndex[3] == 0)
+        {
+            FindObjectOfType<Achiever>().AchievementUnlocked(3);
+        }
     }
     public void levelcomplete()
     {
         gm.CompleteLevel();
-        Debug.Log("Level Completed Cheat Activated");
+        FindObjectOfType<Achiever>().Notify("Cheat Activated", "Level Complete");
+        if(FindObjectOfType<Achiever>().achIndex[3] == 0)
+        {
+            FindObjectOfType<Achiever>().AchievementUnlocked(3);
+        }
     }
     public void slowmo()
     {
         Time.timeScale = 0.5f;
-        Debug.Log("Slow Motion Is On");
+        FindObjectOfType<Achiever>().Notify("Cheat Activated", "Slow Mo");
+        if(FindObjectOfType<Achiever>().achIndex[3] == 0)
+        {
+            FindObjectOfType<Achiever>().AchievementUnlocked(3);
+        }
     }
     public void GodMode()
     {
         rs.isGodMode = true;
-        Debug.Log("God Mode Is Activated");
+        FindObjectOfType<Achiever>().Notify("Cheat Activated", "OP Mode");
+        if(FindObjectOfType<Achiever>().achIndex[3] == 0)
+        {
+            FindObjectOfType<Achiever>().AchievementUnlocked(3);
+        }
     }
     public void normal()
     {
         Time.timeScale = 1f;
-        Debug.Log("Normal");
+        if(FindObjectOfType<Achiever>().achIndex[3] == 0)
+        {
+            FindObjectOfType<Achiever>().AchievementUnlocked(3);
+        }
     }
     public void Pause()
     {
-      PauseMenu.GameIsPaused = true;
+        PauseMenu.GameIsPaused = true;
     }
 
 }

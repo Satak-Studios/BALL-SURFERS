@@ -14,14 +14,12 @@ public class LevelGenerator : MonoBehaviour
         if (PhotonNetwork.InRoom== false)
         {
             Instantiate(objects[rand], transform.position, Quaternion.identity);
-            //Debug.Log("Offline mode enabled");
         }
 
         if (PhotonNetwork.InRoom == true)
         {
             if(PhotonNetwork.IsMasterClient == true)
             PhotonNetwork.Instantiate(objects[rand].name, transform.position, Quaternion.identity);
-            //Debug.Log("Online mode enabled");
         }
     }
 }

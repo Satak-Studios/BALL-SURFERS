@@ -22,23 +22,10 @@ public class playermovement : MonoBehaviour
 
     private void Start()
     {
-        /*if (!isTestLevel)
-        {
-            forwardForce = PlayerPrefs.GetFloat("ff");
-            sidewaysForce = PlayerPrefs.GetFloat("sf");
-            Debug.Log("ff = " + forwardForce + " ," + "sf = " + sidewaysForce);
-        }
-        else
-        {
-            forwardForce = 300f;
-            sidewaysForce = 35f;
-        }*/
-
         if (PlayerPrefs.HasKey("ff") == true)
         {
             forwardForce = PlayerPrefs.GetFloat("ff");
             sidewaysForce = PlayerPrefs.GetFloat("sf");
-            Debug.Log("ff = " + forwardForce + " ," + "sf = " + sidewaysForce);
         }
         else
         {
@@ -50,7 +37,6 @@ public class playermovement : MonoBehaviour
         {
             forwardForce = PlayerPrefs.GetFloat("ff");
             sidewaysForce = PlayerPrefs.GetFloat("sf");
-            Debug.Log("ff = " + forwardForce + " ," + "sf = " + sidewaysForce);
         }
         else
         {
@@ -70,7 +56,7 @@ public class playermovement : MonoBehaviour
 
     public void Movement()
     {
-                // Add a forward force
+        // Add a forward force
         rb.AddForce(0, 0, forwardForce * Time.deltaTime);
 
         //Controls for A & D
@@ -98,13 +84,11 @@ public class playermovement : MonoBehaviour
 
         if (isgoingleft)
         {
-            Debug.Log("Is Going Left");
             Left();
         }
 
         if (isgoingright)
         {
-            Debug.Log("Is Going Right");
             Right();
         }
     }
@@ -133,13 +117,5 @@ public class playermovement : MonoBehaviour
     public void pointerUpright()
     {
         isgoingright = false;
-    }
-
-    public void SpawnOrg()
-    {
-        int randPlayer = Random.Range(0, playerPrefabs.Length);
-        GameObject playertoSpawn = playerPrefabs[randPlayer];
-        Instantiate(playertoSpawn , sp);
-        Debug.Log("Spawned Player = " + playertoSpawn.name);
     }
 }

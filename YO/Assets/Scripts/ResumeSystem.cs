@@ -16,7 +16,6 @@ public static class ResumeSystem// : MonoBehaviour
 
         formatter.Serialize(stream, data);
         stream.Close();
-        Debug.Log("Game Saved");
 
     }
 
@@ -28,8 +27,6 @@ public static class ResumeSystem// : MonoBehaviour
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
 
-            Debug.Log("Game Loaded");
-
             ResumeData data = formatter.Deserialize(stream) as ResumeData;
             stream.Close();
 
@@ -38,7 +35,6 @@ public static class ResumeSystem// : MonoBehaviour
         }
         else
         {
-            Debug.LogError("File not found in " + path);
             return null;
         }
  

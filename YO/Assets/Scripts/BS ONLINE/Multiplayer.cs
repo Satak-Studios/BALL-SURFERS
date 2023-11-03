@@ -25,7 +25,6 @@ public class Multiplayer : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         SceneManager.LoadScene(Lobby);
-        Debug.Log("Connected To Master");
     }
 
     public void CreateMenu()

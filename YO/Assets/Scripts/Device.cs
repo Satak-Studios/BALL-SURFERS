@@ -10,7 +10,6 @@ public class Device : MonoBehaviour
     public bool isLevel1;
 
     public bool isHavingKey;
-    //This is the Text for the Label at the top of the screen
     public string m_DeviceType;
     public string m_DeviceOSType;
     public GameObject dialogpc;
@@ -25,31 +24,23 @@ public class Device : MonoBehaviour
         {
             dialogmobile.SetActive(false);
             dialogpc.SetActive(false);
-            Player.SetActive(true);
+            if (!(Player == null))
+            {
+                Player.SetActive(true);
+            }
         }
 
-        //Output the device type to the console window
-        //Debug.Log("Device type : " + m_DeviceType);
-
-        //Check if the device running this is a console
         if (SystemInfo.deviceType == DeviceType.Console)
         {
-            //Change the text of the label
             m_DeviceType = "Console";
         }
 
-        //Check if the device running this is a desktop
-        if (SystemInfo.deviceType == DeviceType.Desktop)// && PlayerPrefs.HasKey("key") == false)
+        if (SystemInfo.deviceType == DeviceType.Desktop)
         {
             if (isLevel1 == true)
             {
                 if (PlayerPrefs.HasKey("tutuu") == false)
                 {
-                    /* dialogpc.SetActive(true);
-                     dialogmobile.SetActive(false);
-                     m_DeviceType = "Desktop";
-                     controls.SetActive(false);
-                    */
                     dialogpc.SetActive(true);
                     dialogmobile.SetActive(false);
                     m_DeviceType = "Desktop";
@@ -61,7 +52,6 @@ public class Device : MonoBehaviour
                 {
                     dialogpc.SetActive(false);
                     dialogmobile.SetActive(false);
-                    //m_DeviceType = "Desktop";
                     controls.SetActive(false);
                     Player.SetActive(true);
                     isHavingKey = true;
@@ -72,21 +62,14 @@ public class Device : MonoBehaviour
                 {
                     dialogpc.SetActive(false);
                     dialogmobile.SetActive(false);
-                    //m_DeviceType = "Desktop";
                     controls.SetActive(false);
                     Player.SetActive(true);
-                    // Debug.Log("Destop");
                 }
             
         }
-        //Check if the device running this is a handheld
-        if (SystemInfo.deviceType == DeviceType.Handheld)// && PlayerPrefs.HasKey("key") == false)
+
+        if (SystemInfo.deviceType == DeviceType.Handheld)
         {
-            /*dialogpc.SetActive(false);
-            dialogmobile.SetActive(true);
-            m_DeviceType = "Handheld";
-            controls.SetActive(true);*/
-            //Debug.Log("Mobile");
             if (isLevel1 == true)
             {
                 if (PlayerPrefs.HasKey("tutuu") == false)
@@ -103,7 +86,6 @@ public class Device : MonoBehaviour
                 {
                     dialogpc.SetActive(false);
                     dialogmobile.SetActive(false);
-                    //m_DeviceType = "HandHeld";
                     controls.SetActive(true);
                     Player.SetActive(true);
                     isHavingKey = true;
@@ -113,14 +95,11 @@ public class Device : MonoBehaviour
             {
                 dialogpc.SetActive(false);
                 dialogmobile.SetActive(false);
-                //m_DeviceType = "Desktop";
                 controls.SetActive(true);
                 Player.SetActive(true);
-                // Debug.Log("Destop");
             }
         }
 
-        //Check if the device running this is unknown
         if (SystemInfo.deviceType == DeviceType.Unknown)
         {
             m_DeviceType = "Unknown";

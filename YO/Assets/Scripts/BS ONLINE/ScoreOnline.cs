@@ -69,7 +69,7 @@ public class ScoreOnline  : MonoBehaviourPunCallbacks
         }
         else
         {
-            lManager.ThrowError("0x1234", "Make sure that you have entered Room Name");
+            FindObjectOfType<ErrorThrower>().ThrowError("0x1234", "Make sure that you have entered Room Name", "Error");
             Host();
         }
     }
@@ -78,7 +78,6 @@ public class ScoreOnline  : MonoBehaviourPunCallbacks
     {
         if (testing)
         {
-            Debug.Log("Connected To Master");
             PhotonNetwork.JoinLobby();
             Invoke("CreateRoomTest", 2f);
         }
@@ -94,14 +93,6 @@ public class ScoreOnline  : MonoBehaviourPunCallbacks
         SatakExtensions.SetLives(PhotonNetwork.LocalPlayer, life);
         cRoomPanel.SetActive(false);
     }
-
-    /*public void RandName()
-    {
-        int rand = Random.Range(0, names.Length);
-        int Rand = Random.Range(0, 9999);
-        NameField.text = names[rand] + Rand.ToString();
-        SaveName();
-    }*/
 
     private void Update()
     {
@@ -172,10 +163,6 @@ public class ScoreOnline  : MonoBehaviourPunCallbacks
             life = 3;
         }
 #endregion
-        /*if (!PlayerPrefs.HasKey("PlayerName"))
-        {
-            RandName();
-        }*/
 
         if (PhotonNetwork.InRoom == true)
         {
@@ -193,11 +180,6 @@ public class ScoreOnline  : MonoBehaviourPunCallbacks
         PhotonNetwork.NickName = NameField.text;
     }
 
-    /*void Start()
-    {
-        NameField.text = PlayerPrefs.GetString("PlayerName");
-    }*/
-
     public void BackToHome()
     {
         PhotonNetwork.Disconnect();
@@ -208,12 +190,12 @@ public class ScoreOnline  : MonoBehaviourPunCallbacks
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        lManager.ThrowError(returnCode.ToString(), message);
+        FindObjectOfType<ErrorThrower>().ThrowError(returnCode.ToString(), message, "Error");
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        lManager.ThrowError(returnCode.ToString(), message);
+        FindObjectOfType<ErrorThrower>().ThrowError(returnCode.ToString(), message, "Error");
     }
     #endregion
 }

@@ -35,7 +35,6 @@ public class player : MonoBehaviour
         if (Score > PlayerPrefs.GetFloat("hiScore", 0))
         {
             PlayerPrefs.SetFloat("hiScore", Score);
-            Debug.Log("HighScore =  " + HighScoreFloat);
         }
         SaveHScore();
     }
@@ -44,7 +43,6 @@ public class player : MonoBehaviour
     {
         PlayerPrefs.DeleteKey("hiScore");
         ScoreExtensions.SetScore(PhotonNetwork.LocalPlayer, 0);
-        Debug.Log("HighScore Deleted");
     }
 
     public void SaveHScore()

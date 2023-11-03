@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -7,21 +5,29 @@ using Photon.Pun;
 
 public class MainMenu : MonoBehaviour
 {
-    /*public GameObject hi;    
-
-    public Text name;*/
     public Text version;
+    public GameObject Imp;
 
     public void Start()
     {
         string _version = Application.version;
         if (PlayerPrefs.HasKey("sk"))
         {
-            version.text = "." + _version.Substring(1) + " (Sathvik Edition)";
+            version.text =  _version.Substring(1) + " (Sathvik Edition)"; //Version = 2.X.XX
         }
         else
         {
-            version.text = "." + _version.Substring(1);
+            version.text = _version.Substring(1);//Version = 2.X.XX
+        }
+
+        if (!PlayerPrefs.HasKey("v2.0"))
+        {
+            string achievementKey = "Achievement_1";
+            if (PlayerPrefs.GetInt(achievementKey) == 0)
+			{
+				FindObjectOfType<Achiever>().AchievementUnlocked(1);
+			}
+            Play2Footage();
         }
     }
 
@@ -44,12 +50,20 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
-    
-    /*public void Update()
+
+    public void Play2Footage()
     {
-        if (PlayerPrefs.HasKey("PlayerName"))
-           name.text = PlayerPrefs.GetString("PlayerName");
-        else
-           hi.SetActive(true);
-    }*/
+        Debug.Log("Play Footage!!!!!!!!!!!!!!!!");
+    }
+
+    void Update()
+    {
+        if (PlayerPrefs.GetInt("ImpMark") == 1)
+        {
+            Imp.SetActive(true);
+        }else
+        {
+            Imp.SetActive(false);
+        }
+    }
 }

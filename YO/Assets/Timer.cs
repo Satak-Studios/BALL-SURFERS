@@ -6,13 +6,15 @@ using Satak.Utilities;
 
 public class Timer : MonoBehaviour
 {
-    bool Time_ = false;
+    public bool Time_ = false;
     float currentTime = 0f;
     [SerializeField] Text countDownText;
 
-    public void Start()
-    {
+    private static Timer instance;
 
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
@@ -23,7 +25,7 @@ public class Timer : MonoBehaviour
             currentTime = currentTime + Time.deltaTime;
         }
         TimeSpan time = TimeSpan.FromSeconds(currentTime);
-        countDownText.text = "Time Taken: " + time.ToString(@"mm\:ss\:fff");
+        countDownText.text = time.ToString(@"mm\:ss\:fff");
     }
 
     public void StartTimer()

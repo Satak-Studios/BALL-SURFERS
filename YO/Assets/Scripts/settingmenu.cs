@@ -61,7 +61,7 @@ public class settingmenu : MonoBehaviour
         //Getting Value
         bolume = PlayerPrefs.GetFloat("volume");
         res = PlayerPrefs.GetInt("index");
-        /*qIndex*/ Qindex.value = PlayerPrefs.GetInt("qIndex");
+        Qindex.value = PlayerPrefs.GetInt("qIndex");
         FPS = PlayerPrefs.GetInt("fps");
         fScreen = PlayerPrefs.GetInt("fScreen");
         DMode.value = PlayerPrefs.GetInt("dmode");
@@ -129,74 +129,40 @@ public class settingmenu : MonoBehaviour
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
-        /*if (fScreen == 0)
-        {
-            isFullscreen = false;
-        }
-        if (fScreen == 1)
-        {
-            isFullscreen = true;
-        }*/
     }
     
     public void SetFPS(bool isFPS_ON)
     {
-       // Debug.Log("FPS is " + isFPS_ON);
         if (isFPS_ON == true)
         {
             FPS = 1;
-            Debug.Log("FPS is " + isFPS_ON + " " + FPS);
             PlayerPrefs.SetInt("fps", FPS);
         }
         else
         {
             FPS = 0;
-            Debug.Log("FPS is " + isFPS_ON + " " + FPS);
             PlayerPrefs.SetInt("fps", FPS);
         }
-
-        /*if (FPS == 1)
-        {
-            isFPS_ON = true;
-        }
-        if (FPS == 0)
-        {
-            isFPS_ON = false;
-        }*/
     }
 
     //Set Speedrun
     public void SetSpeedRun()
     {
-        // Debug.Log("FPS is " + isFPS_ON);
         if (sRun.isOn == true)
         {
             Srun = 1;
-            Debug.Log("Srun " + sRun.isOn + " " + Srun);
             PlayerPrefs.SetInt("sdrn", Srun);
         }
         if (sRun.isOn == false)
         {
             Srun = 0;
-            Debug.Log("SRUN is " + sRun.isOn + " " + Srun);
             PlayerPrefs.SetInt("sdrn", Srun);
             PlayerPrefs.DeleteKey("cTimer");
         }
-
-        /*if (FPS == 1)
-        {
-            isFPS_ON = true;
-        }
-        if (FPS == 0)
-        {
-            isFPS_ON = false;
-        }*/
     }
 
     private void Update()
     {
-        //pm = FindObjectOfType<PauseMenu>();
-
         //FPS
         if (FPS == 1)
         {
@@ -213,7 +179,6 @@ public class settingmenu : MonoBehaviour
 
     public void SetDMode()
     {
-        Debug.Log("DMode = " + DMode.value);
         if (DMode.value == 0)
         {
             Normal();

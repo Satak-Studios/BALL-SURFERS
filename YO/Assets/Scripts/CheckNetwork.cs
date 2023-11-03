@@ -12,12 +12,11 @@ public class CheckNetwork : MonoBehaviour
     {
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
-            Debug.Log("Network Available");
             noInternet.SetActive(false);
         }
         else
         {
-            Debug.Log("No Network Available");
+            FindObjectOfType<Achiever>().Notify("Error", "No Internet");
             noInternet.SetActive(true);
         }
     }

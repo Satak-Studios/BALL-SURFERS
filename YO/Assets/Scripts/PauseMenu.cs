@@ -22,7 +22,10 @@ public class PauseMenu : MonoBehaviour
         {
             Score = FindObjectOfType<Score>().gameObject;
         }
-        option = FindObjectOfType<settingmenu>().gameObject;
+        if (option == null)
+        {
+            option = FindObjectOfType<settingmenu>().gameObject;
+        }
     }
 
     // Update is called once per frame
@@ -56,7 +59,6 @@ public class PauseMenu : MonoBehaviour
             Time.timeScale = 0f;
             GameIsPaused = true;
             Score.SetActive(false);
-            //Debug.LogError("Back Yo");
         }
     }
     public void LoadMenu()

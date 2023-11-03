@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 using Satak.Utilities;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+using Utilities.Debug;
 
 public class LobbyManager1 : MonoBehaviourPunCallbacks
 {
@@ -35,14 +37,12 @@ public class LobbyManager1 : MonoBehaviourPunCallbacks
     public GameObject HScorePanel;
     public GameObject LoadingCanvas;
 
-    //Errors
-    public GameObject errorObj;
-    public Text errorText;
-    public Text errorCode;
-
     //Chat
     public GameObject chatObj;
     public Transform chatPos;
+
+    //Player Obj PhotonView
+    public PhotonView PV;
 
     // Start is called before the first frame update
     private void Start()
@@ -189,19 +189,15 @@ public class LobbyManager1 : MonoBehaviourPunCallbacks
             BackButton.SetActive(true);
             //lobbyPanel.SetActive(true);
         }
-
-        if (!PhotonNetwork.IsMasterClient && SatakExtensions.GetGameStatus(PhotonNetwork.LocalPlayer) == 1)
-        {
-            OnClickStartButton();
-            Debug.Log("Message Recieved that we have to start game");
-        }
     }
 
     public void OnClickStartButton()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            SatakExtensions.SetGameStatus(PhotonNetwork.LocalPlayer, 1);
+            Hashtable hash = new Hashtable();
+            hash.Add("gameStatus", 1);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
         }
         
         int gameMode = SatakExtensions.GetGM(PhotonNetwork.LocalPlayer);
@@ -216,6 +212,31 @@ public class LobbyManager1 : MonoBehaviourPunCallbacks
         if (gameMode == 3)
         {
             LoadCustom();
+        }
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+        PV = FindObjectOfType<PhotonView>();
+        if (!PV.IsMine && targetPlayer == PV.Owner)
+        {
+            int gameStatus = (int)changedProps["gameStatus"];
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                int gameMode = SatakExtensions.GetGM(PhotonNetwork.LocalPlayer);
+                if (gameMode == 1)
+                {
+                    LoadDefault();
+                }
+                if (gameMode == 2)
+                {
+                    LoadComp();
+                }
+                if (gameMode == 3)
+                {
+                    LoadCustom();
+                }
+            }
         }
     }
 
@@ -250,31 +271,24 @@ public class LobbyManager1 : MonoBehaviourPunCallbacks
 
     #region Displaying Errors
 
-    public void ThrowError(string returnCode, string message)
-    {
-        errorObj.SetActive(true);
-        errorCode.text = returnCode.ToString();
-        errorText.text = message;
-    }
-
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        ThrowError(returnCode.ToString(), message);
+        FindObjectOfType<ErrorThrower>().ThrowError(returnCode.ToString(), message, "Error");
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        ThrowError(returnCode.ToString(), message);
+        FindObjectOfType<ErrorThrower>().ThrowError(returnCode.ToString(), message, "Error");
     }
 
     public override void OnErrorInfo(ErrorInfo errorInfo)
     {
-        ThrowError("0x0000", errorInfo.ToString());
+        FindObjectOfType<ErrorThrower>().ThrowError("0x0000", errorInfo.ToString(), "Error");
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        ThrowError("0x4231", "Disconnected, Make sure you have proper internet connection.");
+        FindObjectOfType<ErrorThrower>().ThrowError("0x4231", "Disconnected, Make sure you have proper internet connection.", "Error");
     }
     #endregion
 }

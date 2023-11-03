@@ -9,7 +9,10 @@ public class Score : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+      if (player == null)
+      {
+        player = FindObjectOfType<playermovement>().transform;
+      }
       scoreText.text = player.position.z.ToString("0");
-
     }
 }

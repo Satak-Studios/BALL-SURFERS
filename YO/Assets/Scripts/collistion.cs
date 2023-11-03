@@ -12,9 +12,7 @@ public class collistion : MonoBehaviour
     {
         if (collisionInfo.collider.tag == "Obsticle")
         {
-            rs.EndGames();
-            FindObjectOfType<Restart>().EndGames();
-           
+            FindObjectOfType<Restart>().EndGames();          
         }
     }
         

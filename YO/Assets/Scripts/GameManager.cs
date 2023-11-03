@@ -29,4 +29,23 @@ public class GameManager : MonoBehaviour
 	{
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
+
+	void Update()
+	{
+		if (SceneManager.GetActiveScene().buildIndex == 7)
+		{
+			if (FindObjectOfType<Achiever>().achIndex[5] == 0)
+			{
+				FindObjectOfType<Achiever>().AchievementUnlocked(5);
+			}
+		}
+
+		if (SceneManager.GetActiveScene().buildIndex == 8)
+		{
+			if (FindObjectOfType<Achiever>().achIndex[6] == 0)
+			{
+				FindObjectOfType<Achiever>().AchievementUnlocked(6);
+			}
+		}
+	}
 }

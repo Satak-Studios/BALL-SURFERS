@@ -40,7 +40,7 @@ using Utilities;
         }
         else
         {
-            Debug.Log("PV is Mine");
+
         }
     }
 
@@ -103,13 +103,11 @@ using Utilities;
 
         if (isgoingleft)
         {
-            Debug.Log("Is Going Left");
             Left();
         }
 
         if (isgoingright)
         {
-            Debug.Log("Is Going Right");
             Right();
         }
     }

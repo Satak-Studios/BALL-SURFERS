@@ -20,19 +20,15 @@ namespace UnityStandardAssets.Utility
         {
             
             m_FpsNextPeriod = Time.realtimeSinceStartup + fpsMeasurePeriod;
-            //m_Text = GetComponent<Text>();
         }
 
 
         private void Update()
         {
-            //Debug.Log("FPS Text = " + PlayerPrefs.GetInt("fps"));
-
             //FPS ON or OFF
             if (PlayerPrefs.GetInt("fps") == 1)
             {
                 Text_Obj.SetActive(true);
-                //Debug.Log("FPS Text = " + PlayerPrefs.GetInt("fps"));
             }
 
             if (PlayerPrefs.GetInt("fps") == 0)

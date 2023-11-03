@@ -41,7 +41,6 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         Transform Point = spawnPoints[rand];
         GameObject playertoSpawn = playerPrefabs[randPlayer];
         PhotonNetwork.Instantiate(playertoSpawn.name, Point.position, Quaternion.identity);
-        Debug.Log("Spawned Player = " + playertoSpawn.name);
     }
 
 
@@ -59,6 +58,10 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
             Destroy(pso);
         }
        SpawnOrg();
+       if (FindObjectOfType<Achiever>().achIndex[2] == 0)
+		{
+			FindObjectOfType<Achiever>().AchievementUnlocked(2);
+		}
     }
 
     public void Update()

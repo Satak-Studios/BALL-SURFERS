@@ -13,14 +13,19 @@ public class LevelScript : MonoBehaviour
         {
             int cLevel = PlayerPrefs.GetInt("levelsUnlocked");
             PlayerPrefs.SetInt("levelsUnlocked", cLevel + 1);
-        }else
+        }
+        if (currentLevel < 6)
         {
             if(currentLevel >= PlayerPrefs.GetInt("levelsUnlocked"))
             {
                 PlayerPrefs.SetInt("levelsUnlocked", currentLevel + 1);
             }
         }
-        Debug.Log("LEVEL" + PlayerPrefs.GetInt("levelsUnlocked") + "UNLOCKED");
+
+        if (currentLevel > 6)
+        {
+            //nothing :)
+        }
         SceneManager.LoadScene("levelmanager");
     }
 

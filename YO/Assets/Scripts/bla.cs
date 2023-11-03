@@ -40,15 +40,13 @@ namespace Photonyo.movement
             {
                 FindObjectOfType<Restart>().EndGames();
             }
-          if (isgoingleft)
-          {
-                Debug.Log("Is Going Left");
+            if (isgoingleft)
+            {
                 left();
-          }
+            }
 
             if (isgoingright)
             {
-                Debug.Log("Is Going Right");
                 rightt();
             }
         }

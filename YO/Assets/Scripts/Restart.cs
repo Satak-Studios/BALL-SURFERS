@@ -20,16 +20,8 @@ public class Restart : MonoBehaviour
 	public ScoreOnline sco;
 
 	public bool cl = false;
-        public bool isGodMode = false;
-        public playermovement movement;
-
-	public void restartGame()
-	{
-		const string Message = "RESTART";
-		Debug.Log(Message);
-		Invoke("Restart", restartDelay);
-	}
-
+    public bool isGodMode = false;
+    public playermovement movement;
 
     private void Start()
     {
@@ -53,7 +45,6 @@ public class Restart : MonoBehaviour
 				if (gameHasEnded == false)
 				{
 					gameHasEnded = true;
-					//Debug.Log("GAME OVER");
 					_disapper = true;
 
 					Time.timeScale = 0.5f;
@@ -61,7 +52,8 @@ public class Restart : MonoBehaviour
 					Restartmenu.SetActive(true);
 					PlayerPrefs.SetInt("sdrn", 0);
 					movement.enabled = false;
-
+					int band = PlayerPrefs.GetInt("band", 0) + 1;
+					PlayerPrefs.SetInt("band", band);
 
 
 
@@ -70,19 +62,14 @@ public class Restart : MonoBehaviour
 					if (gameHasEnded == true)
 					{
 						rscreen = true;
-						//Debug.Log("Displayed");
 						Restartmenu.SetActive(true);
 					}
 				}
             }
-            else
-            {
-            	//Debug.Log("You GodMode Cheater!!!!!");
-            }
         }
         else
         {
-	    	//Debug.Log("You Are in godmode because you cl");
+
         }
 	}
 	public void Update()
@@ -100,7 +87,6 @@ public class Restart : MonoBehaviour
                 float y = 1f;
                 float z = pm.position.z;
                 pm.position = new Vector3(x, y, z);
-                //Debug.Log("You GodMode Cheater!!!!!");
             }
 		}
 

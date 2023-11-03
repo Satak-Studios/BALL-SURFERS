@@ -72,12 +72,10 @@ public class CompManager : MonoBehaviourPunCallbacks
                     timerText.text = Mathf.RoundToInt(currentTime).ToString();
                 }            
             }
-            //Debug.Log("You are MasterOfThisRoom!");
         }
         if (!PhotonNetwork.IsMasterClient && (SatakExtensions.GetGameStatus(myPlayer.PV.Owner) == 1))
         {
             int actTime = SatakExtensions.GetCountDownTime(myPlayer.PV.Owner);
-            //int actTime = Mathf.RoundToInt(currentTime);
             if (actTime <= 0f)
             {
                 gameStarted = true;
@@ -85,7 +83,6 @@ public class CompManager : MonoBehaviourPunCallbacks
             else
             {
                 gameStarted = false;
-                Debug.Log("CountDown Time = " + SatakExtensions.GetCountDownTime(myPlayer.PV.Owner));
                 timerText.text = actTime.ToString();
             }
         }
@@ -160,7 +157,6 @@ public class CompManager : MonoBehaviourPunCallbacks
             if (!_GodMod)
             {
                 gameHasEnded = true;
-                Debug.Log("GAME OVER");
                 Time.timeScale = 1f;   
 
                 ReSpawnPlayer();
@@ -169,7 +165,7 @@ public class CompManager : MonoBehaviourPunCallbacks
             }
             else
             {
-                Debug.Log("Entered God Mode!");
+                
             }
         }
     }
@@ -198,7 +194,6 @@ public class CompManager : MonoBehaviourPunCallbacks
             _ => "You Noob",
         };
         myPlayer.Magic = true;
-        Debug.LogError(myPlayer.PV.Owner.NickName + " Has Achieved " + PlayerPosition.ToString() + " Postion");
     }
 
     public void GodMode(){

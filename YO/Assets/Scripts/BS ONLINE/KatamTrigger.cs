@@ -35,24 +35,20 @@ public class KatamTrigger : MonoBehaviour
         {
             PhotonNetwork.Destroy(PV);
             Get.Hearts += 1;
-            Debug.Log("1 Heart Added");
         }
         if (Get.Hearts == 1)
         {
             PhotonNetwork.Destroy(PV);
             Get.Hearts += 1;
-            Debug.Log("1 Heart Added");
         }
 
         if (Get.Hearts == 0)
         {
             Get.Hearts = 0;
-            Debug.Log("0 Heart Added");
         }
         if (Get.Hearts == 3)
         {
             Get.Hearts = 3;
-            Debug.Log("0 Heart Added");
         }
     }
 

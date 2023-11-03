@@ -33,7 +33,6 @@ public class RestartOnline : MonoBehaviour
             if (gameHasEnded == false)
             {
                 gameHasEnded = true;
-                Debug.Log("GAME OVER");
                 rs.controls.SetActive(true);
 
                 Time.timeScale = 1f;
@@ -41,10 +40,8 @@ public class RestartOnline : MonoBehaviour
                 if (gameHasEnded == true)
                 {
                     psoo.Hearts -= 1;
-                    Debug.Log("katam");
                     ResMenu.SetActive(true);
                     pso.katam();
-                    Debug.Log("Current Hearts = " + psoo.Hearts);
                 }
             }
         }

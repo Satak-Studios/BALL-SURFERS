@@ -39,7 +39,6 @@ using Utilities;
         else
         {
             RSO.enabled = true;
-            Debug.Log("PV is Mine");
         }
             rs = FindObjectOfType<Restart>();
     }
@@ -87,13 +86,11 @@ using Utilities;
 
         if (isgoingleft)
         {
-            Debug.Log("Is Going Left");
             Left();
         }
 
         if (isgoingright)
         {
-            Debug.Log("Is Going Right");
             Right();
         }
     }

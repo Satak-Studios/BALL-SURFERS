@@ -9,12 +9,13 @@ public class CompEndTrigger : MonoBehaviour
 	
     void OnTriggerEnter ()
 	{
-		PhotonView PV = compManager.myPlayer.PV;
-		if (PV.IsMine)
+		if (compManager.myPlayer.PV.IsMine)
 		{
 			compManager.CompleteCompAnim();
 			SatakExtensions.AddPlayerPosition(compManager.myPlayer.PV.Owner, 1);
-			Debug.LogError("compu!!!");
+		}else
+		{
+			FindObjectOfType<Achiever>().Notify(compManager.myPlayer.PV.name, "Has Finnished the race");
 		}
 	}
 }

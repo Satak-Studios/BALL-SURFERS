@@ -2867,6 +2867,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4667739789323584165, guid: 6972a507e131c4b44b7e81efbad23bc8, type: 3}
+      propertyPath: lockRotation
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8492792093367830924, guid: 6972a507e131c4b44b7e81efbad23bc8, type: 3}
       propertyPath: m_Name
       value: Character
