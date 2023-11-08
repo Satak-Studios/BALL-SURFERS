@@ -43,12 +43,13 @@ public class progress : MonoBehaviour
         cLevel.text = "Levels: " + PlayerPrefs.GetInt("levelsUnlocked").ToString();
         PlayerName.text = PlayerPrefs.GetString("PlayerName").ToString();
         CalcXP();
-        if (PlayerPrefs.GetInt("Impmark") == 0)
-        {
-            ImpMark.SetActive(false);
-        }else
+        
+        if (PlayerPrefs.GetInt("ImpMark") == 1)
         {
             ImpMark.SetActive(true);
+        }else
+        {
+            ImpMark.SetActive(false);
         }
     }
 

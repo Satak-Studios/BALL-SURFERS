@@ -1,6 +1,3 @@
-//Attach this script to a GameObject
-//This script checks what device type the Application is running on and outputs this to the console
-
 using UnityEngine;
 
 public class Device : MonoBehaviour
@@ -24,6 +21,7 @@ public class Device : MonoBehaviour
         {
             dialogmobile.SetActive(false);
             dialogpc.SetActive(false);
+            Player = FindObjectOfType<playermovement>().gameObject;
             if (!(Player == null))
             {
                 Player.SetActive(true);
@@ -54,6 +52,7 @@ public class Device : MonoBehaviour
                     dialogmobile.SetActive(false);
                     controls.SetActive(false);
                     Player.SetActive(true);
+                    FindObjectOfType<Restart>()._disapper = false;
                     isHavingKey = true;
                 }
             }
@@ -63,7 +62,11 @@ public class Device : MonoBehaviour
                     dialogpc.SetActive(false);
                     dialogmobile.SetActive(false);
                     controls.SetActive(false);
-                    Player.SetActive(true);
+                    Player = FindObjectOfType<playermovement>().gameObject;
+                    if (!(Player == null))
+                    {
+                        Player.SetActive(true);
+                    }
                 }
             
         }
@@ -96,7 +99,11 @@ public class Device : MonoBehaviour
                 dialogpc.SetActive(false);
                 dialogmobile.SetActive(false);
                 controls.SetActive(true);
-                Player.SetActive(true);
+                Player = FindObjectOfType<playermovement>().gameObject;
+                if (!(Player == null))
+                {
+                    Player.SetActive(true);
+                }
             }
         }
 
