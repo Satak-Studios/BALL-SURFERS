@@ -83,15 +83,38 @@ public class ScoreboardOverview : MonoBehaviourPunCallbacks
 
 	private void SortEntries()
 	{
-		//sort entries in list
-		m_entries.Sort((a, b) => b.Score.CompareTo(a.Score));
+		// Create a copy of the list before sorting
+		List<ScoreboardEntry> sortedEntries = new List<ScoreboardEntry>(m_entries);
 
-		//sort child order
-		for (var i = 0; i < m_entries.Count; i++)
+		// Sort the copied list in ascending order based on score, handling zero separately
+		sortedEntries.Sort((a, b) =>
 		{
-			m_entries[i].transform.SetSiblingIndex(i);
+			if (a.Score == 0f && b.Score == 0f)
+			{
+				return 0;
+			}
+			else if (a.Score == 0f)
+			{
+				return 1; // Move zero values to the end
+			}
+			else if (b.Score == 0f)
+			{
+				return -1; // Move zero values to the end
+			}
+			else
+			{
+				return a.Score.CompareTo(b.Score);
+			}
+		});
+
+		// Sort child order and store the index in ScoreboardEntry
+		for (var i = 0; i < sortedEntries.Count; i++)
+		{
+			sortedEntries[i].transform.SetSiblingIndex(i);
+			sortedEntries[i].SetPlayerPos(i + 1); // SetIndex method should be added to ScoreboardEntry
 		}
 	}
+
 
 	private void RemoveEntry(Player targetPlayer)
 	{
@@ -105,17 +128,5 @@ public class ScoreboardOverview : MonoBehaviourPunCallbacks
 		PlayerPrefs.DeleteKey("hiScore");
 		PhotonNetwork.LocalPlayer.SetScore(0);
 		Debug.Log("HighScore Deleted");
-	}
-
-	public void Back()
-    {
-		SceneManager.LoadScene("Lobby 1");
-    }
-
-	public void MenuBack()
-	{
-		PhotonNetwork.LeaveLobby();
-		PhotonNetwork.LeaveRoom();
-		PhotonNetwork.Disconnect();
 	}
 }

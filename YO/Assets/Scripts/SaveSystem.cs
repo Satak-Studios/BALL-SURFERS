@@ -73,11 +73,9 @@ public class SaveSystem : MonoBehaviour
                 if (toDoLoad)
                 {
                     LoadFromCloud();
-                    Debug.Log("LOading as normal");
                 }else
                 {
                     SaveToCloud();
-                    Debug.Log("SAving as mobile data");
                 }
             break;
 
@@ -85,11 +83,9 @@ public class SaveSystem : MonoBehaviour
                 if (toDoLoad)
                 {
                     LoadFromCloud();
-                    Debug.Log("Loading as normal");
                 }else
                 {
                     SaveToCloud();
-                    Debug.Log("Saving as normal");
                 }
             break;
         }
@@ -102,7 +98,6 @@ public class SaveSystem : MonoBehaviour
             SaveData saveData = new SaveData();
             await firestore.Document($"save_data/" + secretKey).SetAsync(saveData);
             FindObjectOfType<Achiever>().Notify("Done!", "Game Saved Sucessfully!");
-            Debug.Log("GameSaved Sucessfully from the user " + saveData.UserName);
             errorThrower.ThrowError("111111", "Game Saved Sucessfully!", "Done!");
         }else
         {
@@ -125,9 +120,10 @@ public class SaveSystem : MonoBehaviour
             saveData.EyeColor = data.EyeColor;
             saveData.BodyColor = data.BodyColor;
             saveData.Mouth = data.Mouth;
+            saveData.Bandage = data.Bandage;
             FindObjectOfType<Achiever>().Notify("Done!", "Game Loaded Sucessfully!");
+            FindObjectOfType<Achiever>().Notify("Yay!", "Welcome back " + data.UserName);
             errorThrower.ThrowError("111111", "Game Loaded Sucessfully!", "Done!");
-            Debug.Log("Game loaded sucessfully for user: " + saveData.UserName);
         }else
         {
             FindObjectOfType<Achiever>().Notify("Error!", "No such game progress");

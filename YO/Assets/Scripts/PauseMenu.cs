@@ -60,13 +60,12 @@ public class PauseMenu : MonoBehaviour
             GameIsPaused = true;
             Score.SetActive(false);
         }
+        FindObjectOfType<Restart>()._disapper = true;
     }
     public void LoadMenu()
     {
-        {
-            SceneManager.LoadScene("Menu 1");
-            GameIsPaused = false;
-        }
+        SceneManager.LoadScene("Menu 1");
+        GameIsPaused = false;
     }
 
     public void Red()
@@ -83,18 +82,12 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene("Menu 1");
     }
 
-    void Quit()
-    {
-        Application.Quit();
-    }
-
     public void LoadingMenu()
     {
-        {
-            SceneManager.LoadScene("Menu 1");
-            PlayerPrefs.SetInt("sdrn", 0);
-        }
+        SceneManager.LoadScene("Menu 1");
+        PlayerPrefs.SetInt("sdrn", 0);
     }
+
    public void rest()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -133,14 +126,12 @@ public class PauseMenu : MonoBehaviour
         Application.Quit();
     }
 
-        public void RestartGame()
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            Red();
-            PlayerPrefs.SetInt("sdrn", 0);
-        }
-
-
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Red();
+        PlayerPrefs.SetInt("sdrn", 0);
+    }
 }
 
 

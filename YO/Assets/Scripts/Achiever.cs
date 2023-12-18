@@ -20,15 +20,12 @@ public class Achiever : MonoBehaviour
     {
         if (instance == null)
         {
-            // Set the instance to this object
             instance = this;
 
-            // Mark this object to not be destroyed when loading a new scene
             DontDestroyOnLoad(gameObject);
         }
         else
         {
-            // If an instance already exists, destroy this object
             Destroy(gameObject);
         }
     }
@@ -72,7 +69,7 @@ public class Achiever : MonoBehaviour
         }
 
         band = PlayerPrefs.GetInt("band");
-        if (band == 5 && SceneManager.GetActiveScene().buildIndex == 0 && achIndex[18] == 0)//gritBange
+        if (band == 5 && SceneManager.GetActiveScene().buildIndex == 0 && achIndex[18] == 0)//gritBandage
         {
             achIndex[18] = 1;
             AchievementUnlocked(18);
@@ -82,6 +79,12 @@ public class Achiever : MonoBehaviour
             achIndex[19] = 1;
             AchievementUnlocked(19);
         }
+
+        if (PlayerPrefs.GetInt("totalAch") > 25)
+        {
+            totalAch = 25;
+            PlayerPrefs.SetInt("totalAch", 25);
+        }
     }
 
     public void AchievementUnlocked(int index)
@@ -90,37 +93,37 @@ public class Achiever : MonoBehaviour
         Title.text = "Achievement Unlocked";
         Subj.text = index switch
         {
-            1 => "Welcome",
-            2 => "Costumes",  
-            3 => "Novice Surfer",
-            4 => "Multiplayer?",
-            5 => "Cheater!",
-            6 => "End?",
-            7 => "Infinity?",
-            8 => "Crazy Mode?",      
-            9 => "Casual Surfer",
-            10 => "Intermediate Surfer",
-            11 => "Advanced Surfer",
-            12 => "Expert Surfer",
-            13 => "Master Surfer",
-            14 => "GrandMaster Surfer",
-            15 => "Legend Surfer",
-            16 => "End!",
-            17 => "Century!",
-            18 => "Grit Bandage!",
-            19 => "Resilience 50",
-            20 => "Winner!",
-            21 => "Close!",
-            22 => "Third!",
-            23 => "Social Person",
-            24 => "Collector",
-            25 => "Master Collector",
-            _ => "Error :("
+            1 => "Welcome",//
+            2 => "Costumes", // 
+            3 => "Novice Surfer",//
+            4 => "Multiplayer?",//
+            5 => "Cheater!",//
+            6 => "End?",//
+            7 => "Infinity?",//
+            8 => "Crazy Mode?",//      
+            9 => "Casual Surfer",//
+            10 => "Intermediate Surfer",//
+            11 => "Advanced Surfer",//
+            12 => "Expert Surfer",//
+            13 => "Master Surfer",//
+            14 => "GrandMaster Surfer",//
+            15 => "Legend Surfer",//
+            16 => "End!",//
+            17 => "Century!",//
+            18 => "Grit Bandage!",//
+            19 => "Resilience 50",//
+            20 => "Winner!",//
+            21 => "Close!",//
+            22 => "Third!",//
+            23 => "Social Person",//
+            24 => "Collector",//
+            25 => "Master Collector",//
+            _ => "Error :("//
         };
         achIndex[index] = 1;
         SaveAchievements(index);
         _anim.SetBool("achUn", true);
-        PlayerPrefs.SetInt("ImpMark", 1);
+        PlayerPrefs.SetInt("ImpMark", index);
 
         if(delete)
         {
@@ -138,8 +141,7 @@ public class Achiever : MonoBehaviour
     {
         string achievementKey = "Achievement_" + index.ToString();
         PlayerPrefs.SetInt(achievementKey, achIndex[index]);
-        Debug.Log("Saved " + achIndex[index]);
-        totalAch = totalAch = 1 + PlayerPrefs.GetInt("totalAch");  
+        totalAch = 1 + PlayerPrefs.GetInt("totalAch");  
         PlayerPrefs.SetInt("totalAch", totalAch);
         PlayerPrefs.Save();
     }
@@ -161,8 +163,21 @@ public class Achiever : MonoBehaviour
         {
             string achievementKey = "Achievement_" + i.ToString();
             PlayerPrefs.DeleteKey(achievementKey);
-            Debug.Log("deleted " + achievementKey);
+            LockAchievements(i);
         }
+        AchievementObj.SetActive(true);
+        Title.text = "Achievement Deleted";
+        Subj.text = "All Deleted!";
+    }
+
+    public void LockAchievements(int index)
+    {
+        string achievementKey = "Achievement_" + index.ToString();
+        PlayerPrefs.SetInt(achievementKey, 0);
+        FindObjectOfType<AchievementManager>().LockAchievement(index);
+        totalAch = 0;
+        PlayerPrefs.SetInt("totalAch", totalAch);
+        PlayerPrefs.Save();
     }
 
     public void Notify(string _Title, string _Subject)

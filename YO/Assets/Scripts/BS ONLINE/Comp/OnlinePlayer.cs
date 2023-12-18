@@ -6,8 +6,8 @@ using Photon.Pun;
 using Photon.Realtime;
 using Utilities;
 
-    public class OnlinePlayer : MonoBehaviourPunCallbacks
-    {
+public class OnlinePlayer : MonoBehaviourPunCallbacks
+{
     public Camera PlayerCam;
     public GameObject Char;
 
@@ -17,16 +17,16 @@ using Utilities;
     public OnlinePlayer movement;
 
     //Code From PlayerMovement Script
-    public float forwardForce;    
-    public float sidewaysForce;    
-    public bool isgoingleft;    
-    public bool isgoingright;    
+    public float forwardForce;
+    public float sidewaysForce;
+    public bool isgoingleft;
+    public bool isgoingright;
 
     //Photon View    
-    public PhotonView PV;     
+    public PhotonView PV;
 
     //Animator
-    Animator explosion;
+    public Animator cam;
 
     //Magic
     public bool Magic = false;
@@ -38,17 +38,25 @@ using Utilities;
             Destroy(PlayerCam);
             Destroy(movement);
         }
-        else
-        {
 
-        }
+        cam = PlayerCam.GetComponent<Animator>();
+        LoadRoomProps();
     }
 
-    public void Freeze(){
+    public void LoadRoomProps()
+    {
+        forwardForce = PlayerPrefs.GetInt("fSpeedComp", 300);
+        sidewaysForce = PlayerPrefs.GetInt("sSpeedComp", 35);
+    }
+
+    public void Freeze(Vector3 pos)
+    {
         movement.enabled = false;
+        movement.transform.position = pos;
     }
 
-    public void UnFreeze(){
+    public void UnFreeze()
+    {
         movement.enabled = true;
     }
 
@@ -61,10 +69,12 @@ using Utilities;
             {
                 Movement();
             }
-            else{
-                transform.position = new Vector3(0, 0, -256);
-                Freeze();
+            else
+            {
+                Vector3 pos = new Vector3(0, 50, -25006);
+                Freeze(pos);
             }
+            Start();
         }
     }
 
@@ -145,10 +155,11 @@ using Utilities;
     {
         if (PV.IsMine)
         {
-            if (collisionInfo.collider.tag == "Obsticle")
+            if (!compManager._GodMod && collisionInfo.collider.tag == "Obsticle")
             {
                 movement.enabled = false;
                 KatamOnCollision();
+                PhotonNetwork.Destroy(Char);
             }
         }
     }
@@ -169,20 +180,21 @@ using Utilities;
         }
         else
         {
-            
+
         }
 
         compManager = FindObjectOfType<CompManager>();
     }
 
     public void KatamOnCollision()
-    {   
+    {
         if (PV.IsMine)
         {
             if (compManager._GodMod == true)
             {
-                
-            }else
+
+            }
+            else
             {
                 PhotonNetwork.Destroy(Char);
                 compManager.EndGame();

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UnityStandardAssets.Utility
+namespace Satak.Utilities
 {
     //[RequireComponent(typeof (Text))]
     public class FPSCounter : MonoBehaviour
@@ -15,10 +15,11 @@ namespace UnityStandardAssets.Utility
         public Text m_Text;
         public GameObject Text_Obj;
 
+        public bool must = false;
+        public int fps;
 
         private void Start()
         {
-            
             m_FpsNextPeriod = Time.realtimeSinceStartup + fpsMeasurePeriod;
         }
 
@@ -31,7 +32,7 @@ namespace UnityStandardAssets.Utility
                 Text_Obj.SetActive(true);
             }
 
-            if (PlayerPrefs.GetInt("fps") == 0)
+            if (PlayerPrefs.GetInt("fps") == 0 && !must)
             {
                 Text_Obj.SetActive(false);
             }
@@ -44,6 +45,7 @@ namespace UnityStandardAssets.Utility
                 m_FpsAccumulator = 0;
                 m_FpsNextPeriod += fpsMeasurePeriod;
                 m_Text.text = string.Format(display, m_CurrentFps);
+                fps = m_CurrentFps;
             }
         }
     }

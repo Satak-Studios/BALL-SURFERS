@@ -6,7 +6,6 @@ using Firebase.Messaging;
 
 public class PushNotification : MonoBehaviour
 {
-
     public void Start() 
     {
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {

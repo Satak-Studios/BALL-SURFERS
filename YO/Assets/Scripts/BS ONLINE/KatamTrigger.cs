@@ -24,9 +24,13 @@ public class KatamTrigger : MonoBehaviour
             Heart.SetActive(false);
         }
 
-        if (SceneManager.GetActiveScene().buildIndex == 105)
+        if (!(SceneManager.GetActiveScene().name == "Game"))
         {
             Heart.SetActive(false);
+        }
+        else
+        {
+            Heart.SetActive(true);
         }
     }
 	void OnTriggerEnter()
@@ -55,6 +59,11 @@ public class KatamTrigger : MonoBehaviour
     public void Connect()
     {
         PlayerPrefs.SetString("intro", "katam");
-        SceneManager.LoadScene("Lobby 1");
+        string achievementKey = "Achievement_4";
+        if (PlayerPrefs.GetInt(achievementKey) == 0)
+        {
+            FindObjectOfType<Achiever>().AchievementUnlocked(4);
+        }
+        SceneManager.LoadScene("connecttoserver");
     }
 }

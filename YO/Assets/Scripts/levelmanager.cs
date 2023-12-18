@@ -74,7 +74,12 @@ public class levelmanager : MonoBehaviour
                 PlayerPrefs.SetString("credits", "credits");
             }else
             {
-                Next_btn.SetActive(true);
+                switch (slPanel)
+                {
+                    case 2: Next_btn.SetActive(false); break;
+                    case 33: Next_btn.SetActive(false); break;
+                    default: Next_btn.SetActive(true); break;
+                }
             }
         }
         else
@@ -82,7 +87,7 @@ public class levelmanager : MonoBehaviour
             switch (slPanel)
             {
                 case 2 : Next_btn.SetActive(false);break;
-                case 34: Next_btn.SetActive(false);break; 
+                case 33: Next_btn.SetActive(false);break; 
                 default: Next_btn.SetActive(true);break;
             }
         }
@@ -104,6 +109,9 @@ public class levelmanager : MonoBehaviour
             LevelPanels[slPanel].SetActive(false);
             slPanel++;
             LevelPanels[slPanel].SetActive(true);
+        }else if (slPanel == 33)
+        {
+            Next_btn.SetActive(false);
         }
     }
 

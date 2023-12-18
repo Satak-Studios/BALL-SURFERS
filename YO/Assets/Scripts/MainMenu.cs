@@ -38,7 +38,15 @@ public class MainMenu : MonoBehaviour
 
     public void Multiplayer()
     {
-        SceneManager.LoadScene("Start");
+        Time.timeScale = 1f;
+        if (PlayerPrefs.HasKey("intro"))
+        {
+            SceneManager.LoadScene("Start");
+        }
+        else
+        {
+            SceneManager.LoadScene("Trailer");
+        }
     }
 
     public void Stats()
@@ -58,7 +66,7 @@ public class MainMenu : MonoBehaviour
 
     void Update()
     {
-        if (PlayerPrefs.GetInt("ImpMark") == 1)
+        if (PlayerPrefs.GetInt("ImpMark") >= 1)
         {
             Imp.SetActive(true);
         }else

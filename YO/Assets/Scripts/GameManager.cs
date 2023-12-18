@@ -34,17 +34,17 @@ public class GameManager : MonoBehaviour
 	{
 		if (SceneManager.GetActiveScene().buildIndex == 7)
 		{
-			if (FindObjectOfType<Achiever>().achIndex[5] == 0)
+			if (FindObjectOfType<Achiever>().achIndex[7] == 0)
 			{
-				FindObjectOfType<Achiever>().AchievementUnlocked(5);
+				FindObjectOfType<Achiever>().AchievementUnlocked(7);
 			}
 		}
 
 		if (SceneManager.GetActiveScene().buildIndex == 8)
 		{
-			if (FindObjectOfType<Achiever>().achIndex[6] == 0)
+			if (FindObjectOfType<Achiever>().achIndex[8] == 0)
 			{
-				FindObjectOfType<Achiever>().AchievementUnlocked(6);
+				FindObjectOfType<Achiever>().AchievementUnlocked(8);
 			}
 		}
 	}

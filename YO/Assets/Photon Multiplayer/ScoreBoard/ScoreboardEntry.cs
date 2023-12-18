@@ -1,3 +1,4 @@
+using System;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -9,9 +10,11 @@ public class ScoreboardEntry : MonoBehaviour
 	//[SerializeField] private Text m_label;// = null;
 	[SerializeField] private Text pName = null;
 	[SerializeField] private Text m_Scorelabel = null;
-	[SerializeField] private Text m_Retries = null;
+	[SerializeField] private Text m_time = null;
 	public Player Player => m_player;
-	public int Score => SatakExtensions.GetPlayerPosition(m_player);
+
+	public int playerPosition;
+	public float Score => SatakExtensions.GetTime(m_player);
 
 	private Player m_player;
 
@@ -23,19 +26,50 @@ public class ScoreboardEntry : MonoBehaviour
 		UpdateScore();
 		pName.color = PhotonNetwork.LocalPlayer == m_player ? Color.black : Color.black;
 		m_Scorelabel.color = PhotonNetwork.LocalPlayer == m_player ? Color.black : Color.black;
-		m_Retries.color = PhotonNetwork.LocalPlayer == m_player ? Color.black : Color.black;
+		m_time.color = PhotonNetwork.LocalPlayer == m_player ? Color.black : Color.black;
+		playerPosition = 0;
+		PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerName");
 	}
 
 	//update label bases on score and name
 	public void UpdateScore()
 	{
 		pName.text = $"{m_player.NickName}";
-		m_Scorelabel.text = SatakExtensions.GetPlayerPosition(PhotonNetwork.LocalPlayer).ToString();
-		m_Retries.text = SatakExtensions.GetCompRetries(m_player).ToString();
+		m_Scorelabel.text = playerPosition.ToString();
+		m_time.text = ConvertSecondsToTimeString(SatakExtensions.GetTime(m_player));
 	}
 
 	void Update()
 	{
 		UpdateScore();
+	}
+
+	public void SetPlayerPos(int newPos)
+    {
+		if (!(SatakExtensions.GetTime(m_player) == 0))
+		{
+			playerPosition = newPos;
+			SatakExtensions.SetPlayerPosition(m_player, playerPosition);
+		}
+		else
+		{
+			playerPosition = 0;
+			SatakExtensions.SetPlayerPosition(m_player, 0);
+		}
+    }
+
+	private string ConvertSecondsToTimeString(float seconds)
+	{
+		int totalMilliseconds = Mathf.RoundToInt(seconds * 1000);
+
+		int minutes = totalMilliseconds / (60 * 1000);
+		int secondsRemaining = (totalMilliseconds % (60 * 1000)) / 1000;
+		int milliseconds = totalMilliseconds % 1000;
+
+		// Use string.Format or string interpolation to create the formatted string
+		// Here, I'm using string interpolation for simplicity
+		string formattedTime = $"{minutes:D2}:{secondsRemaining:D2}:{milliseconds:D3}";
+
+		return formattedTime;
 	}
 }

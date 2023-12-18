@@ -45,6 +45,19 @@ MonoBehaviour:
   - StartTimerRPC
   - UpdateWaypoint
   - UpdatePlacements
+  - RequestLoadLevel
+  - UpdateTime
+  - UpdateLives
+  - UpdateCompManagerTime
+  - SyncCurrentTimeRPC
+  - SyncInitialValues
+  - SyncTime
+  - RPC_StartTimer
+  - SyncSpeeds
+  - SyncStartTime
+  - RPC_SyncSpeed
+  - ReceiveChatMessage
+  - SendMessageRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -20,7 +20,9 @@ public class playermovement : MonoBehaviour
 
     public bool gameStarted = true;
 
-    private void Start()
+    public Restart rs;
+
+    void Start()
     {
         if (PlayerPrefs.HasKey("ff") == true)
         {
@@ -43,6 +45,7 @@ public class playermovement : MonoBehaviour
             float sf = 35;
             PlayerPrefs.SetFloat("sf", sf);
         }
+        rs = FindObjectOfType<Restart>();
     }
 
     // Update is called once per frame
@@ -54,6 +57,7 @@ public class playermovement : MonoBehaviour
         }
     }
 
+    #region Movement
     public void Movement()
     {
         // Add a forward force
@@ -117,5 +121,11 @@ public class playermovement : MonoBehaviour
     public void pointerUpright()
     {
         isgoingright = false;
+    }
+#endregion
+
+    public void LoadPos()
+    {
+        transform.position = rs.katamPoint;
     }
 }

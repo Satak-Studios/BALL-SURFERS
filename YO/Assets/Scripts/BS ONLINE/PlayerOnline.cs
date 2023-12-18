@@ -6,30 +6,30 @@ using Photon.Pun;
 using Photon.Realtime;
 using Utilities;
 
-    public class PlayerOnline : MonoBehaviourPunCallbacks
-    {
+public class PlayerOnline : MonoBehaviourPunCallbacks
+{
     public Camera PlayerCam;
 
-      public RestartOnline RSO = null;
-      public GameObject Char;
+    public RestartOnline RSO = null;
+    public GameObject Char;
 
-        public Rigidbody rb;
+    public Rigidbody rb;
 
-        private Restart rs;
-        public PlayerOnline movement;
+    private Restart rs;
+    public PlayerOnline movement;
 
-        //Code From PlayerMovement Script
-        private float forwardForce = 300f;
-        private float sidewaysForce = 35f;
-        public bool isgoingleft;
-        public bool isgoingright;
+    //Code From PlayerMovement Script
+    private float forwardForce = 300f;
+    private float sidewaysForce = 35f;
+    public bool isgoingleft;
+    public bool isgoingright;
 
-        //Photon View
-        public PhotonView PV;
-        //public QuitScreen qs;
+    //Photon View
+    public PhotonView PV;
+    //public QuitScreen qs;
 
-        private void Start()
-        {
+    private void Start()
+    {
         if (!PV.IsMine)
         {
             Destroy(PlayerCam);
@@ -40,17 +40,17 @@ using Utilities;
         {
             RSO.enabled = true;
         }
-            rs = FindObjectOfType<Restart>();
+        rs = FindObjectOfType<Restart>();
     }
 
-        // Update is called once per frame
-        public void FixedUpdate()
-        {
+    // Update is called once per frame
+    public void FixedUpdate()
+    {
         if (PV.IsMine)
         {
             Movement();
         }
-        }
+    }
 
     public void Movement()
     {
@@ -79,10 +79,6 @@ using Utilities;
         {
             rb.AddForce(sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
         }
-        if (rb.position.y < -1f)
-        {
-            FindObjectOfType<GameManager>().EndGame();
-        }
 
         if (isgoingleft)
         {
@@ -95,39 +91,39 @@ using Utilities;
         }
     }
 
-        public void Left()
-        {
-            rb.AddForce(-sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
-        }
-        public void Right()
-        {
-            rb.AddForce(sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
-        }
+    public void Left()
+    {
+        rb.AddForce(-sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+    }
+    public void Right()
+    {
+        rb.AddForce(sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+    }
 
-        public void pointerDownleft()
-        {
-            isgoingleft = true;
-        }
-        public void pointerUpleft()
-        {
-            isgoingleft = false;
-        }
-        public void pointerDownright()
-        {
-            isgoingright = true;
-        }
-        public void pointerUpright()
-        {
-            isgoingright = false;
-        }
+    public void pointerDownleft()
+    {
+        isgoingleft = true;
+    }
+    public void pointerUpleft()
+    {
+        isgoingleft = false;
+    }
+    public void pointerDownright()
+    {
+        isgoingright = true;
+    }
+    public void pointerUpright()
+    {
+        isgoingright = false;
+    }
 
-        public void ControlsOff()
-        {
+    public void ControlsOff()
+    {
 
-        }
-        //Collition Script
-        public void OnCollisionEnter(Collision collisionInfo)
-        {
+    }
+    //Collition Script
+    public void OnCollisionEnter(Collision collisionInfo)
+    {
         if (PV.IsMine)
         {
             if (collisionInfo.collider.tag == "Obsticle")
@@ -138,7 +134,7 @@ using Utilities;
                 katam();
             }
         }
-        }
+    }
     public void Update()
     {
         if (rb.position.y < -1f)
@@ -164,13 +160,13 @@ using Utilities;
     }
 
 
-        //[PunRPC]
-        public void katam()
-        {   
-           if (PV.IsMine)
-           {
+    //[PunRPC]
+    public void katam()
+    {
+        if (PV.IsMine)
+        {
             PhotonNetwork.Destroy(Char);
-           }
         }
-
     }
+
+}

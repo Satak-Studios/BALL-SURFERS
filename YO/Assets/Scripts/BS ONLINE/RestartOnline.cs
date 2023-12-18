@@ -13,7 +13,6 @@ public class RestartOnline : MonoBehaviour
     public PlayerSpawner psoo;
     private GameObject ResMenu;
     private GameManager gm;
-    private player _SCO;
 
     public bool gameHasEnded = false;
     //public Player _player;
@@ -33,7 +32,7 @@ public class RestartOnline : MonoBehaviour
             if (gameHasEnded == false)
             {
                 gameHasEnded = true;
-                rs.controls.SetActive(true);
+                rs.controls.SetActive(false);
 
                 Time.timeScale = 1f;
 

@@ -10,36 +10,25 @@ public class PlayerItem1 : MonoBehaviourPunCallbacks
 {
     public Text playerName;
 
-    public Text Devicename;
+    public Text LevelsUnlocked;
+
+    public Text _Status;
 
     public Player playerr;
 
-    public Player Player => m_player;
-    //public int Score => m_player.GetScore();
-
-    private Player m_player;
-    // public Image backgroundImage;
-    // public Color highlightColor;
-    // public GameObject leftArrowButton;
-    //public GameObject rightArrowButton;
-    public Text Rank;
+    public Text HighScore;
     public int HighScoreFloat;
 
-    public Image pBG;
-
-    //public PhotonView PV;
-    public string deviceType;
-    public string deviceOS;
-    public string deviceOSfamily;
+    public Player Player => m_player;
+    private Player m_player;
 
     ExitGames.Client.Photon.Hashtable playerScore = new ExitGames.Client.Photon.Hashtable();
-    //public Image playerAvatar;
-    //public Sprite[] avatars;
 
 
     private void Start()
     {
-        HighScoreFloat = (int)PlayerPrefs.GetFloat("hiScore");
+        CalcXP(PhotonNetwork.LocalPlayer);
+        HighScoreFloat = (int)PlayerPrefs.GetFloat("hiScore", 1);
         SatakExtensions.SetScore(PhotonNetwork.LocalPlayer, HighScoreFloat);
         int levelCompleted = PlayerPrefs.GetInt("levelsUnlocked", 1);
         SatakExtensions.SetLevel(PhotonNetwork.LocalPlayer, levelCompleted);
@@ -49,20 +38,16 @@ public class PlayerItem1 : MonoBehaviourPunCallbacks
         playerName.text = _player.NickName;
         playerr = _player;
         m_player = _player;
-        deviceType = SystemInfo.deviceType.ToString();
-        deviceOS = SystemInfo.operatingSystem;
-        deviceOSfamily = SystemInfo.operatingSystemFamily.ToString();//UpdatePlayer(playerr);
-        HighScoreFloat = (int)PlayerPrefs.GetFloat("hiScore");
-        Rank.text = SatakExtensions.GetScore(_player).ToString();
-        Devicename.text = SatakExtensions.GetLevel(_player).ToString();
+
+        HighScore.text = SatakExtensions.GetScore(_player).ToString();
+        _Status.text = SatakExtensions.GetStatus(_player);
+        LevelsUnlocked.text = SatakExtensions.GetLevel(_player).ToString();
     }
 
+    //Depriciated
     public void ApplyLocalChanges()
     {
-        // backgroundImage.color = highlightColor;
-        //leftArrowButton.SetActive(true);
-        //rightArrowButton.SetActive(true);
-        pBG.color = Color.red;
+
     }
     
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
@@ -77,12 +62,60 @@ public class PlayerItem1 : MonoBehaviourPunCallbacks
     {
         if (player.CustomProperties.ContainsKey("playerScore"))
         {
-            //Rank.text = player.CustomProperties["playerScore"].ToString();
             playerScore["playerScore"] = (int)player.CustomProperties["playerScore"];
         }
         else
         {
             playerScore["playerScore"] = 0;
         }
-    }    
+    }
+
+    void CalcXP(Player _player)
+    {
+        int achievements = PlayerPrefs.GetInt("totalAch");
+        int levels = PlayerPrefs.GetInt("levelsUnlocked", 1);
+        int hScore = (int)PlayerPrefs.GetFloat("hiScore", 1);
+        int XP = achievements * levels * hScore / 2;
+        string Status = "Error";
+        if (XP >= 1 && XP < 500)
+        {
+            Status = "NewBie";
+        }
+
+        if (XP >= 500)
+        {
+            Status = "Causual";
+        }
+
+        if (XP >= 1100)
+        {
+            Status = "Intermediate";
+        }
+
+        if (XP >= 10000)
+        {
+            Status = "Advanced";
+        }
+
+        if (XP >= 15000)
+        {
+            Status = "Expert";
+        }
+
+        if (XP >= 25000)
+        {
+            Status = "Master";
+        }
+
+        if (XP >= 75000)
+        {
+            Status = "GrandMaster";
+        }
+
+        if (XP >= 225000)
+        {
+            Status = "Legend";
+        }
+        SatakExtensions.SetStatus(PhotonNetwork.LocalPlayer, Status);
+    }
 }

@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerSpawner : MonoBehaviourPunCallbacks
 {
-    public Restart rs;
     public PhotonView PV;
     public Timer timer;
 
@@ -66,8 +65,8 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
 
     public void Update()
     {
-        PV = pso.PV;
         pso = FindObjectOfType<PlayerOnline>();
+        PV = pso.PV;
         if (PV == null)
         {
             return;

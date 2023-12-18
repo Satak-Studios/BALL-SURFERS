@@ -10,27 +10,33 @@ public class AchievementManager : MonoBehaviour
 
     public GameObject[] CompleteObjects;
     public Image[] Icons;
+    public Image[] AchBackgrounds;
     public Sprite[] DefaultSprites;
     public Slider[] sliders;
+    public GameObject[] AchDetails;
     public Text[] statusText;
 
     public GameObject[] AchPanels;
-    public GameObject upBtn;
-    public GameObject downBtn;
     public int currentIndex = 0;
 
     public Text welcomeStatus;
 
+    //PlayTime
+    public Text playTimeText;
+    public float playtimeInSeconds;
+
     // Start is called before the first frame update
     void Start()
-    {
-        upBtn.SetActive(false);
+    {       
         _achiever = FindObjectOfType<Achiever>();
+        GoToAch();
     }
 
     // Update is called once per frame
     void Update()
     {
+        playtimeInSeconds = PlayerPrefs.GetFloat("TotalPlaytime", 0f);
+        DisplayFormattedPlaytime();
         for (int i = 0; i < sliders.Length; i++)
         {
             sliders[i].interactable = false;
@@ -81,38 +87,13 @@ public class AchievementManager : MonoBehaviour
     {
         CompleteObjects[index].SetActive(true);
         Icons[index].sprite = completedSprite;
+        AchBackgrounds[index].color = new Color32(0, 235, 255, 255);
     }
 
     public void LockAchievement(int index)
     {
         CompleteObjects[index].SetActive(false);
         Icons[index].sprite = DefaultSprites[index];
-    }
-
-    public void Down()
-    {
-        if (currentIndex < AchPanels.Length - 1)
-        {
-            AchPanels[currentIndex].SetActive(false);
-            currentIndex++;
-            AchPanels[currentIndex].SetActive(true);
-        }
-
-        upBtn.SetActive(true);
-        downBtn.SetActive(currentIndex < AchPanels.Length - 1);
-    }
-
-    public void Up()
-    {
-        if (currentIndex > 0)
-        {
-            AchPanels[currentIndex].SetActive(false);
-            currentIndex--;
-            AchPanels[currentIndex].SetActive(true);
-        }
-
-        upBtn.SetActive(currentIndex > 0);
-        downBtn.SetActive(true);
     }
 
     public void Claim()
@@ -127,5 +108,54 @@ public class AchievementManager : MonoBehaviour
     public void Claimed()
     {
         welcomeStatus.text = "Claimed";
+    }
+
+    void GoToAch()
+    {
+        int currentPanel = (PlayerPrefs.GetInt("ImpMark") - 1) / 5;
+        int currentAch = PlayerPrefs.GetInt("ImpMark");
+        currentPanel = Mathf.Clamp(currentPanel, 0, AchPanels.Length - 1);
+
+        for (int i = 0; i < AchPanels.Length; i++)
+        {
+            AchPanels[i].SetActive(i == currentPanel);
+        }
+
+        for (int i = 0; i < AchDetails.Length; i++)
+        {
+            AchDetails[i].SetActive(i == currentAch);
+        }
+
+        if(PlayerPrefs.GetInt("ImpMark") == 0)
+        {
+            for (int i = 0; i < AchDetails.Length; i++)
+            {
+                AchDetails[i].SetActive(i == 1);
+            }
+        }
+    }
+
+    private void DisplayFormattedPlaytime()
+    {
+        float totalMinutes = playtimeInSeconds / 60f;
+        float totalHours = playtimeInSeconds / 3600f;
+        float totalDays = playtimeInSeconds / (3600f * 24f);
+
+        string formattedPlaytime;
+
+        if (totalDays >= 1)
+        {
+            formattedPlaytime = string.Format("{0} Days", Mathf.Floor(totalDays));
+        }
+        else if (totalHours >= 1)
+        {
+            formattedPlaytime = string.Format("{0} hr", Mathf.Floor(totalHours));
+        }
+        else
+        {
+            formattedPlaytime = string.Format("{0} min", Mathf.Floor(totalMinutes));
+        }
+
+        playTimeText.text = "Total Playtime: " + formattedPlaytime;
     }
 }

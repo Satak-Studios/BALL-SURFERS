@@ -6,38 +6,56 @@ using Photon.Realtime;
 using Satak.Utilities;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class ScoreOnline  : MonoBehaviourPunCallbacks
-{ 
+public class ScoreOnline : MonoBehaviourPunCallbacks
+{
     public GameObject cRoomPanel;
     public GameObject fRoomPanel;
     public GameObject mainPanel;
     public InputField roomIF;
-    //public InputField pName;
     public Text GM_txt;
+    public Text Map_txt;
 
-    public InputField NameField;
+    public Text PlayerName;
+    public InputField nameField;
     public string[] names;
     public LobbyManager1 lManager;
 
     //Room Options
-    public Dropdown GM;
     public int gameMode;
-    public GameObject Comp;
-    public GameObject Custom;
-    public Dropdown Players;
     public byte players;
-    public Dropdown Lives;
-    public int life;
 
-    //Debugging
-    public int gameMode_test;
-    public bool testing = false;
+    //Room Options
+    public Dropdown GM;
+    public Dropdown fSpeedDD;
+    public Dropdown sSpeedDD;
+    public Dropdown[] Custom;
+    public GameObject CompObj;
+    public GameObject CustomObj;
+    public int life;
+    public int fSpeed;
+    public int sSpeed;
+    public int fSpeedCustom;
+    public int sSpeedCustom;
+    public int defaulFSpeed;
+    public int defaultSSpeed;
+    public int mapType;
+
+    //RoomPanelDetails
+    public Text[] RoomDetails;
 
     public void Start()
     {
-        if (testing)
+        if (!PlayerPrefs.HasKey("PlayerName"))
         {
-            PhotonNetwork.ConnectUsingSettings();
+            SetPlayerName();
+        }
+        else
+        {
+            PlayerName.text = PlayerPrefs.GetString("PlayerName");
+        }
+        if (PhotonNetwork.InRoom)
+        {
+            LoadRoomProps();
         }
     }
 
@@ -61,112 +79,207 @@ public class ScoreOnline  : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.CreateRoom(roomIF.text, new RoomOptions() {
                 MaxPlayers = players, 
-                BroadcastPropsChangeToAll = true 
+                BroadcastPropsChangeToAll = true,
             });
-            SatakExtensions.SetGM(PhotonNetwork.LocalPlayer, gameMode);
-            SatakExtensions.SetLives(PhotonNetwork.LocalPlayer, life);
+            SetRoomProperties();
             cRoomPanel.SetActive(false);
         }
         else
         {
-            FindObjectOfType<ErrorThrower>().ThrowError("0x1234", "Make sure that you have entered Room Name", "Error");
-            Host();
+            //FindObjectOfType<ErrorThrower>().ThrowError("0x1234", "Make sure that you have entered Room Name", "Error");
+            //Host();
+            PhotonNetwork.CreateRoom(PhotonNetwork.NickName + "'s Room", new RoomOptions()
+            {
+                MaxPlayers = players,
+                BroadcastPropsChangeToAll = true,
+            });
+            SetRoomProperties();
+            cRoomPanel.SetActive(false);
         }
     }
 
-    public override void OnConnectedToMaster()
+    #region RoomProps
+    private void SetRoomProperties()
     {
-        if (testing)
+        if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.JoinLobby();
-            Invoke("CreateRoomTest", 2f);
+            Hashtable customRoomProperties = new Hashtable();
+            customRoomProperties.Add("GameMode", gameMode);
+            customRoomProperties.Add("MapType", mapType);
+            customRoomProperties.Add("Lives", life);   
+            customRoomProperties.Add("fSpeedComp", fSpeed);   
+            customRoomProperties.Add("fSpeedCustom", fSpeedCustom);   
+            customRoomProperties.Add("sSpeedComp", sSpeed);   
+            customRoomProperties.Add("sSpeedCustom", sSpeedCustom);   
+
+            PhotonNetwork.CurrentRoom.SetCustomProperties(customRoomProperties);
         }
     }
 
-    void CreateRoomTest()
+    private void LoadRoomProps()
     {
-        PhotonNetwork.CreateRoom("TestingTheRoom", new RoomOptions() {
-            MaxPlayers = 4, 
-            BroadcastPropsChangeToAll = true 
-        });
-        SatakExtensions.SetGM(PhotonNetwork.LocalPlayer, gameMode_test);
-        SatakExtensions.SetLives(PhotonNetwork.LocalPlayer, life);
-        cRoomPanel.SetActive(false);
+        if (PhotonNetwork.CurrentRoom != null)
+        {
+            if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("GameMode"))
+            {
+                gameMode = (int)PhotonNetwork.CurrentRoom.CustomProperties["GameMode"];
+            }
+
+            if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("MapType"))
+            {
+                mapType = (int)PhotonNetwork.CurrentRoom.CustomProperties["MapType"];
+            }
+
+            if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("Lives"))
+            {
+                life = (int)PhotonNetwork.CurrentRoom.CustomProperties["Lives"];
+            }
+
+            if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("fSpeedComp"))
+            {
+                fSpeed = (int)PhotonNetwork.CurrentRoom.CustomProperties["fSpeedComp"];
+            }
+
+            if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("sSpeedComp"))
+            {
+                sSpeed = (int)PhotonNetwork.CurrentRoom.CustomProperties["sSpeedComp"];
+            }
+            if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("fSpeedCustom"))
+            {
+                fSpeedCustom = (int)PhotonNetwork.CurrentRoom.CustomProperties["fSpeedCustom"];
+            }
+
+            if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("sSpeedCustom"))
+            {
+                sSpeedCustom = (int)PhotonNetwork.CurrentRoom.CustomProperties["sSpeedCustom"];
+            }
+        }
     }
+    #endregion
 
     private void Update()
     {
-        //pName.text = PhotonNetwork.NickName;
-        if (SatakExtensions.GetGM(PhotonNetwork.LocalPlayer) == 1)
+        if (PhotonNetwork.IsMasterClient && PhotonNetwork.InRoom)
+        {
+            SetRoomProperties();
+        }
+
+        if (gameMode == 1)
         {
             GM_txt.text = "GameMode: Default";
+            Map_txt.gameObject.SetActive(false);
+            RoomDetails[0].gameObject.SetActive(false);
+            RoomDetails[1].gameObject.SetActive(false);
+            RoomDetails[2].gameObject.SetActive(false);
         }
-        if (SatakExtensions.GetGM(PhotonNetwork.LocalPlayer) == 2)
+        if (gameMode == 2)
         {
             GM_txt.text = "GameMode: Competition";
+            Map_txt.gameObject.SetActive(false);
+            RoomDetails[0].gameObject.SetActive(true);
+            RoomDetails[1].gameObject.SetActive(true);
+            RoomDetails[2].gameObject.SetActive(false);
+            RoomDetails[0].text = "Forward Speed: x" + fSpeed;
+            RoomDetails[1].text = "Side Speed: x" + sSpeed;
         }
-        if (SatakExtensions.GetGM(PhotonNetwork.LocalPlayer) == 3)
+        if (gameMode == 3)
         {
             GM_txt.text = "GameMode: Custom";
+            Map_txt.gameObject.SetActive(true);
+            RoomDetails[0].gameObject.SetActive(true);
+            RoomDetails[1].gameObject.SetActive(true);
+            RoomDetails[2].gameObject.SetActive(true);
+            RoomDetails[0].text = "Forward Speed: x" + fSpeedCustom;
+            RoomDetails[1].text = "Side Speed: x" + sSpeedCustom;
+            if (life <= 3)
+            {
+                RoomDetails[2].text = "Lives: " + life;
+            }
+            else
+            {
+                RoomDetails[2].text = "Lives: ∞";
+            }
         }
+
+        #region MapType
+        if (mapType == 1)
+        {
+            Map_txt.text = "MapType: Default";
+        }
+        if (mapType == 2)
+        {
+            Map_txt.text = "MapType: Crazy";
+        }
+        if (mapType == 3)
+        {
+            Map_txt.text = "MapType: Easy";
+        }
+        if (mapType == 4)
+        {
+            Map_txt.text = "MapType: Hard";
+        }
+#endregion
 
         #region GM
         if (GM.value == 0)
         {
             gameMode = 1;
-            Comp.SetActive(false);
-            Custom.SetActive(false);
-            Players.interactable = true;
+
+            for (int i = 0; i < Custom.Length; i++)
+            {
+                Custom[i].gameObject.SetActive(false);
+            }
+
+            CompObj.SetActive(false);
+            CustomObj.SetActive(false);
         }
         if (GM.value == 1)
         {
             gameMode = 2;
-            Comp.SetActive(true);
-            Custom.SetActive(false);
-            Players.interactable = false;
-            players = 4;
+            for (int i = 0; i < Custom.Length; i++)
+            {
+                Custom[i].gameObject.SetActive(false);
+            }
+
+            CompObj.SetActive(true);
+            CustomObj.SetActive(false);
         }
         if (GM.value == 2)
         {
             gameMode = 3;
-            Comp.SetActive(true);
-            Custom.SetActive(true);
-            Players.interactable = true;
+
+            for (int i = 0; i < Custom.Length; i++)
+            {
+                Custom[i].gameObject.SetActive(true);
+            }
+
+            CompObj.SetActive(false);
+            CustomObj.SetActive(true);
         }
         #endregion
 
-        #region Players
-        if (Players.value == 0)
+        if (Custom[0].value == 3)
         {
-            players = 4;
+            life = 4;
+        }
+        else
+        {
+            life = 3 - Custom[0].value;
         }
 
-        if (Players.value == 1)
-        {
-            players = 3;
-        }
-        #endregion
+        fSpeed = (int)(defaulFSpeed * Mathf.Pow(2, fSpeedDD.value));
+        sSpeed = (int)(defaultSSpeed * Mathf.Pow(2, sSpeedDD.value));
 
-        #region lives
-        if (Lives.value == 0)
-        {
-            life = 1;
-        }
+        fSpeedCustom = (int)(defaulFSpeed * Mathf.Pow(2, Custom[2].value));
+        sSpeedCustom = (int)(defaultSSpeed * Mathf.Pow(2, Custom[3].value));
 
-        if (Lives.value == 1)
-        {
-            life = 2;
-        }
-
-        if (Lives.value == 2)
-        {
-            life = 3;
-        }
-#endregion
+        mapType = Custom[1].value + 1;
 
         if (PhotonNetwork.InRoom == true)
         {
             lManager.roomPanel.SetActive(true);
+            LoadRoomProps();
+            RoomDetails[3].text = "Owner: " + PhotonNetwork.MasterClient.NickName;
         }
         else
         {
@@ -174,16 +287,40 @@ public class ScoreOnline  : MonoBehaviourPunCallbacks
         }
     }
 
-    public void SaveName()
+    //Random PlayerName
+    public void SetPlayerName()
     {
-        PlayerPrefs.SetString("PlayerName", NameField.text);
-        PhotonNetwork.NickName = NameField.text;
+        string[] nouns = { "Gamer", "Explorer", "Adventurer", "Hero", "Champion", "Pioneer", "Detective", "Scholar", "Artist", "Musician", "Scientist", "Engineer", "Captain", "Pirate", "Wizard", "Warrior", "Athlete", "Leader", "Dreamer", "Traveler", "Nomad", "Guardian", "Hunter", "Knight", "Jester", "Acrobat", "Magician", "Guardian", "Gladiator", "Spy", "Sailor", "Astronaut", "Pirate", "Viking", "Explorer", "Samurai", "Ninja", "Archer", "Scribe", "Sage", "Gladiator" };
+        int randNoun = Random.Range(0, nouns.Length);
+        int rand = Random.Range(0, 10000);
+        int randName = Random.Range(0, names.Length);
+        string player_name = names[randName] + nouns[randNoun] + rand.ToString("0000");
+        if (player_name.Length > 15)
+        {
+            string playerName = player_name.Substring(0, 15);
+            PlayerPrefs.SetString("PlayerName", playerName);
+            PlayerName.text = PlayerPrefs.GetString("PlayerName");
+            nameField.text = PlayerPrefs.GetString("PlayerName");
+        }
+        else
+        {
+            PlayerPrefs.SetString("PlayerName", player_name);
+            PlayerName.text = PlayerPrefs.GetString("PlayerName");
+            nameField.text = PlayerPrefs.GetString("PlayerName");
+        }
     }
 
-    public void BackToHome()
+    public void SavePlayerName()
     {
-        PhotonNetwork.Disconnect();
-        SceneManager.LoadScene("Menu");
+        if (nameField.text.Length >= 1)
+        {
+            PlayerPrefs.SetString("PlayerName", nameField.text);
+            nameField.text = PlayerPrefs.GetString("PlayerName");
+        }
+        else
+        {
+            FindObjectOfType<ErrorThrower>().ThrowError("9898", "Your name cannot be empty", "Check!");
+        }
     }
 
     #region Displaying Errors
@@ -204,42 +341,16 @@ namespace Satak.Utilities
 {
     public class SatakOnline : MonoBehaviour
     {
-        public const string GM_Prop = "gMode";
-        public const string LifeProp = "Lives";
         public const string LevelProp = "Level";
         public const string highScore = "hScore";
         public const string badge = "badge";
         public const string PlayerPosition = "PlayerPosition";
         public const string Time = "Time";
-        public const string CD_Time = "CD_Time";
-        public const string GameStatus = "GameStatus";
-        public const string Retries_Comp = "Retries";
+        public const string Player_Status = "PlayerStatus";
     }
 
     public static class SatakExtensions
     {
-        //GameMode
-        #region GameMode
-        public static void SetGM(this Player player, int newGM)
-        {
-            Hashtable score = new Hashtable();  // using PUN's implementation of Hashtable
-            score[SatakOnline.GM_Prop] = newGM;
-
-            player.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
-        }
-
-        public static int GetGM(this Player player)
-        {
-            object score;
-            if (player.CustomProperties.TryGetValue(SatakOnline.GM_Prop, out score))
-            {
-                return (int)score;
-            }
-
-            return 0;
-        }
-        #endregion
-
         //Levels Completed
         #region Levels Completed
         public static void SetLevel(this Player player, int newLevel)
@@ -254,28 +365,6 @@ namespace Satak.Utilities
         {
             object Lives;
             if (player.CustomProperties.TryGetValue(SatakOnline.LevelProp, out Lives))
-            {
-                return (int)Lives;
-            }
-
-            return 0;
-        }
-        #endregion
-
-        //Lives
-        #region Lives
-        public static void SetLives(this Player player, int newLife)
-        {
-            Hashtable score = new Hashtable();  // using PUN's implementation of Hashtable
-            score[SatakOnline.LifeProp] = newLife;
-
-            player.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
-        }
-
-        public static int GetLives(this Player player)
-        {
-            object Lives;
-            if (player.CustomProperties.TryGetValue(SatakOnline.LifeProp, out Lives))
             {
                 return (int)Lives;
             }
@@ -340,14 +429,6 @@ namespace Satak.Utilities
             player.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
         }
 
-        public static void AddPlayerPosition(this Player player, int AmountToAdd)
-        {
-            Hashtable score = new Hashtable();  // using PUN's implementation of Hashtable
-            score[SatakOnline.PlayerPosition] = GetPlayerPosition(player) + AmountToAdd;
-
-            player.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
-        }
-
         public static int GetPlayerPosition(this Player player)
         {
             object PlayerPosition;
@@ -361,7 +442,7 @@ namespace Satak.Utilities
 
         #endregion
 
-        //Time
+        //Time(Comp)
         #region Time
         public static void SetTime(this Player player, float time)
         {
@@ -383,72 +464,26 @@ namespace Satak.Utilities
         }
         #endregion
 
-        //CountDownTime
-        #region CountDownTime
-        public static void SetCountDownTime(this Player player, int cdTime)
-        {
-            Hashtable cd_time_ = new Hashtable();  // using PUN's implementation of Hashtable
-            cd_time_[SatakOnline.CD_Time] = cdTime;
+        //Status(Noob)
+        #region PlayerStatus
 
-            player.SetCustomProperties(cd_time_);  // this locally sets the score and will sync it in-game asap.
-        }
-
-        public static int GetCountDownTime(this Player player)
-        {
-            object CD_Time;
-            if (player.CustomProperties.TryGetValue(SatakOnline.CD_Time, out CD_Time))
-            {
-                return (int)CD_Time;
-            }
-
-            return 0;
-        }
-        #endregion
-
-        //GameStatus
-        #region GameStatus
-
-        public static void SetGameStatus(this Player player, int _gameStaus)
+        public static void SetStatus(this Player player, string _playerStatus)
         {
             Hashtable score = new Hashtable();  // using PUN's implementation of Hashtable
-            score[SatakOnline.GameStatus] = _gameStaus;
+            score[SatakOnline.Player_Status] = _playerStatus;
 
             player.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
         }
 
-        public static int GetGameStatus(this Player player)
+        public static string GetStatus(this Player player)
         {
-            object GameStatus;
-            if (player.CustomProperties.TryGetValue(SatakOnline.GameStatus, out GameStatus))
+            object PlayerStatus;
+            if (player.CustomProperties.TryGetValue(SatakOnline.Player_Status, out PlayerStatus))
             {
-                return (int)GameStatus;
+                return PlayerStatus.ToString();
             }
 
-            return 0;
-        }
-
-        #endregion
-
-        //Retries Comp
-        #region Retries_Comp
-
-        public static void SetCompRetries(this Player player, int _compRetries)
-        {
-            Hashtable score = new Hashtable();  // using PUN's implementation of Hashtable
-            score[SatakOnline.Retries_Comp] = _compRetries;
-
-            player.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
-        }
-
-        public static int GetCompRetries(this Player player)
-        {
-            object CompRetries;
-            if (player.CustomProperties.TryGetValue(SatakOnline.Retries_Comp, out CompRetries))
-            {
-                return (int)CompRetries;
-            }
-
-            return 0;
+            return "";
         }
 
         #endregion

@@ -23,6 +23,8 @@ public class Restart : MonoBehaviour
     public bool isGodMode = false;
     public playermovement movement;
 
+	public Vector3 katamPoint;
+
     private void Start()
     {
         movement = FindObjectOfType<playermovement>();
@@ -44,6 +46,7 @@ public class Restart : MonoBehaviour
             {
 				if (gameHasEnded == false)
 				{
+					SavePos();
 					gameHasEnded = true;
 					_disapper = true;
 
@@ -97,9 +100,23 @@ public class Restart : MonoBehaviour
 		}
 		else
 		{
-			controls.SetActive(true);
+			if (SystemInfo.deviceType == DeviceType.Handheld)
+			{
+				controls.SetActive(true);
+            }
+            else
+            {
+				controls.SetActive(false);
+			}
 			pauseButton.SetActive(true);
 		}
+	}
+
+	void SavePos()
+    {
+		katamPoint.x = 0f;
+		katamPoint.y = 1.5f;
+		katamPoint.z = movement.transform.position.z;
 	}
 }
 

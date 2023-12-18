@@ -13,7 +13,7 @@ public class LobbyManager1 : MonoBehaviourPunCallbacks
     public InputField roomInputField;
     public GameObject lobbyPanel;
     public GameObject roomPanel;
-    public GameObject roomFPanel; //Only for RoomItem
+    public GameObject roomFPanel;
     public Text roomName;
 
     public RoomItem roomItemPrfab;
@@ -25,31 +25,26 @@ public class LobbyManager1 : MonoBehaviourPunCallbacks
 
     List<PlayerItem1> playerItemsList = new List<PlayerItem1>();
     public PlayerItem1 playerItemPrefab;
-    //public PlayerItem1 playerItem_prefab_1_retry_;
     public Transform playerItemParent;
 
     public GameObject StartButton;
     public GameObject BackButton;
-    public bool isPlaying = false;
-    public Transform Playing;
-    public GameObject PlayingPrefab;
 
     public GameObject HScorePanel;
     public GameObject LoadingCanvas;
 
-    //Chat
-    public GameObject chatObj;
-    public Transform chatPos;
-
-    //Player Obj PhotonView
-    public PhotonView PV;
+    //Syncing
+    public ScoreOnline scoreOnline;
 
     // Start is called before the first frame update
     private void Start()
     {
         //isPlaying = false;
         PhotonNetwork.JoinLobby();
-        SatakExtensions.SetGameStatus(PhotonNetwork.LocalPlayer, 0);
+        if (PhotonNetwork.InRoom)
+        {
+            LoadRoomProps();
+        }
     }
 
     public void OnClickCreate()
@@ -62,10 +57,6 @@ public class LobbyManager1 : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        //Chat
-        Instantiate(chatObj, chatPos);
-
-        //Normal
         lobbyPanel.SetActive(false);
         roomPanel.SetActive(true);
         roomName.text = "Room Name: " + PhotonNetwork.CurrentRoom.Name;
@@ -113,8 +104,6 @@ public class LobbyManager1 : MonoBehaviourPunCallbacks
     {
         roomPanel.SetActive(false);
         lobbyPanel.SetActive(true);
-
-        Destroy(chatObj);
     }
 
     public override void OnConnectedToMaster()
@@ -161,12 +150,7 @@ public class LobbyManager1 : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (isPlaying == true)
-        {
-            PhotonNetwork.Instantiate(PlayingPrefab.name, Playing.position, Quaternion.identity);
-        }
-
-        if (PhotonNetwork.IsMasterClient)
+         if (PhotonNetwork.IsMasterClient)
         {
             StartButton.SetActive(true);
         }
@@ -187,73 +171,131 @@ public class LobbyManager1 : MonoBehaviourPunCallbacks
         {
             roomPanel.SetActive(false);
             BackButton.SetActive(true);
-            //lobbyPanel.SetActive(true);
         }
     }
 
     public void OnClickStartButton()
     {
-        if (PhotonNetwork.IsMasterClient)
+        switch (scoreOnline.gameMode)
         {
-            Hashtable hash = new Hashtable();
-            hash.Add("gameStatus", 1);
-            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-        }
-        
-        int gameMode = SatakExtensions.GetGM(PhotonNetwork.LocalPlayer);
-        if (gameMode == 1)
-        {
-            LoadDefault();
-        }
-        if (gameMode == 2)
-        {
-            LoadComp();
-        }
-        if (gameMode == 3)
-        {
-            LoadCustom();
+            case 1:
+                LoadLevel("Game");
+                break;
+            case 2:
+                LoadLevel("Comp");
+                break;
+            case 3:
+                switch (scoreOnline.mapType)
+                {
+                    case 1: LoadLevel("Custom"); break;
+                    case 2: LoadLevel("CrazyOnline"); break;
+                    case 3: LoadLevel("Custom_Easy"); break;
+                    case 4: LoadLevel("Custom_Hard"); break;
+                    default:
+                        LoadLevel("Custom"); break;
+                }
+                break;
         }
     }
 
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    private void LoadLevel(string levelName)
     {
-        PV = FindObjectOfType<PhotonView>();
-        if (!PV.IsMine && targetPlayer == PV.Owner)
+        PhotonNetwork.LoadLevel(levelName);
+    }
+
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        if (propertiesThatChanged.ContainsKey("GameMode"))
         {
-            int gameStatus = (int)changedProps["gameStatus"];
-            if (!PhotonNetwork.IsMasterClient)
+            scoreOnline.gameMode = (int)propertiesThatChanged["GameMode"];
+        }
+
+        if (propertiesThatChanged.ContainsKey("MapType"))
+        {
+            scoreOnline.mapType = (int)propertiesThatChanged["MapType"];
+        }
+
+        if (propertiesThatChanged.ContainsKey("Lives"))
+        {
+            scoreOnline.life = (int)propertiesThatChanged["Lives"];
+        }
+
+        if (propertiesThatChanged.ContainsKey("fSpeedComp"))
+        {
+            scoreOnline.fSpeed = (int)propertiesThatChanged["fSpeedComp"];
+        }
+        
+        if (propertiesThatChanged.ContainsKey("fSpeedCustom"))
+        {
+            scoreOnline.fSpeedCustom = (int)propertiesThatChanged["fSpeedCustom"];
+        }
+
+        if (propertiesThatChanged.ContainsKey("sSpeedComp"))
+        {
+            scoreOnline.sSpeed = (int)propertiesThatChanged["sSpeedComp"];
+        }
+        
+        if (propertiesThatChanged.ContainsKey("sSpeedCustom"))
+        {
+            scoreOnline.sSpeedCustom = (int)propertiesThatChanged["sSpeedCustom"];
+        }
+
+        SaveRoomProps();
+    }
+    public void SaveRoomProps()
+    {
+        PlayerPrefs.SetInt("fSpeedComp", scoreOnline.fSpeed);
+        PlayerPrefs.SetInt("sSpeedComp", scoreOnline.sSpeed);
+        PlayerPrefs.SetInt("fSpeedCustom", scoreOnline.fSpeedCustom);
+        PlayerPrefs.SetInt("sSpeedCustom", scoreOnline.sSpeedCustom);
+        PlayerPrefs.SetInt("MapType", scoreOnline.mapType);
+        PlayerPrefs.SetInt("Lives", scoreOnline.life);
+        PlayerPrefs.SetInt("GameMode", scoreOnline.gameMode);
+
+        PlayerPrefs.Save();
+    }
+
+    private void LoadRoomProps()
+    {
+        if (PhotonNetwork.CurrentRoom != null)
+        {
+            if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("GameMode"))
             {
-                int gameMode = SatakExtensions.GetGM(PhotonNetwork.LocalPlayer);
-                if (gameMode == 1)
-                {
-                    LoadDefault();
-                }
-                if (gameMode == 2)
-                {
-                    LoadComp();
-                }
-                if (gameMode == 3)
-                {
-                    LoadCustom();
-                }
+                scoreOnline.gameMode = (int)PhotonNetwork.CurrentRoom.CustomProperties["GameMode"];
+            }
+
+            if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("MapType"))
+            {
+                scoreOnline.mapType = (int)PhotonNetwork.CurrentRoom.CustomProperties["MapType"];
+            }
+
+            if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("Lives"))
+            {
+                scoreOnline.life = (int)PhotonNetwork.CurrentRoom.CustomProperties["Lives"];
+            }
+
+            if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("fSpeedComp"))
+            {
+                scoreOnline.fSpeed = (int)PhotonNetwork.CurrentRoom.CustomProperties["fSpeedComp"];
+            }
+
+            if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("sSpeedComp"))
+            {
+                scoreOnline.sSpeed = (int)PhotonNetwork.CurrentRoom.CustomProperties["sSpeedComp"];
+            }
+
+            if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("fSpeedCustom"))
+            {
+                scoreOnline.fSpeedCustom = (int)PhotonNetwork.CurrentRoom.CustomProperties["fSpeedCustom"];
+            }
+
+            if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("sSpeedCustom"))
+            {
+                scoreOnline.sSpeedCustom = (int)PhotonNetwork.CurrentRoom.CustomProperties["sSpeedCustom"];
             }
         }
     }
 
-    public void LoadDefault()
-    {
-        PhotonNetwork.LoadLevel("Game");
-    }
-
-    public void LoadComp()
-    {
-        PhotonNetwork.LoadLevel("Comp");
-    }
-
-    public void LoadCustom()
-    {
-        PhotonNetwork.LoadLevel("Custom");
-    }
 
     public void LeaderBoard()
     {

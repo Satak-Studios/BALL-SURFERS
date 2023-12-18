@@ -32,6 +32,7 @@ public class settingmenu : MonoBehaviour
     int qIndex;
     int FPS;
     int fScreen;
+    bool isFScreen;
     int Dval;
     int Srun;
 
@@ -61,9 +62,16 @@ public class settingmenu : MonoBehaviour
         //Getting Value
         bolume = PlayerPrefs.GetFloat("volume");
         res = PlayerPrefs.GetInt("index");
+        SetResolution(res);
         Qindex.value = PlayerPrefs.GetInt("qIndex");
+        SetQuality(Qindex.value);
         FPS = PlayerPrefs.GetInt("fps");
         fScreen = PlayerPrefs.GetInt("fScreen");
+        switch (fScreen)
+        {
+            case 0: SetFullscreen(false); break;
+            case 1: SetFullscreen(true);break;
+        }
         DMode.value = PlayerPrefs.GetInt("dmode");
         Srun = PlayerPrefs.GetInt("sdrn");
 
@@ -103,14 +111,26 @@ public class settingmenu : MonoBehaviour
 
     public void SetResolution(int resolutionIndex)
     {
-        Resolution resolution = resolutions[resolutionIndex];
+        if (reslutionDropdown == null)
+        {
+            Debug.LogError("reslutionDropdown is not assigned in the Inspector.");
+            return;
+        }
 
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-        
-        resolutionIndex = PlayerPrefs.GetInt("index",resolutionIndex);
+        if (resolutions == null || resolutions.Length == 0 || resolutionIndex < 0 || resolutionIndex >= resolutions.Length)
+        {
+            //Debug.LogError("Invalid resolution index or resolutions array is null/empty.");
+            return;
+        }
+
+        Resolution resolution = resolutions[resolutionIndex];
+        isFScreen = (fScreen == 1);
+
+        Screen.SetResolution(resolution.width, resolution.height, isFScreen);
         res = resolutionIndex;
-        PlayerPrefs.SetInt("index",resolutionIndex);
+        PlayerPrefs.SetInt("index", resolutionIndex);
     }
+
 
     public void SetVolume (float volume)
     {
@@ -123,12 +143,20 @@ public class settingmenu : MonoBehaviour
     {
         QualitySettings.SetQualityLevel(qualityIndex);
         qIndex = qualityIndex;
-        qualityIndex = PlayerPrefs.GetInt("qIndex");
         PlayerPrefs.SetInt("qIndex", Qindex.value);
     }
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
+        if (isFullscreen)
+        {
+            fScreen = 1;
+        }
+        else
+        {
+            fScreen = 0;
+        }
+        PlayerPrefs.SetInt("fScreen", fScreen);
     }
     
     public void SetFPS(bool isFPS_ON)
@@ -205,8 +233,6 @@ public class settingmenu : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// All GameModes
     public void Normal()
     {
         float ff = 300;
@@ -253,8 +279,6 @@ public class settingmenu : MonoBehaviour
 
         PlayerPrefs.SetInt("dmode", DMode.value);
     }
-    /// </summary>
-    // END
 
     //Saving
     public void SaveSettings()
@@ -264,15 +288,9 @@ public class settingmenu : MonoBehaviour
         PlayerPrefs.SetInt("qIndex", qIndex);
         PlayerPrefs.SetInt("fps", FPS);
         PlayerPrefs.SetInt("fScreen", fScreen);
-        PlayerPrefs.SetInt("fScreen", fScreen);
         PlayerPrefs.SetInt("dmode", DMode.value);
         PlayerPrefs.SetInt("sdrn", Srun);
         PlayerPrefs.Save();
-    }
-
-    public void BenchMark()
-    {
-        SceneManager.LoadScene("Benchmark");
     }
 
     public void Back()

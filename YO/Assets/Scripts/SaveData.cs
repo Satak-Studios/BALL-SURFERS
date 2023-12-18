@@ -13,6 +13,7 @@ public class SaveData
     private int selectedMouth = 0;
     private int selectedBodyColor = 0;
     private int selectedEyeColor = 0;
+    private int band = 0;
 
     [FirestoreProperty]
     public string UserName
@@ -144,4 +145,18 @@ public class SaveData
         }
     }
 
+    [FirestoreProperty]
+    public int Bandage
+    {
+        get
+        {
+            band = PlayerPrefs.GetInt("band");
+            return selectedEyes;
+        }
+        set
+        {
+            band = value;
+            PlayerPrefs.SetInt("band", value);
+        }
+    }
 }

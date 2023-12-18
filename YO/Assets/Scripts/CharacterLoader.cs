@@ -44,14 +44,6 @@ public class CharacterLoader : MonoBehaviour
             1 => Color.white,
             _ => EyeColor.color,
         };
-
-        if (!(selectedEyes + selectedMouth == 0))
-        {
-            if (PlayerPrefs.GetInt("Achievement_2") == 0)
-			{
-				FindObjectOfType<Achiever>().AchievementUnlocked(2);
-			}
-        }
     }
 
     void Update()
@@ -63,6 +55,14 @@ public class CharacterLoader : MonoBehaviour
             newRotation.y = 180f;
             newRotation.z = 0f;
             transform.rotation = Quaternion.Euler(newRotation);
+        }
+
+        if (!(selectedEyes + selectedMouth == 0))
+        {
+            if (PlayerPrefs.GetInt("Achievement_2") == 0)
+            {
+                FindObjectOfType<Achiever>().AchievementUnlocked(2);
+            }
         }
     }
 }

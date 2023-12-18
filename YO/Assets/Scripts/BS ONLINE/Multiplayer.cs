@@ -13,36 +13,20 @@ public class Multiplayer : MonoBehaviourPunCallbacks
 
     public void onStart()
     {
-            PhotonNetwork.ConnectUsingSettings();
-            status.text = "Connecting....";
-            PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerName");
-            PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.ConnectUsingSettings();
+        status.text = "Connecting....";
+        PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerName");
+        PhotonNetwork.AutomaticallySyncScene = true;
 
+        if (SystemInfo.deviceType == DeviceType.Handheld)
+        {
             Touch touch = Input.GetTouch(0);
             pointer.position = touch.position;
+        }
     }
 
     public override void OnConnectedToMaster()
     {
         SceneManager.LoadScene(Lobby);
     }
-
-    public void CreateMenu()
-    {
-        Time.timeScale = 1f;
-        if (PlayerPrefs.HasKey("intro"))
-        {
-            SceneManager.LoadScene("Start");
-        }
-        else
-        {
-            SceneManager.LoadScene("Trailer");
-        }
-    }
-
-    public void NoName()
-    {
-        SceneManager.LoadScene("connecttoserver");
-    }
-
 }

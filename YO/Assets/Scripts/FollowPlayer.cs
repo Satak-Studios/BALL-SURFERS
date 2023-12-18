@@ -7,6 +7,7 @@ public class FollowPlayer : MonoBehaviour {
     public bool isOnline = false;
     public Vector3 offset;
     public bool Comp = false;
+    public bool Custom = false;
     
     // Update is called once per frame
     void Update()
@@ -23,7 +24,7 @@ public class FollowPlayer : MonoBehaviour {
                 player.position = FindObjectOfType<playermovement>().transform.position;
             }
             transform.position = player.position + offset;
-        }        
+        }
     }
 
     public void CompleteCompReal()
@@ -31,6 +32,10 @@ public class FollowPlayer : MonoBehaviour {
         if (Comp)
         {
             FindObjectOfType<CompManager>().CompleteComp();
+        }
+        if(Custom)
+        {
+            FindObjectOfType<CustomManager>().CompleteComp();
         }
     }
 }

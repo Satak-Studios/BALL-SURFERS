@@ -29,23 +29,6 @@ public class connecttoserver : MonoBehaviourPunCallbacks
     public string Region_5;
     #endregion
 
-    #region BSU 2.0
-    public Text btnTXT;
-
-    public void OnClickBack()
-    {
-        if (PlayerPrefs.HasKey("ko"))
-        {
-            SceneManager.LoadScene(0);
-        }
-        else
-        {
-            SceneManager.LoadScene("Start");
-            PlayerPrefs.SetString("ko", "");
-        }
-    }
-    #endregion
-
     public void OnClick()
     {
         if (username.text.Length >= 1)
@@ -70,20 +53,16 @@ public class connecttoserver : MonoBehaviourPunCallbacks
         username.characterLimit = 15;
         }
 
-        if (!PlayerPrefs.HasKey(PlayerPrefsNameKey)){
-             {
-			int rand = Random.Range(0, 10000);
-            int randName = Random.Range(0, Names.Length);
-			string player_name = Names[randName] + rand.ToString("0000");
-			Debug.Log("Your Name is " + randName + rand);
-			PlayerPrefs.SetString("PlayerName", player_name);
-            username.text = player_name;
-		}
-        }
-      /*  if (PlayerPrefs.HasKey(PlayerPrefsNameKey))
+        if (!PlayerPrefs.HasKey(PlayerPrefsNameKey))
         {
-            OnClick();
-        }*/
+            SetPlayerName();
+        }
+    }
+
+    public void Connect()
+    {
+        PhotonNetwork.NickName = PlayerPrefs.GetString(PlayerPrefsNameKey);
+        SceneManager.LoadScene("Start");
     }
 
     // Update is called once per frame
@@ -92,11 +71,6 @@ public class connecttoserver : MonoBehaviourPunCallbacks
         SceneManager.LoadScene(SceneToLoadOnLobby);
         Debug.Log("Connected To Master");
     }
-    // public override void OnJoinedLobby()
-    //{
-    //     SceneManager.LoadScene("Find Room");
-    //     Debug.Log("Joined The Lobby");
-    // }
  
      public GameObject noInternet;
 
@@ -127,7 +101,7 @@ public class connecttoserver : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        //Verify That it is me
+        /*Verify That it is me
         if (isCreater == true)
         {
             PlayerPrefs.SetString("sk", "Sathvik");
@@ -189,6 +163,7 @@ public class connecttoserver : MonoBehaviourPunCallbacks
              {
                  NameError.SetActive(true);
              }*/
+            /*
             string pName = PlayerPrefs.GetString("PlayerName");
             pName.ToLower();
             pName.Trim();
@@ -200,9 +175,9 @@ public class connecttoserver : MonoBehaviourPunCallbacks
             if (pName == "satak")
             {
                 NameError.SetActive(true);
-            }
+            }*/
 
-
+            /*
             string usernameString = username.text;
             usernameString.ToLower();
             usernameString.Trim();
@@ -221,22 +196,10 @@ public class connecttoserver : MonoBehaviourPunCallbacks
         {
             NameError.SetActive(false);
         }
+        }*/
+    }
 
-
-        #region BSU 2.0
-
-        if (PlayerPrefs.HasKey("ko"))
-        {
-            btnTXT.text = "Back";
-        }
-        else
-        {
-            btnTXT.text = "Connect";
-        }
-    #endregion
-}
-
-public void nTry()
+    public void nTry()
     {
         username.text = "";
     }
@@ -286,13 +249,23 @@ public void nTry()
 
     public void SetPlayerName()
     {
-        //Random PlayerName
+        string[] nouns = { "Gamer", "Explorer", "Adventurer", "Hero", "Champion", "Pioneer", "Detective", "Scholar", "Artist", "Musician", "Scientist", "Engineer", "Captain", "Pirate", "Wizard", "Warrior", "Athlete", "Leader", "Dreamer", "Traveler", "Nomad", "Guardian", "Hunter", "Knight", "Jester", "Acrobat", "Magician", "Guardian", "Gladiator", "Spy", "Sailor", "Astronaut", "Pirate", "Viking", "Explorer", "Samurai", "Ninja", "Archer", "Scribe", "Sage", "Gladiator" };
+        int randNoun = Random.Range(0, nouns.Length);
         int rand = Random.Range(0, 10000);
         int randName = Random.Range(0, Names.Length);
-        string player_name = Names[randName] + rand.ToString("0000");
-        Debug.Log("Your Name is " + randName + rand);
-        PlayerPrefs.SetString("PlayerName", player_name);
-        username.text = player_name;
+        string player_name = Names[randName] + nouns[randNoun] + rand.ToString("0000");
+        
+        if (player_name.Length > 15)
+        {
+            string playerName = player_name.Substring(0, 15);
+            username.text = playerName;
+            PlayerPrefs.SetString("PlayerName", playerName);
+        }
+        else
+        {
+            username.text = player_name;
+            PlayerPrefs.SetString("PlayerName", player_name);
+        }
     }
 }
 

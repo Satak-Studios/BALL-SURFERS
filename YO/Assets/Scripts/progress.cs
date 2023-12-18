@@ -16,6 +16,7 @@ public class progress : MonoBehaviour
     public Text PlayerName;
     public InputField nameField;
     public Text xpText;
+    public Text achText;
 
     public GameObject resetObj;
 
@@ -42,9 +43,10 @@ public class progress : MonoBehaviour
         hScore.text = "HighScore: " + hScoreInt.ToString();
         cLevel.text = "Levels: " + PlayerPrefs.GetInt("levelsUnlocked").ToString();
         PlayerName.text = PlayerPrefs.GetString("PlayerName").ToString();
+        achText.text = "Achievements:" + PlayerPrefs.GetInt("totalAch").ToString();
         CalcXP();
         
-        if (PlayerPrefs.GetInt("ImpMark") == 1)
+        if (PlayerPrefs.GetInt("ImpMark") >= 1)
         {
             ImpMark.SetActive(true);
         }else
@@ -72,9 +74,14 @@ public class progress : MonoBehaviour
         {
             string playerName = player_name.Substring(0, 15);
             PlayerPrefs.SetString("PlayerName", playerName);
-        }else
+            PlayerName.text = PlayerPrefs.GetString("PlayerName");
+            nameField.text = PlayerPrefs.GetString("PlayerName");
+        }
+        else
         {
             PlayerPrefs.SetString("PlayerName", player_name);
+            PlayerName.text = PlayerPrefs.GetString("PlayerName");
+            nameField.text = PlayerPrefs.GetString("PlayerName");
         }
     }
 
@@ -92,7 +99,7 @@ public class progress : MonoBehaviour
     void CalcXP()
     {
         int achievements = PlayerPrefs.GetInt("totalAch");
-        int levels = PlayerPrefs.GetInt("levelsUnlocked");
+        int levels = PlayerPrefs.GetInt("levelsUnlocked", 1);
         int hScore = (int)PlayerPrefs.GetFloat("hiScore", 1);
         int XP = achievements*levels*hScore/2;
         if (XP <= 1)
@@ -163,6 +170,7 @@ public class progress : MonoBehaviour
 			}
         }
         xpText.text = "Xp: " + XP;
+        PlayerPrefs.SetInt("xp", XP);
     }  
 
     public void CH()
