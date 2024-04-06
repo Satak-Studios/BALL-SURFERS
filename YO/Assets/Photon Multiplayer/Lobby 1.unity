@@ -7330,8 +7330,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 101.556244, y: -15}
-  m_SizeDelta: {x: 203.1125, y: 30}
+  m_AnchoredPosition: {x: 111.34, y: -15}
+  m_SizeDelta: {x: 183.55, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &650606056
 MonoBehaviour:
@@ -7360,7 +7360,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -11989,8 +11989,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -107.443726, y: -15}
-  m_SizeDelta: {x: 214.8874, y: 30}
+  m_AnchoredPosition: {x: -122.97, y: -15}
+  m_SizeDelta: {x: 225.15, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1032346185
 MonoBehaviour:
@@ -12019,13 +12019,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 4
+    m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Owner: PlayerName12345'
+  m_Text: 'Owner: PlayerNameSatak?'
 --- !u!222 &1032346186
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12382,7 +12382,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -25.992302, y: 0}
+  m_AnchoredPosition: {x: -35.992, y: 0}
   m_SizeDelta: {x: 51.984604, y: 51.7533}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1067205825
@@ -12983,6 +12983,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 753194195}
     m_Modifications:
+    - target: {fileID: 1391905238996702432, guid: 78090d7cf8ad074468f7c7965ccbeb61, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3934873737732907701, guid: 78090d7cf8ad074468f7c7965ccbeb61, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -13345,8 +13349,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -201, y: -32.436}
-  m_SizeDelta: {x: 428.5586, y: 64.8712}
+  m_AnchoredPosition: {x: -193.74, y: -32.464}
+  m_SizeDelta: {x: 516.65, y: 75.684}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1131500961
 MonoBehaviour:
@@ -14271,7 +14275,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 25.992302, y: 0}
+  m_AnchoredPosition: {x: 35.992, y: 0}
   m_SizeDelta: {x: 51.984604, y: 51.7533}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1251510476
@@ -22049,7 +22053,7 @@ MonoBehaviour:
   roomPanel: {fileID: 1298615348}
   roomFPanel: {fileID: 854320073}
   roomName: {fileID: 411178090}
-  roomItemPrfab: {fileID: 2678651615480746340, guid: 78090d7cf8ad074468f7c7965ccbeb61, type: 3}
+  roomItemPrfab: {fileID: 2678651615480746340, guid: 13ca9d456af989b4ea4f23dce9f06cf3, type: 3}
   contentObject: {fileID: 753194195}
   timeBetweenUpdates: 1.5
   playerItemPrefab: {fileID: 5741480145982800728, guid: 35f471dda98cf31429b433f8314e1439, type: 3}
@@ -25016,8 +25020,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 200, y: -83.97212}
-  m_SizeDelta: {x: 400, y: 32.05575}
+  m_AnchoredPosition: {x: 200, y: -84.15094}
+  m_SizeDelta: {x: 400, y: 31.698112}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6479452471859933539
 CanvasRenderer:

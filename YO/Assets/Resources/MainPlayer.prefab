@@ -4930,7 +4930,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.42864984, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10032,12 +10032,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae58ba4330548a48a6e499d93f04b71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  po: {fileID: 0}
   player: {fileID: 3243727180431584093}
-  isOnline: 0
   offset: {x: 0, y: 1, z: 0}
   Comp: 0
   Custom: 0
+  defaultObstacleMaterial: {fileID: 0}
+  fadedObstacleMaterial: {fileID: 0}
+  exception: 0
+  isOnline: 0
 --- !u!1 &4656391404860511540
 GameObject:
   m_ObjectHideFlags: 0
@@ -15191,12 +15193,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae58ba4330548a48a6e499d93f04b71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  po: {fileID: 0}
   player: {fileID: 3243727180431584093}
-  isOnline: 0
   offset: {x: 0, y: 1, z: -5}
   Comp: 1
   Custom: 0
+  defaultObstacleMaterial: {fileID: 0}
+  fadedObstacleMaterial: {fileID: 0}
+  exception: 1
+  isOnline: 1
 --- !u!95 &9162319260772806308
 Animator:
   serializedVersion: 5
@@ -15225,6 +15229,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3243727180431584093}
     m_Modifications:
+    - target: {fileID: 4215907483150983619, guid: 6972a507e131c4b44b7e81efbad23bc8, type: 3}
+      propertyPath: PV
+      value: 
+      objectReference: {fileID: 7490287685031848735}
+    - target: {fileID: 4215907483150983619, guid: 6972a507e131c4b44b7e81efbad23bc8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215907483150983619, guid: 6972a507e131c4b44b7e81efbad23bc8, type: 3}
+      propertyPath: photonView
+      value: 
+      objectReference: {fileID: 7490287685031848735}
+    - target: {fileID: 4215907483150983619, guid: 6972a507e131c4b44b7e81efbad23bc8, type: 3}
+      propertyPath: lockRotation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4667739789323584165, guid: 6972a507e131c4b44b7e81efbad23bc8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8492792093367830924, guid: 6972a507e131c4b44b7e81efbad23bc8, type: 3}
       propertyPath: m_Name
       value: Character

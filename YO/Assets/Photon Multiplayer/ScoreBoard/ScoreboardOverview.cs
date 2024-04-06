@@ -10,26 +10,20 @@ public class ScoreboardOverview : MonoBehaviourPunCallbacks
 {
 	[SerializeField] private ScoreboardEntry m_entry = null;
 	private List<ScoreboardEntry> m_entries = new List<ScoreboardEntry>();
-	//private Player newPlayer;
-	//public bool isinMenu;
 
 #region Callbacks
-
-	//creates and entry for local player and udpates the board
 	public override void OnJoinedRoom()
 	{
 		CreateNewEntry(PhotonNetwork.LocalPlayer);
 		UpdateScoreboard();
 	}
 
-	//creates entry foreach new player and updates the board
 	public override void OnPlayerEnteredRoom(Player newPlayer)
 	{
 		CreateNewEntry(newPlayer);
 		UpdateScoreboard();
 	}
 	
-	//removes entry from player that left the room and updates the board
 	public override void OnPlayerLeftRoom(Player targetPlayer)
 	{
 		RemoveEntry(targetPlayer);
@@ -37,7 +31,6 @@ public class ScoreboardOverview : MonoBehaviourPunCallbacks
 		UpdateScoreboard();
 	}
 
-	//using this callback to update the scoreboard only if the score property changed
 	public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
 	{
 		if (changedProps.ContainsKey(PunPlayerScores.PlayerScoreProp))
@@ -64,8 +57,6 @@ public class ScoreboardOverview : MonoBehaviourPunCallbacks
 
 	private void UpdateScoreboard()
 	{
-		//iterate through all player to update score
-		//if no entry exists create one
 		foreach (var targetPlayer in PhotonNetwork.CurrentRoom.Players.Values)
 		{
 			var targetEntry = m_entries.Find(x => x.Player == targetPlayer);
@@ -81,12 +72,16 @@ public class ScoreboardOverview : MonoBehaviourPunCallbacks
 		SortEntries();
 	}
 
-	private void SortEntries()
+    private void Update()
+    {
+		SortEntries();
+
+	}
+
+    private void SortEntries()
 	{
-		// Create a copy of the list before sorting
 		List<ScoreboardEntry> sortedEntries = new List<ScoreboardEntry>(m_entries);
 
-		// Sort the copied list in ascending order based on score, handling zero separately
 		sortedEntries.Sort((a, b) =>
 		{
 			if (a.Score == 0f && b.Score == 0f)
@@ -95,11 +90,11 @@ public class ScoreboardOverview : MonoBehaviourPunCallbacks
 			}
 			else if (a.Score == 0f)
 			{
-				return 1; // Move zero values to the end
+				return 1;
 			}
 			else if (b.Score == 0f)
 			{
-				return -1; // Move zero values to the end
+				return -1;
 			}
 			else
 			{
@@ -107,11 +102,10 @@ public class ScoreboardOverview : MonoBehaviourPunCallbacks
 			}
 		});
 
-		// Sort child order and store the index in ScoreboardEntry
 		for (var i = 0; i < sortedEntries.Count; i++)
 		{
 			sortedEntries[i].transform.SetSiblingIndex(i);
-			sortedEntries[i].SetPlayerPos(i + 1); // SetIndex method should be added to ScoreboardEntry
+			sortedEntries[i].SetPlayerPos(i + 1);
 		}
 	}
 

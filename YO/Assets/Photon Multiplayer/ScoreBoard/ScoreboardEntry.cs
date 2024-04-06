@@ -7,7 +7,6 @@ using Satak.Utilities;
 
 public class ScoreboardEntry : MonoBehaviour
 {
-	//[SerializeField] private Text m_label;// = null;
 	[SerializeField] private Text pName = null;
 	[SerializeField] private Text m_Scorelabel = null;
 	[SerializeField] private Text m_time = null;
@@ -18,8 +17,6 @@ public class ScoreboardEntry : MonoBehaviour
 
 	private Player m_player;
 
-	//store player for this entry
-	//set init value and color
 	public void Set(Player player)
 	{
 		m_player = player;
@@ -31,7 +28,6 @@ public class ScoreboardEntry : MonoBehaviour
 		PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerName");
 	}
 
-	//update label bases on score and name
 	public void UpdateScore()
 	{
 		pName.text = $"{m_player.NickName}";
@@ -66,8 +62,6 @@ public class ScoreboardEntry : MonoBehaviour
 		int secondsRemaining = (totalMilliseconds % (60 * 1000)) / 1000;
 		int milliseconds = totalMilliseconds % 1000;
 
-		// Use string.Format or string interpolation to create the formatted string
-		// Here, I'm using string interpolation for simplicity
 		string formattedTime = $"{minutes:D2}:{secondsRemaining:D2}:{milliseconds:D3}";
 
 		return formattedTime;

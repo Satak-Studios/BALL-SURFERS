@@ -22,6 +22,7 @@ public class settingmenu : MonoBehaviour
     public GameObject Score;
 
     public Toggle FPST;
+    public Toggle LFPS;
     public Toggle fsn;
     public Toggle sRun;
 
@@ -31,6 +32,7 @@ public class settingmenu : MonoBehaviour
     int res;
     int qIndex;
     int FPS;
+    int lFPS;
     int fScreen;
     bool isFScreen;
     int Dval;
@@ -62,19 +64,14 @@ public class settingmenu : MonoBehaviour
         //Getting Value
         bolume = PlayerPrefs.GetFloat("volume");
         res = PlayerPrefs.GetInt("index");
-        SetResolution(res);
+        //SetResolution(res);
         Qindex.value = PlayerPrefs.GetInt("qIndex");
         SetQuality(Qindex.value);
         FPS = PlayerPrefs.GetInt("fps");
         fScreen = PlayerPrefs.GetInt("fScreen");
-        switch (fScreen)
-        {
-            case 0: SetFullscreen(false); break;
-            case 1: SetFullscreen(true);break;
-        }
+        lFPS = PlayerPrefs.GetInt("lfps");
         DMode.value = PlayerPrefs.GetInt("dmode");
         Srun = PlayerPrefs.GetInt("sdrn");
-
         //FPS
         if (FPS == 1)
         {
@@ -83,6 +80,26 @@ public class settingmenu : MonoBehaviour
         else
         {
             FPST.isOn = false;
+        } 
+        
+        if (lFPS == 1)
+        {
+            LFPS.isOn = true;
+        }
+        else
+        {
+            LFPS.isOn = false;
+        }   
+        
+        if (Screen.fullScreen)
+        {
+            fsn.isOn = true;
+            fScreen = 1;
+        }
+        else
+        {
+            fsn.isOn = false;
+            fScreen = 0;
         }
 
         //Resoultion
@@ -147,14 +164,16 @@ public class settingmenu : MonoBehaviour
     }
     public void SetFullscreen(bool isFullscreen)
     {
-        Screen.fullScreen = isFullscreen;
+        //Screen.fullScreen = isFullscreen;
         if (isFullscreen)
         {
             fScreen = 1;
+            Screen.fullScreen = true;
         }
         else
         {
             fScreen = 0;
+            Screen.fullScreen = false;
         }
         PlayerPrefs.SetInt("fScreen", fScreen);
     }
@@ -170,6 +189,20 @@ public class settingmenu : MonoBehaviour
         {
             FPS = 0;
             PlayerPrefs.SetInt("fps", FPS);
+        }
+    }
+
+    public void LockFPS(bool isLocked)
+    {
+        if (isLocked)
+        {
+            lFPS = 1;
+            PlayerPrefs.SetInt("lfps", lFPS);
+        }
+        else
+        {
+            lFPS = 0;
+            PlayerPrefs.SetInt("lfps", lFPS);
         }
     }
 

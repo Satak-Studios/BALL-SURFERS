@@ -71,7 +71,7 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         {
             return;
         }
-        if (pso == null)
+        if (pso.PV == null)
         {
             return;
         }

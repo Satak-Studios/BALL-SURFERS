@@ -16,6 +16,8 @@ public class Achiever : MonoBehaviour
     private static Achiever instance;
     public bool delete = false;
 
+    public int targetFPS = 60;
+
     void Awake()
     {
         if (instance == null)
@@ -30,15 +32,12 @@ public class Achiever : MonoBehaviour
         }
     }
 
-
-    // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(gameObject);
         LoadAchievements();
     }
 
-    // Update is called once per frame
     void Update()
     {
         //Casual Surfer
@@ -84,6 +83,18 @@ public class Achiever : MonoBehaviour
         {
             totalAch = 25;
             PlayerPrefs.SetInt("totalAch", 25);
+        }
+
+        //Optimaisation
+        if (PlayerPrefs.GetInt("lfps") == 0)
+        {
+            QualitySettings.vSyncCount = 0;
+            Application.targetFrameRate = -1;//Optimisation
+        }
+        else
+        {
+            QualitySettings.vSyncCount = 1;
+            Application.targetFrameRate = targetFPS;
         }
     }
 

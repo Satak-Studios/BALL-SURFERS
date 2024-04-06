@@ -1,13 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 using Photon.Pun;
 using Photon.Realtime;
-using Utilities;
-using Photon.Pun.UtilityScripts;
-using System.IO;
 
 public class Intro : MonoBehaviour
 { 

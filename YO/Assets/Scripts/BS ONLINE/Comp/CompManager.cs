@@ -11,7 +11,10 @@ public class CompManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject playerPrefab;
 
     public int currentPos;
-    private int NumberOfKatams;
+    public int NumberOfKatams;
+    public int retries;
+    public int tempStore;
+    public int tempStorage;
 
     //UI
     public Text koText;
@@ -21,7 +24,7 @@ public class CompManager : MonoBehaviourPunCallbacks
 
     //OtherTimerRelated
     float startTime = 3f;
-    float currentTime;
+    float currentTime = 3f;
     public bool timerStarted = true;
     public Text timerText;
     public GameObject Stopper;
@@ -61,9 +64,13 @@ public class CompManager : MonoBehaviourPunCallbacks
         SpawnPlayer();
         currentTime = startTime;
         timerStarted = true;
+        myPlayer = FindAnyObjectByType<OnlinePlayer>();
+        if (myPlayer == null)
+        {
+            return;
+        }
     }
-
-    // Update is called once per frame
+    
     public void Update()
     {
         myPlayer = FindObjectOfType<OnlinePlayer>();
@@ -95,13 +102,13 @@ public class CompManager : MonoBehaviourPunCallbacks
         #region extra
 
         timerText.text = Mathf.RoundToInt(currentTime).ToString();
-        koText.text = "Retries : " + NumberOfKatams.ToString();
+        koText.text = "Retries : " + retries.ToString();
         if (!(myPlayer == null))
         {
-            progress = myPlayer.gameObject.transform.position.z / 925 * 100;
+            progress = myPlayer.gameObject.transform.position.z; /// 925 * 100;
         }
-        progressText.text = progress.ToString("F2") + "%";
-        progressSlider.value = progress;
+        progressText.text = progress.ToString("0");// + "%";
+        progressSlider.value = progress / 925 * 100;
         screenshotFolder = Path.Combine(Application.persistentDataPath, "Screenshots");
         Directory.CreateDirectory(screenshotFolder);
 
@@ -125,7 +132,7 @@ public class CompManager : MonoBehaviourPunCallbacks
             Stopper.SetActive(false);
         }
 
-        if (progress >= 100)
+        if ((progress / 925 * 100) >= 100)
         {
             CompleteCompAnim();
         }
@@ -184,29 +191,38 @@ public class CompManager : MonoBehaviourPunCallbacks
         int randIndex = Random.Range(0, spawnPoints.Length);
         _pos = spawnPoints[randIndex].position;
         PhotonNetwork.Instantiate(playerPrefab.name, _pos, Quaternion.identity);
-        myPlayer.Freeze(_pos);
+        if (myPlayer != null)
+        {
+            myPlayer.Freeze(_pos);
+        }
     }
 
     public void ReSpawnPlayer()
     {
+        if (myPlayer != null)
+        {
+            myPlayer = null;
+        }
+
         int randIndex = Random.Range(0, spawnPoints.Length);
-        PhotonNetwork.Instantiate(playerPrefab.name, spawnPoints[randIndex].position, Quaternion.identity);
-        myPlayer.UnFreeze();
+        GameObject newPlayer = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoints[randIndex].position, Quaternion.identity);
+        myPlayer = newPlayer.GetComponent<OnlinePlayer>();
+        if (myPlayer != null)
+        {
+            myPlayer.UnFreeze();
+        }
+        NumberOfKatams++;
     }
 
-    public void EndGame()
+    public void EndGaming()
     {
-        if (myPlayer.PV.IsMine == true)
+        if (myPlayer.PV.IsMine)
         {
-            if (!_GodMod)
-            {
-                gameHasEnded = true;
-                Time.timeScale = 1f;
-                PhotonNetwork.Destroy(myPlayer.Char);
-
-                ReSpawnPlayer();
-                NumberOfKatams++;
-            }
+            retries++;
+            gameHasEnded = true;
+            Time.timeScale = 1f;
+            PhotonNetwork.Destroy(myPlayer.Char);
+            ReSpawnPlayer();         
         }
     }
 
@@ -221,6 +237,8 @@ public class CompManager : MonoBehaviourPunCallbacks
             koText.gameObject.SetActive(false);
             progressText.gameObject.SetActive(false);  
             myPlayer.cam.SetBool("compu", true);
+            string _message = "\n has completed the race!";
+            FindObjectOfType<Notifier>().SendInfo(_message);
             progressObj.SetActive(false);
         }
     }
@@ -231,8 +249,8 @@ public class CompManager : MonoBehaviourPunCallbacks
         FeedBackText.text = PlayerPosition switch
         {
             1 => "Winner!",
-            2 => "Close, but Cigar",
-            3 => "Wistful!",
+            2 => "The Veiled Challenger",
+            3 => "Close, but Cigar!",
             4 => "Better efforts, Next time!",
             5 => "You Noob",
             _ => "Winner!"
@@ -301,6 +319,12 @@ public class CompManager : MonoBehaviourPunCallbacks
     public void LeaveGameFake()
     {
         leaveGameObj[0].text = "Confirm?";
+        tempStorage++;
+        if (tempStore == 1)
+        {
+            PhotonNetwork.DestroyAll(true);
+            SceneManager.LoadScene("Lobby 1");
+        }
     }
 
     public void LeaveGame(int x)

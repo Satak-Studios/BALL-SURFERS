@@ -24,7 +24,10 @@ public class player : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        cScore = FindObjectOfType<PlayerOnline>().gameObject.transform.position.z;
+        if (FindObjectOfType<PlayerOnline>() != null)
+        {
+            cScore = FindObjectOfType<PlayerOnline>().gameObject.transform.position.z;
+        }
         int _score = (int) cScore;
         scoreText.text = _score.ToString();
 

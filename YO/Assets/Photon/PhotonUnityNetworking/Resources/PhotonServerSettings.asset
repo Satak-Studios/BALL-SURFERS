@@ -28,7 +28,7 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: 
+  DevRegion: in
   PunLogging: 2
   EnableSupportLogger: 0
   RunInBackground: 1
@@ -58,6 +58,13 @@ MonoBehaviour:
   - RPC_SyncSpeed
   - ReceiveChatMessage
   - SendMessageRPC
+  - RecieveInfo
+  - ReceiveInfo
+  - NotifyAllPlayers
+  - ShowNotification
+  - SendInfo
+  - Show
+  - SyncPlayerCustomization
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

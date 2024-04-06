@@ -26,7 +26,6 @@ public class PlayerOnline : MonoBehaviourPunCallbacks
 
     //Photon View
     public PhotonView PV;
-    //public QuitScreen qs;
 
     private void Start()
     {

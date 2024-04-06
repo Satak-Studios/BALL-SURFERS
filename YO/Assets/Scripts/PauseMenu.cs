@@ -75,6 +75,14 @@ public class PauseMenu : MonoBehaviour
         Score.SetActive(true);
         pauseMenuUI.SetActive(false);
         isOptions = false;
+        if (FindObjectOfType<Restart>() != null)
+        {
+            FindObjectOfType<Restart>()._disapper = false;
+        }
+        else
+        {
+            return;
+        }
     }
     void UnLoadMenu()
     {
@@ -95,13 +103,13 @@ public class PauseMenu : MonoBehaviour
         PlayerPrefs.SetInt("sdrn", 0);
     }
     public void options()
+
     {
-        {
-            option.SetActive(true);
-            //pauseMenuUI.SetActive(false);
-            isOptions = true;
-            GameIsPaused = true;
-        }
+        option.SetActive(true);
+        //pauseMenuUI.SetActive(false);
+        isOptions = true;
+        GameIsPaused = true;
+        FindObjectOfType<Restart>()._disapper = true;
     }
     public void back()
     {
@@ -109,6 +117,8 @@ public class PauseMenu : MonoBehaviour
         //pauseMenuUI.SetActive(true);
         GameIsPaused = true;
         isOptions = false;
+        FindObjectOfType<Restart>()._disapper = false;
+
     }
 
     public void Pause()

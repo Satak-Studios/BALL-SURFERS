@@ -10,7 +10,7 @@ public class LevelGenerator : MonoBehaviour
 
     public void Start()
     {
-        int rand = Random.Range(0, objects.Length);
+        int rand = Random.Range(0, objects.Length-1);
         if (PhotonNetwork.InRoom == false)
         {
             Instantiate(objects[rand], transform.position, Quaternion.identity);
@@ -27,7 +27,8 @@ public class LevelGenerator : MonoBehaviour
     {
         if (currentLevel == "infinite" && other.tag == "Player")
         {
-            FindObjectOfType<RestartMenu>().RestartGame();
+            Restart rs = FindObjectOfType<Restart>();
+            rs.RestartGame();
         }
     }
 }

@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Photon.Pun;
-using Photon.Realtime;
-using Utilities;
 
 public class OnlinePlayer : MonoBehaviourPunCallbacks
 {
@@ -30,6 +25,7 @@ public class OnlinePlayer : MonoBehaviourPunCallbacks
 
     //Magic
     public bool Magic = false;
+    public int numberOfKatams = 0;
 
     private void Start()
     {
@@ -190,14 +186,10 @@ public class OnlinePlayer : MonoBehaviourPunCallbacks
     {
         if (PV.IsMine)
         {
-            if (compManager._GodMod == true)
+            if (!compManager._GodMod)
             {
-
-            }
-            else
-            {
-                PhotonNetwork.Destroy(Char);
-                compManager.EndGame();
+                compManager.EndGaming();
+                numberOfKatams++;
             }
         }
     }

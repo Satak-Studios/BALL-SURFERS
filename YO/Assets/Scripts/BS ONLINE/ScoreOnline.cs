@@ -179,8 +179,8 @@ public class ScoreOnline : MonoBehaviourPunCallbacks
             RoomDetails[0].gameObject.SetActive(true);
             RoomDetails[1].gameObject.SetActive(true);
             RoomDetails[2].gameObject.SetActive(false);
-            RoomDetails[0].text = "Forward Speed: x" + fSpeed;
-            RoomDetails[1].text = "Side Speed: x" + sSpeed;
+            RoomDetails[0].text = "Forward Speed: x" + fSpeedCustom / defaulFSpeed;
+            RoomDetails[1].text = "Side Speed: x" + sSpeedCustom / defaultSSpeed;
         }
         if (gameMode == 3)
         {
@@ -189,8 +189,8 @@ public class ScoreOnline : MonoBehaviourPunCallbacks
             RoomDetails[0].gameObject.SetActive(true);
             RoomDetails[1].gameObject.SetActive(true);
             RoomDetails[2].gameObject.SetActive(true);
-            RoomDetails[0].text = "Forward Speed: x" + fSpeedCustom;
-            RoomDetails[1].text = "Side Speed: x" + sSpeedCustom;
+            RoomDetails[0].text = "Forward Speed: x" + fSpeedCustom / defaulFSpeed;
+            RoomDetails[1].text = "Side Speed: x" + sSpeedCustom / defaultSSpeed;
             if (life <= 3)
             {
                 RoomDetails[2].text = "Lives: " + life;
@@ -347,6 +347,10 @@ namespace Satak.Utilities
         public const string PlayerPosition = "PlayerPosition";
         public const string Time = "Time";
         public const string Player_Status = "PlayerStatus";
+        public const string Player_Props_Eye = "PlayerEye";
+        public const string Player_Props_Mouth = "PlayerMouth";
+        public const string Player_Props_BodyColor = "PlayerBodyColor";
+        public const string Player_Props_EyeColor = "PlayerEyeColor";
     }
 
     public static class SatakExtensions
@@ -486,6 +490,83 @@ namespace Satak.Utilities
             return "";
         }
 
+        #endregion
+
+        //PlayerProperties
+        #region PlayerProperties
+
+        public static void SetPlayerEyes(this Player player, int sEye)
+        {
+            Hashtable score = new Hashtable();
+            score[SatakOnline.Player_Props_Eye] = sEye;
+            player.SetCustomProperties(score);
+        }
+
+        public static int GetPlayerEyes(this Player player)
+        {
+            object PlayerEye;
+            if (player.CustomProperties.TryGetValue(SatakOnline.Player_Props_Eye, out PlayerEye))
+            {
+                return (int)PlayerEye;
+            }
+            return 0;
+        }
+
+        //Mouth
+        public static void SetPlayerMouth(this Player player, int sMouth)
+        {
+            Hashtable score = new Hashtable();
+            score[SatakOnline.Player_Props_Mouth] = sMouth;
+            player.SetCustomProperties(score);
+        }
+
+        public static int GetPlayerMouth(this Player player)
+        {
+            object PlayerMouth;           
+            if (player.CustomProperties.TryGetValue(SatakOnline.Player_Props_Mouth, out PlayerMouth))
+            {
+                return (int)PlayerMouth;
+            }        
+            return 0;
+        }
+        
+        //BodyColor
+        public static void SetPlayerBodyColor(this Player player,int sBodyColor)
+        {
+            Hashtable score = new Hashtable();
+            score[SatakOnline.Player_Props_BodyColor] = sBodyColor;
+            player.SetCustomProperties(score);
+        }
+
+        public static int GetPlayerBodyColor(this Player player)
+        {
+            object PlayerBodyColor;         
+            if (player.CustomProperties.TryGetValue(SatakOnline.Player_Props_BodyColor, out PlayerBodyColor))
+            {
+                return (int)PlayerBodyColor;
+            }
+            return 0;
+        }
+
+        //EyeColor
+        public static void SetPlayerEyeColor(this Player player, int sEyeColor)
+        {
+            Hashtable score = new Hashtable();
+            score[SatakOnline.Player_Props_EyeColor] = sEyeColor;
+
+            player.SetCustomProperties(score);
+        }
+
+        public static int GetPlayerEyeColor(this Player player)
+        {
+            object PlayerEyeColor;
+            if (player.CustomProperties.TryGetValue(SatakOnline.Player_Props_EyeColor, out PlayerEyeColor))
+            {
+                return (int)PlayerEyeColor;
+            }
+           
+            return 0;
+        }
         #endregion
     }
 }
