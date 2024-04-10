@@ -60,7 +60,6 @@ public class CustomPlayer : MonoBehaviourPunCallbacks
         movement.enabled = true;
     }
 
-    // Update is called once per frame
     public void FixedUpdate()
     {
         if (PV.IsMine)
@@ -157,16 +156,19 @@ public class CustomPlayer : MonoBehaviourPunCallbacks
     {
         if (PV.IsMine)
         {
-            if (customManager != null && !customManager.crazyMode && collisionInfo.collider.CompareTag("Obsticle"))
+            if (collisionInfo.collider.CompareTag("Obsticle"))
             {
-                movement.enabled = false;
-                KatamOnCollision();
-                //PhotonNetwork.Destroy(Char);
+                if (!customManager.crazyMode)
+                {
+                    movement.enabled = false;
+                    KatamOnCollision();
+                }
             }
         }
     }
     public void Update()
     {
+        customManager = FindObjectOfType<CustomManager>();
         if (rb.position.y < -1f)
         {
             if (PV.IsMine)
@@ -179,22 +181,15 @@ public class CustomPlayer : MonoBehaviourPunCallbacks
         {
             Destroy(PlayerCam);
             Destroy(movement);
-        }
-
-        customManager = FindObjectOfType<CustomManager>();
+        }     
     }
 
     public void KatamOnCollision()
     {
         if (PV.IsMine)
         {
-            if (customManager._GodMod == true)
+            if (!customManager._GodMod)
             {
-
-            }
-            else
-            {
-                //PhotonNetwork.Destroy(Char);
                 customManager.EndGame();
             }
         }

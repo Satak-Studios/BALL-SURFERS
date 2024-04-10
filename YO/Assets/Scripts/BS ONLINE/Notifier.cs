@@ -28,7 +28,6 @@ public class Notifier : MonoBehaviourPunCallbacks
             notificationText.text = "<b>" + senderName + "</b>" + message;
             notificationPanel.SetActive(true);
             _animator.SetBool(notifyParam, true);
-            Debug.Log("Received notification from " + senderName + ": " + message);
             Invoke(nameof(ResetNotification), 6f);
         }
     }
@@ -37,6 +36,18 @@ public class Notifier : MonoBehaviourPunCallbacks
     {
         string senderName = PhotonNetwork.LocalPlayer.NickName;
         photonView.RPC("ShowNotification", RpcTarget.Others, senderName, message);
+    }
+
+    public void SendInfoLocally(string message)
+    {
+        if (!isNotificationShowing)
+        {
+            isNotificationShowing = true;
+            notificationText.text = message;
+            notificationPanel.SetActive(true);
+            _animator.SetBool(notifyParam, true);
+            Invoke(nameof(ResetNotification), 6f);
+        }
     }
 
     public void ResetNotification()

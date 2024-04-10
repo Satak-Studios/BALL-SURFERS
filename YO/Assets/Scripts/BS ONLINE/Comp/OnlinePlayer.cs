@@ -152,8 +152,11 @@ public class OnlinePlayer : MonoBehaviourPunCallbacks
         if (PV.IsMine)
         {
             if (!compManager._GodMod && collisionInfo.collider.tag == "Obsticle")
-            {
-                movement.enabled = false;
+            {       
+                if (movement == null)
+                {
+                    movement.enabled = false;
+                }
                 KatamOnCollision();
                 PhotonNetwork.Destroy(Char);
             }
@@ -173,10 +176,6 @@ public class OnlinePlayer : MonoBehaviourPunCallbacks
         {
             Destroy(PlayerCam);
             Destroy(movement);
-        }
-        else
-        {
-
         }
 
         compManager = FindObjectOfType<CompManager>();

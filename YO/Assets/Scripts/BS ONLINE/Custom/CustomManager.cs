@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using Photon.Realtime;
 using Satak.Utilities;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
@@ -13,6 +14,7 @@ public class CustomManager : MonoBehaviourPunCallbacks
 
     public int currentPos;
     private int NumberOfKatams;
+    int tempStore = 0;
 
     //UI
     public Text koText;
@@ -26,6 +28,8 @@ public class CustomManager : MonoBehaviourPunCallbacks
     public Text timerText;
     public GameObject Stopper;
     public bool gameStarted = false;
+    bool gameCompleted = false;
+    bool changedFPS = false;
 
     //Player Online
     public CustomPlayer myPlayer;
@@ -63,10 +67,10 @@ public class CustomManager : MonoBehaviourPunCallbacks
     void Start()
     {
         SpawnPlayer();
-        //lives = PlayerPrefs.GetInt("Lives", 3);
         LoadRoomProps();
         currentTime = startTime;
         timerStarted = true;
+        gameCompleted = false;
     }
 
     private void LoadRoomProps()
@@ -82,7 +86,7 @@ public class CustomManager : MonoBehaviourPunCallbacks
 
     // Update is called once per frame
     public void Update()
-    {
+    { 
         myPlayer = FindObjectOfType<CustomPlayer>();
 
         //Ping
@@ -113,15 +117,6 @@ public class CustomManager : MonoBehaviourPunCallbacks
         #region extra
 
         timerText.text = Mathf.RoundToInt(currentTime).ToString();
-        FeedBackText.text = PlayerPosition switch
-        {
-            1 => "Winner!",
-            2 => "Close, but Cigar",
-            3 => "Wistful!",
-            4 => "Better efforts, Next time!",
-            5 => "You Noob",
-            _ => "Failed!"
-        };
         if (lives >= 4)
         {
             koText.text = "Retries : " + NumberOfKatams.ToString();
@@ -133,11 +128,14 @@ public class CustomManager : MonoBehaviourPunCallbacks
 
         if (!(myPlayer == null))
         {
-            progress = myPlayer.gameObject.transform.position.z / 925 * 100;
+            progress = myPlayer.gameObject.transform.position.z / 925 * 1000;
         }
-        progressText.text = progress.ToString("F2") + "%";
+        progressText.text = progress.ToString("0");
         screenshotFolder = Path.Combine(Application.persistentDataPath, "Screenshots");
-        Directory.CreateDirectory(screenshotFolder);
+        if (!Directory.Exists(screenshotFolder))
+        {
+            Directory.CreateDirectory(screenshotFolder);
+        }
 
         if (gameStarted)
         {
@@ -205,25 +203,25 @@ public class CustomManager : MonoBehaviourPunCallbacks
         }
 
         //Hearts
-        if (lives == 3 && !(progress >= 100))
+        if (lives == 3 && !gameCompleted)
         {
             Hearts[0].SetActive(true);
             Hearts[1].SetActive(true);
             Hearts[2].SetActive(true);
         }
-        if (lives == 2 && !(progress >= 100))
+        if (lives == 2 && !gameCompleted)
         {
             Hearts[0].SetActive(true);
             Hearts[1].SetActive(true);
             Hearts[2].SetActive(false);
         }
-        if (lives == 1 && !(progress >= 100))
+        if (lives == 1 && !gameCompleted)
         {
             Hearts[0].SetActive(true);
             Hearts[1].SetActive(false);
             Hearts[2].SetActive(false);
         }
-        if (lives <= 0 && !(progress >= 100))
+        if (lives <= 0 && !gameCompleted)
         {
             GodMode();
             gameStarted = false;
@@ -232,17 +230,28 @@ public class CustomManager : MonoBehaviourPunCallbacks
             koText.gameObject.SetActive(false);
             progressText.gameObject.SetActive(false);
             CompleteComp();
-            progressText.gameObject.SetActive(false);
             for (int i = 0; i < Hearts.Length; i++)
             {
                 Hearts[i].SetActive(false);
             }
         }
-        if (lives == 4)
+        if (lives == 4 && !gameCompleted)
         {
             Hearts[0].SetActive(false);
             Hearts[1].SetActive(false);
             Hearts[2].SetActive(false);
+        }
+
+        if (gameCompleted)
+        {
+            Hearts[0].SetActive(false);
+            Hearts[1].SetActive(false);
+            Hearts[2].SetActive(false);
+            if (PlayerPrefs.GetInt("fps") == 1)
+            {
+                PlayerPrefs.SetInt("fps", 0);
+                changedFPS = true;
+            }
         }
         #endregion
     }
@@ -259,7 +268,10 @@ public class CustomManager : MonoBehaviourPunCallbacks
         int randIndex = Random.Range(0, spawnPoints.Length);
         _pos = spawnPoints[randIndex].position;
         PhotonNetwork.Instantiate(playerPrefab.name, _pos, Quaternion.identity);
-        myPlayer.Freeze(_pos);
+        if (myPlayer != null)
+        {
+            myPlayer.Freeze(_pos);
+        }
     }
 
     public void ReSpawnPlayer()
@@ -271,29 +283,26 @@ public class CustomManager : MonoBehaviourPunCallbacks
 
     public void EndGame()
     {
-        if (myPlayer.PV.IsMine == true)
+        if (!_GodMod)
         {
-            if (!_GodMod)
+            gameHasEnded = true;
+            Time.timeScale = 1f;
+            if (lives != 4)
             {
-                gameHasEnded = true;
-                Time.timeScale = 1f;
-                if (lives != 4)
-                {
-                    lives--;
-                }
-                if (!(lives <= 0))
-                {
-                    ReSpawnPlayer();
-                    PhotonNetwork.Destroy(myPlayer.Char);
-                    NumberOfKatams++;
-                }
+                lives--;
+            }
+            if (lives > 0)
+            {
+                PhotonNetwork.Destroy(myPlayer.Char);
+                ReSpawnPlayer();           
+                NumberOfKatams++;
             }
         }
     }
 
     public void CompleteCompAnim()
     {
-        if (myPlayer.PV.IsMine && progress >= 100)
+        if (myPlayer.PV.IsMine && progress >= 1000)
         {
             GodMode();
             gameStarted = false;
@@ -313,6 +322,16 @@ public class CustomManager : MonoBehaviourPunCallbacks
     {
         Controls.SetActive(false);
         CompPanel.SetActive(true);
+        FeedBackText.text = PlayerPosition switch
+        {
+            0 => "Better efforts, Next time!",
+            1 => "Winner!",
+            2 => "The Veiled Challenger",
+            3 => "Close, but Cigar!",
+            4 => "Better efforts, Next time!",
+            5 => "You Noob",
+            _ => ""
+        };
 
         switch (PlayerPosition)
         {
@@ -352,6 +371,13 @@ public class CustomManager : MonoBehaviourPunCallbacks
 
     public void Continue()
     {
+        if (changedFPS)
+        {
+            PlayerPrefs.SetInt("fps", 1);
+            changedFPS = false;
+        }
+        string _message = "\n has left the game.";
+        FindObjectOfType<Notifier>().SendInfo(_message);
         SceneManager.LoadScene("Lobby 1");
         SatakExtensions.SetPlayerPosition(myPlayer.PV.Owner, 0);
         SatakExtensions.SetTime(myPlayer.PV.Owner, 0);
@@ -377,6 +403,15 @@ public class CustomManager : MonoBehaviourPunCallbacks
     public void LeaveGameFake()
     {
         leaveGameObj[0].text = "Confirm?";
+        tempStore++;
+        if (tempStore == 1)
+        {
+            PhotonNetwork.DestroyAll(true);
+            SceneManager.LoadScene("Lobby 1");
+            SceneManager.LoadScene("Lobby 1");
+            string _message = "\n has left the game.";
+            FindObjectOfType<Notifier>().SendInfo(_message);
+        }
     }
 
     public void LeaveGame(int x)
@@ -385,4 +420,18 @@ public class CustomManager : MonoBehaviourPunCallbacks
         leaveGameObj[1].gameObject.SetActive(false);
         leaveGameObj[x].gameObject.SetActive(true);
     }
+
+    #region Errors
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        string _message = "\n was Disconnected due to " + cause + ".";
+        FindObjectOfType<Notifier>().SendInfo(_message);
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        string _message = "\n has joined the game.";
+        FindObjectOfType<Notifier>().SendInfo(_message);
+    }
+    #endregion
 }

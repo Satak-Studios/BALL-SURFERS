@@ -28,7 +28,10 @@ public class Restart : MonoBehaviour
     private void Start()
     {
         movement = FindObjectOfType<playermovement>();
-		rb = movement.rb;
+		if (movement != null)
+		{
+			rb = movement.rb;
+		}
 	}
 
 

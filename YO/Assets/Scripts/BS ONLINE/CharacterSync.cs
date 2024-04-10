@@ -22,50 +22,24 @@ public class CharacterSync : MonoBehaviourPunCallbacks
 
     public bool lockRotation = true;
     CompManager compManager;
+    CustomManager custManager;
+    PlayerSpawner playerSpawner;
+    public bool compMode = false;
+    public bool defaultMode = false;
 
     private void Start()
     {
-        //if (photonView.IsMine)
-        {
-            // Initialize customization for local player
-            LoadPlayerCustomization();
-            InvokeRepeating("SyncCharacter", 2.0f, 5f);
-            SyncCharacter();
-            SetVisualCustomization(selectedEyes, selectedMouth, selectedBodyColor, selectedEyeColor);
-        }
+        LoadPlayerCustomization();
+        SyncCharacter();
+        SetVisualCustomization(selectedEyes, selectedMouth, selectedBodyColor, selectedEyeColor);
     }
 
     private void LoadPlayerCustomization()
     {
-        // Load customization data from PlayerPrefs
         selectedEyes = PlayerPrefs.GetInt("eyes");
         selectedMouth = PlayerPrefs.GetInt("mouth");
         selectedBodyColor = PlayerPrefs.GetInt("bodyColor");
         selectedEyeColor = PlayerPrefs.GetInt("eyeColor");
-    }
-
-    public void SetPlayerInfo(Player _player)
-    {
-        eyes[SatakExtensions.GetPlayerEyes(_player)].SetActive(true);
-        mouth[SatakExtensions.GetPlayerMouth(_player)].SetActive(true);
-        //BodyColor.color = SatakExtensions.GetPlayerBodyColor(_player) switch
-        tempBody.GetComponent<MeshRenderer>().material.color = SatakExtensions.GetPlayerBodyColor(_player) switch
-        {
-            0 => Color.black,
-            1 => Color.red,
-            2 => Color.green,
-            3 => Color.blue,
-            4 => Color.yellow,
-            5 => Color.magenta,
-            _ => Color.red
-        };
-        //EyeColor.color = SatakExtensions.GetPlayerEyeColor(_player) switch
-        tempEye[selectedEyes].GetComponent<Material>().color = SatakExtensions.GetPlayerEyeColor(_player) switch
-        {
-            0 => Color.black,
-            1 => Color.white,
-            _ => Color.black,
-        };
     }
 
     private void Update()
@@ -87,12 +61,23 @@ public class CharacterSync : MonoBehaviourPunCallbacks
             }
         }
 
-        compManager = FindObjectOfType<CompManager>();
+        if (compMode)
+        {
+            compManager = FindObjectOfType<CompManager>();
+        }
+        else if (!compMode && !defaultMode)
+        {
+            custManager = FindObjectOfType<CustomManager>();
+        }
+        if (defaultMode)
+        {
+            playerSpawner = FindObjectOfType<PlayerSpawner>();
+        }
+        SyncCharacter();
     }
 
     private void SetVisualCustomization(int eyesIndex, int mouthIndex, int bodyColorIndex, int eyeColorIndex)
     {
-        //BodyColor.color = bodyColorIndex switch
         tempBody.GetComponent<MeshRenderer>().material.color = bodyColorIndex switch
         {
             0 => Color.black,
@@ -103,13 +88,15 @@ public class CharacterSync : MonoBehaviourPunCallbacks
             5 => Color.magenta,
             _ => Color.red
         };
-        //EyeColor.color = eyeColorIndex switch
-        tempEye[eyesIndex].GetComponent<Material>().color = eyeColorIndex switch
+        if (tempEye[eyeColorIndex].GetComponent<Material>() != null)
         {
-            0 => Color.black,
-            1 => Color.white,
-            _ => Color.black
-        };
+            tempEye[eyesIndex].GetComponent<Material>().color = eyeColorIndex switch
+            {
+                0 => Color.black,
+                1 => Color.white,
+                _ => Color.black
+            };
+        }
         SetActiveGameObject(eyes, eyesIndex);
         SetActiveGameObject(mouth, mouthIndex);
     }
@@ -118,7 +105,6 @@ public class CharacterSync : MonoBehaviourPunCallbacks
     {
         if (photonView.IsMine)
         {
-            // Synchronize customization across the network
             Hashtable hash = new Hashtable();
             hash.Add("eyes", selectedEyes);
             hash.Add("mouth", selectedMouth);
@@ -138,14 +124,41 @@ public class CharacterSync : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
-        if (!photonView.IsMine && targetPlayer == photonView.Owner && compManager.gameStarted)
+        if (compMode && !defaultMode)
         {
-            int eyes = (int)changedProps["eyes"];
-            int mouth = (int)changedProps["mouth"];
-            int boddColor = (int)changedProps["bodyColor"];
-            int eyeColor = (int)changedProps["eyeColor"];
+            if (!photonView.IsMine && targetPlayer == photonView.Owner && compManager.gameStarted && changedProps != null)
+            {
+                int eyes = (int)changedProps["eyes"];
+                int mouth = (int)changedProps["mouth"];
+                int bodyColor = (int)changedProps["bodyColor"];
+                int eyeColor = (int)changedProps["eyeColor"];
 
-            SetVisualCustomization(eyes, mouth, boddColor, eyeColor);
+                SetVisualCustomization(eyes, mouth, bodyColor, eyeColor);
+            }
+        }
+        else if (!compMode && !defaultMode)
+        {
+            if (!photonView.IsMine && targetPlayer == photonView.Owner && custManager.gameStarted && changedProps != null)
+            {
+                int eyes = (int)changedProps["eyes"];
+                int mouth = (int)changedProps["mouth"];
+                int bodyColor = (int)changedProps["bodyColor"];
+                int eyeColor = (int)changedProps["eyeColor"];
+
+                SetVisualCustomization(eyes, mouth, bodyColor, eyeColor);
+            }
+        }
+        else
+        {
+            if (!photonView.IsMine && targetPlayer == photonView.Owner && playerSpawner.Hearts > 0 && changedProps != null)
+            {
+                int eyes = (int)changedProps["eyes"];
+                int mouth = (int)changedProps["mouth"];
+                int bodyColor = (int)changedProps["bodyColor"];
+                int eyeColor = (int)changedProps["eyeColor"];
+
+                SetVisualCustomization(eyes, mouth, bodyColor, eyeColor);
+            }
         }
     }
 }

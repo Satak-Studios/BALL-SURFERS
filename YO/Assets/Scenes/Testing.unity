@@ -217,6 +217,8 @@ MonoBehaviour:
   Custom: 0
   defaultObstacleMaterial: {fileID: 2100000, guid: b0acb4c4b0cb4be4daf1e10dc4073a65, type: 2}
   fadedObstacleMaterial: {fileID: 2100000, guid: 42e8a92d6412a3540b16d6cd313dfa04, type: 2}
+  exception: 0
+  isOnline: 0
 --- !u!1 &683283285
 GameObject:
   m_ObjectHideFlags: 0

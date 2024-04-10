@@ -24,15 +24,16 @@ public class KatamTrigger : MonoBehaviour
             Heart.SetActive(false);
         }
 
-        if (!(SceneManager.GetActiveScene().name == "Game"))
-        {
-            Heart.SetActive(false);
-        }
-        else
+        if (SceneManager.GetActiveScene().name == "Game")
         {
             Heart.SetActive(true);
         }
+        else
+        {
+            Heart.SetActive(false);
+        }
     }
+
 	void OnTriggerEnter()
 	{
         if (Get.Hearts == 2)

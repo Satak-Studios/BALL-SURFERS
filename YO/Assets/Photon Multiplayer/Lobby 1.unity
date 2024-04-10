@@ -1967,6 +1967,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -3595,6 +3596,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -3725,6 +3727,57 @@ MonoBehaviour:
   - {fileID: 653127307}
   - {fileID: 1669045167}
   - {fileID: 1032346185}
+  randRoomName:
+  - Noob'sPalace
+  - CelestialChamber
+  - LuminousLounge
+  - DimensionDen
+  - ZenZone
+  - AuroraAbode
+  - InfinityInn
+  - ElysianEdifice
+  - SpectralSanctum
+  - HarmonyHaven
+  - PhoenixParlor
+  - EtherealEmporium
+  - OdysseyOasis
+  - SolsticeSuite
+  - PrismPalace
+  - EchoEnclave
+  - ArcaneAsylum
+  - NexusNest
+  - TranquilityTower
+  - QuantumQuarters
+  - EdenExpanse
+  - MirageManor
+  - AstralApartment
+  - HavenHall
+  - RadiantRetreat
+  - VertexVilla
+  - DreamDwelling
+  - NimbusNook
+  - EssenceEscape
+  - EnchantedEnclosure
+  - UnityUtopia
+  - GalaxyGallery
+  - MysticMansion
+  - SanctuarySalon
+  - OracleOutpost
+  - SerenitySpace
+  - EtherealEstate
+  - WonderlandWard
+  - NebulaNest
+  - BlissBungalow
+  - SeraphimSuite
+  - ZodiacZephyr
+  - HarmonyHearth
+  - SolitudeSanctuary
+  - TranquilTurret
+  - CosmoCottage
+  - CelestialCell
+  - MirageMaze
+  - LuminaryLodge
+  - EmpyreanEden
 --- !u!1 &253093616
 GameObject:
   m_ObjectHideFlags: 0
@@ -7326,7 +7379,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1298615349}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -8952,6 +9005,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -12576,7 +12630,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1298615349}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -12746,6 +12800,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -14008,6 +14063,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -15206,7 +15262,6 @@ RectTransform:
   - {fileID: 411178089}
   - {fileID: 1752146327}
   - {fileID: 141767958}
-  - {fileID: 41656859959761850}
   - {fileID: 650606055}
   - {fileID: 1068110003}
   - {fileID: 1495146022}
@@ -17049,7 +17104,7 @@ RectTransform:
   - {fileID: 1669045166}
   - {fileID: 1032346184}
   m_Father: {fileID: 1298615349}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -17642,131 +17697,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
---- !u!1001 &1571669131
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1298615349}
-    m_Modifications:
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 2131.5322
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 972.8214
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.37531686
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.37531686
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.37531686
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 400
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 182.55814
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 41707749811717823, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 152424811827295185, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: sceneViewId
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 152998869887489263, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 256254449974897761, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_Name
-      value: RoomChatCanvas 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 256254449974897761, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
 --- !u!1 &1593164001
 GameObject:
   m_ObjectHideFlags: 0
@@ -23440,11 +23370,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140131029}
   m_CullTransparentMesh: 1
---- !u!224 &41656859959761850 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 41656861395640113, guid: 41718f5cfeac80644ac45d03b93d2b54, type: 3}
-  m_PrefabInstance: {fileID: 1571669131}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &451609033036501738
 GameObject:
   m_ObjectHideFlags: 0
@@ -24092,6 +24017,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -24149,7 +24075,7 @@ RectTransform:
   - {fileID: 1519523579246775323}
   - {fileID: 6722505073435428808}
   m_Father: {fileID: 1298615349}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -24173,6 +24099,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -25020,8 +24947,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 200, y: -84.15094}
-  m_SizeDelta: {x: 400, y: 31.698112}
+  m_AnchoredPosition: {x: 200, y: -84}
+  m_SizeDelta: {x: 400, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6479452471859933539
 CanvasRenderer:

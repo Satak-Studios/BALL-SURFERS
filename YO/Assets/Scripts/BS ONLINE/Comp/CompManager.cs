@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Satak.Utilities;
+using Photon.Realtime;
 
 public class CompManager : MonoBehaviourPunCallbacks
 {
@@ -14,13 +15,12 @@ public class CompManager : MonoBehaviourPunCallbacks
     public int NumberOfKatams;
     public int retries;
     public int tempStore;
-    public int tempStorage;
 
     //UI
     public Text koText;
     public GameObject progressObj;
     public Text progressText;
-    public Slider progressSlider;
+    //public Slider progressSlider;
 
     //OtherTimerRelated
     float startTime = 3f;
@@ -29,6 +29,7 @@ public class CompManager : MonoBehaviourPunCallbacks
     public Text timerText;
     public GameObject Stopper;
     public bool gameStarted = false;
+    bool changedFPS = false;
 
     //Player Online
     public OnlinePlayer myPlayer;
@@ -58,7 +59,6 @@ public class CompManager : MonoBehaviourPunCallbacks
     public Text[] leaveGameObj;
     Vector3 _pos;
 
-    // Start is called before the first frame update
     void Start()
     {
         SpawnPlayer();
@@ -100,17 +100,19 @@ public class CompManager : MonoBehaviourPunCallbacks
         }
 
         #region extra
-
         timerText.text = Mathf.RoundToInt(currentTime).ToString();
         koText.text = "Retries : " + retries.ToString();
         if (!(myPlayer == null))
         {
-            progress = myPlayer.gameObject.transform.position.z; /// 925 * 100;
+            progress = myPlayer.gameObject.transform.position.z / 925 * 1000;
         }
         progressText.text = progress.ToString("0");// + "%";
-        progressSlider.value = progress / 925 * 100;
+        //progressSlider.value = progress / 925 * 1000;
         screenshotFolder = Path.Combine(Application.persistentDataPath, "Screenshots");
-        Directory.CreateDirectory(screenshotFolder);
+        if (!Directory.Exists(screenshotFolder))
+        {
+            Directory.CreateDirectory(screenshotFolder);
+        }
 
         if (gameStarted)
         {
@@ -132,9 +134,14 @@ public class CompManager : MonoBehaviourPunCallbacks
             Stopper.SetActive(false);
         }
 
-        if ((progress / 925 * 100) >= 100)
+        if (progress >= 1000)
         {
             CompleteCompAnim();
+            if (PlayerPrefs.GetInt("fps") == 1)
+            {
+                PlayerPrefs.SetInt("fps", 0);
+                changedFPS = true;
+            }        
         }
 
         PlayerPosition = SatakExtensions.GetPlayerPosition(myPlayer.PV.Owner);
@@ -216,7 +223,7 @@ public class CompManager : MonoBehaviourPunCallbacks
 
     public void EndGaming()
     {
-        if (myPlayer.PV.IsMine)
+        if (myPlayer.PV.IsMine && !_GodMod)
         {
             retries++;
             gameHasEnded = true;
@@ -228,7 +235,7 @@ public class CompManager : MonoBehaviourPunCallbacks
 
     public void CompleteCompAnim()
     {
-        if (myPlayer.PV.IsMine && progress >= 100)
+        if (myPlayer.PV.IsMine && progress >= 1000)
         {
             GodMode();
             gameStarted = false;
@@ -248,12 +255,13 @@ public class CompManager : MonoBehaviourPunCallbacks
         CompPanel.SetActive(true);
         FeedBackText.text = PlayerPosition switch
         {
+            0 => "Better efforts, Next time!",
             1 => "Winner!",
             2 => "The Veiled Challenger",
             3 => "Close, but Cigar!",
             4 => "Better efforts, Next time!",
             5 => "You Noob",
-            _ => "Winner!"
+            _ => ""
         };
 
         switch (PlayerPosition)
@@ -294,7 +302,14 @@ public class CompManager : MonoBehaviourPunCallbacks
 
     public void Continue()
     {
+        if (changedFPS)
+        {
+            PlayerPrefs.SetInt("fps", 1);
+            changedFPS = false;
+        }
         SceneManager.LoadScene("Lobby 1");
+        string _message = "\n has left the game.";
+        FindObjectOfType<Notifier>().SendInfo(_message);
         SatakExtensions.SetPlayerPosition(myPlayer.PV.Owner, 0);
         SatakExtensions.SetTime(myPlayer.PV.Owner, 0);
         LevelGenerator[] obsticles = FindObjectsOfType<LevelGenerator>();
@@ -319,11 +334,13 @@ public class CompManager : MonoBehaviourPunCallbacks
     public void LeaveGameFake()
     {
         leaveGameObj[0].text = "Confirm?";
-        tempStorage++;
+        tempStore++;
         if (tempStore == 1)
         {
             PhotonNetwork.DestroyAll(true);
             SceneManager.LoadScene("Lobby 1");
+            string _message = "\n has left the game.";
+            FindObjectOfType<Notifier>().SendInfo(_message);
         }
     }
 
@@ -333,4 +350,18 @@ public class CompManager : MonoBehaviourPunCallbacks
         leaveGameObj[1].gameObject.SetActive(false);
         leaveGameObj[x].gameObject.SetActive(true);
     }
+
+    #region Errors
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        string _message = "\n was Disconnected due to " + cause + ".";
+        FindObjectOfType<Notifier>().SendInfo(_message);
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        string _message = "\n has joined the game.";
+        FindObjectOfType<Notifier>().SendInfo(_message);
+    }
+    #endregion
 }

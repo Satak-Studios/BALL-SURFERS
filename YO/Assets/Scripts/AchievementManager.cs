@@ -25,14 +25,12 @@ public class AchievementManager : MonoBehaviour
     public Text playTimeText;
     public float playtimeInSeconds;
 
-    // Start is called before the first frame update
     void Start()
     {       
         _achiever = FindObjectOfType<Achiever>();
         GoToAch();
     }
 
-    // Update is called once per frame
     void Update()
     {
         playtimeInSeconds = PlayerPrefs.GetFloat("TotalPlaytime", 0f);
@@ -75,6 +73,7 @@ public class AchievementManager : MonoBehaviour
             {
                 LockAchievement(i);
             }
+            Icons[i].color = Color.white;
         }
 
         if (PlayerPrefs.GetInt("Welcomed") == 1)

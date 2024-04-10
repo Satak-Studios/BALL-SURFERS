@@ -42,6 +42,58 @@ public class ScoreOnline : MonoBehaviourPunCallbacks
 
     //RoomPanelDetails
     public Text[] RoomDetails;
+    public string[] randRoomName = {
+    "Noob'sPalace",
+    "CelestialChamber",
+    "LuminousLounge",
+    "DimensionDen",
+    "ZenZone",
+    "AuroraAbode",
+    "InfinityInn",
+    "ElysianEdifice",
+    "SpectralSanctum",
+    "HarmonyHaven",
+    "PhoenixParlor",
+    "EtherealEmporium",
+    "OdysseyOasis",
+    "SolsticeSuite",
+    "PrismPalace",
+    "EchoEnclave",
+    "ArcaneAsylum",
+    "NexusNest",
+    "TranquilityTower",
+    "QuantumQuarters",
+    "EdenExpanse",
+    "MirageManor",
+    "AstralApartment",
+    "HavenHall",
+    "RadiantRetreat",
+    "VertexVilla",
+    "DreamDwelling",
+    "NimbusNook",
+    "EssenceEscape",
+    "EnchantedEnclosure",
+    "UnityUtopia",
+    "GalaxyGallery",
+    "MysticMansion",
+    "SanctuarySalon",
+    "OracleOutpost",
+    "SerenitySpace",
+    "EtherealEstate",
+    "WonderlandWard",
+    "NebulaNest",
+    "BlissBungalow",
+    "SeraphimSuite",
+    "ZodiacZephyr",
+    "HarmonyHearth",
+    "SolitudeSanctuary",
+    "TranquilTurret",
+    "CosmoCottage",
+    "CelestialCell",
+    "MirageMaze",
+    "LuminaryLodge",
+    "EmpyreanEden"
+    };
 
     public void Start()
     {
@@ -86,15 +138,28 @@ public class ScoreOnline : MonoBehaviourPunCallbacks
         }
         else
         {
-            //FindObjectOfType<ErrorThrower>().ThrowError("0x1234", "Make sure that you have entered Room Name", "Error");
-            //Host();
-            PhotonNetwork.CreateRoom(PhotonNetwork.NickName + "'s Room", new RoomOptions()
+            if (PhotonNetwork.NickName.Length <= 11)
             {
-                MaxPlayers = players,
-                BroadcastPropsChangeToAll = true,
-            });
-            SetRoomProperties();
-            cRoomPanel.SetActive(false);
+                string roomName = PhotonNetwork.NickName + "'s Room";
+                PhotonNetwork.CreateRoom(roomName, new RoomOptions()
+                {
+                    MaxPlayers = players,
+                    BroadcastPropsChangeToAll = true,
+                });
+                SetRoomProperties();
+                cRoomPanel.SetActive(false);
+            }
+            else
+            {
+                int randRoomN = Random.Range(0, randRoomName.Length - 1);
+                PhotonNetwork.CreateRoom(randRoomName[randRoomN], new RoomOptions()
+                {
+                    MaxPlayers = players,
+                    BroadcastPropsChangeToAll = true,
+                });
+                SetRoomProperties();
+                cRoomPanel.SetActive(false);
+            }
         }
     }
 
@@ -299,12 +364,14 @@ public class ScoreOnline : MonoBehaviourPunCallbacks
         {
             string playerName = player_name.Substring(0, 15);
             PlayerPrefs.SetString("PlayerName", playerName);
+            PhotonNetwork.NickName = playerName;
             PlayerName.text = PlayerPrefs.GetString("PlayerName");
             nameField.text = PlayerPrefs.GetString("PlayerName");
         }
         else
         {
             PlayerPrefs.SetString("PlayerName", player_name);
+            PhotonNetwork.NickName = player_name;
             PlayerName.text = PlayerPrefs.GetString("PlayerName");
             nameField.text = PlayerPrefs.GetString("PlayerName");
         }
@@ -315,6 +382,7 @@ public class ScoreOnline : MonoBehaviourPunCallbacks
         if (nameField.text.Length >= 1)
         {
             PlayerPrefs.SetString("PlayerName", nameField.text);
+            PhotonNetwork.NickName = nameField.text;
             nameField.text = PlayerPrefs.GetString("PlayerName");
         }
         else

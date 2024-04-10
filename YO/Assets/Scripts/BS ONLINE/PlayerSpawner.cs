@@ -5,28 +5,17 @@ using UnityEngine.SceneManagement;
 public class PlayerSpawner : MonoBehaviourPunCallbacks
 {
     public PhotonView PV;
-    public Timer timer;
 
-    public GameObject[] playerPrefabs;
+    public GameObject playerPrefab;
     public Transform[] spawnPoints;
-    int randPlayer;
+    public GameObject[] Heart;
 
-    public GameObject RECAM;
     public GameObject Controlls;
     public GameObject Score;
     public GameObject REMENU;
 
-    public ScoreOnline sco;
-
-    public GameObject Hearts1;
-    public GameObject Hearts2;
-    public GameObject Hearts3;
-
-
     public GameObject NOINTERNET;
     public GameObject GameOver;
-    public GameObject AddNoHearts;
-
     public PlayerOnline pso;
 
     //==MAIN==
@@ -38,14 +27,13 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     {
         int rand = Random.Range(0, spawnPoints.Length);
         Transform Point = spawnPoints[rand];
-        GameObject playertoSpawn = playerPrefabs[randPlayer];
-        PhotonNetwork.Instantiate(playertoSpawn.name, Point.position, Quaternion.identity);
+        PhotonNetwork.Instantiate(playerPrefab.name, Point.position, Quaternion.identity);
     }
 
 
     public void Start()
     {
-        randPlayer = Random.Range(0, playerPrefabs.Length);
+        SpawnOrg();
         GameOver.SetActive(false);
         if (Hearts == 0)
         {
@@ -56,83 +44,52 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         {
             Destroy(pso);
         }
-       SpawnOrg();
-       if (FindObjectOfType<Achiever>().achIndex[2] == 0)
-		{
-			FindObjectOfType<Achiever>().AchievementUnlocked(2);
-		}
+
+        if (FindObjectOfType<Achiever>().achIndex[2] == 0)
+        {
+            FindObjectOfType<Achiever>().AchievementUnlocked(2);
+        }
     }
 
     public void Update()
     {
+        switch (Hearts)
+        {
+            case 0:
+                Heart[0].SetActive(false);
+                Heart[1].SetActive(false);
+                Heart[2].SetActive(false);
+                GameOver.SetActive(true);
+                break;
+
+            case 1:
+                Heart[0].SetActive(true);
+                Heart[1].SetActive(false);
+                Heart[2].SetActive(false);
+                break;
+
+            case 2:
+                Heart[0].SetActive(true);
+                Heart[1].SetActive(true);
+                Heart[2].SetActive(false);
+                break;
+
+            case 3:
+                Heart[0].SetActive(true);
+                Heart[1].SetActive(true);
+                Heart[2].SetActive(true);
+                break;
+        }
+
         pso = FindObjectOfType<PlayerOnline>();
-        PV = pso.PV;
         if (PV == null)
         {
             return;
         }
-        if (pso.PV == null)
+        if (pso != null)
         {
-            return;
+            PV = pso.PV;
         }
-
-        if (PV.IsMine)
-        {
-            if (Hearts == -3)
-            {
-                AddNoHearts.SetActive(true);
-                Hearts = 0;
-            }
-            if (Hearts == -2)
-            {
-                AddNoHearts.SetActive(true);
-                Hearts = 0;
-            }
-            if (Hearts == -1)
-            {
-                AddNoHearts.SetActive(true);
-                Hearts = 0;
-            }
-
-            if (Hearts == 0)
-            {
-                // GameOver.SetActive(false);
-                Hearts1.SetActive(false);
-                Hearts2.SetActive(false);
-                Hearts3.SetActive(false);
-                AddNoHearts.SetActive(false);
-                GameOver.SetActive(true);
-            }
-
-            if (Hearts == 1)
-            {
-                Hearts1.SetActive(false);
-                Hearts2.SetActive(false);
-                Hearts3.SetActive(true);
-                GameOver.SetActive(false);
-            }
-
-            if (Hearts == 2)
-            {
-                Hearts1.SetActive(false);
-                Hearts2.SetActive(true);
-                Hearts3.SetActive(true);
-                GameOver.SetActive(false);
-            }
-
-            if (Hearts == 3)
-            {
-                Hearts1.SetActive(true);
-                Hearts2.SetActive(true);
-                Hearts3.SetActive(true);
-                GameOver.SetActive(false);
-            }
-        }
-    }
-
-    public void Destroy()
-    {
-        //PhotonNetwork.Destroy(FakePV);
     }
 
     public void Retry()
@@ -155,6 +112,8 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
         }
         else
         {
+            string _message = "\n has left the game.";
+            FindObjectOfType<Notifier>().SendInfo(_message);
             NOINTERNET.SetActive(false);
             SceneManager.LoadScene("Lobby 1");
             Hearts = 3;

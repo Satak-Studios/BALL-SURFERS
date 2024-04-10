@@ -19,7 +19,17 @@ public class LevelGenerator : MonoBehaviour
         if (PhotonNetwork.InRoom == true)
         {
             if (PhotonNetwork.IsMasterClient == true)
-                PhotonNetwork.Instantiate(objects[rand].name, transform.position, Quaternion.identity);
+            {
+                if (objects[rand] != null)
+                {
+                    PhotonNetwork.Instantiate(objects[rand].name, transform.position, Quaternion.identity);
+                }
+                else
+                {
+                    int randAgain = Random.Range(0, objects.Length - 1);
+                    PhotonNetwork.Instantiate(objects[randAgain].name, transform.position, Quaternion.identity);
+                }
+            }
         }
     }
 
