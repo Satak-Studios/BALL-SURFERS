@@ -12,6 +12,8 @@ namespace UpdateChecker
         public string Description;
         public string Version;
         public string Url;
+        public string isNews;
+        public string newsVersion;
     }
 
     public class UpdateChecker: MonoBehaviour
@@ -62,6 +64,15 @@ namespace UpdateChecker
                     versionText.text = "v" + latestGameData.Version;
                     ShowPopUp();
                     Debug.Log("Update Available = " + latestGameData.Version + ", version = " + Application.version);
+                }
+
+                if (Application.version.Equals(latestGameData.Version) && latestGameData.isNews.Equals("yes"))
+                {
+                    titleText.text = latestGameData.Title;
+                    descriptionText.text = latestGameData.Description;
+                    versionText.text = "News." + latestGameData.newsVersion;
+                    ShowPopUp();
+                    Debug.Log("News Available = " + latestGameData.newsVersion);
                 }
             }
 
