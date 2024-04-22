@@ -126,19 +126,22 @@ public class CharacterSync : MonoBehaviourPunCallbacks
     {
         if (compMode && !defaultMode)
         {
-            if (!photonView.IsMine && targetPlayer == photonView.Owner && compManager.gameStarted && changedProps != null)
+            if (!photonView.IsMine && targetPlayer == photonView.Owner)// && compManager.gameStarted)
             {
-                int eyes = (int)changedProps["eyes"];
-                int mouth = (int)changedProps["mouth"];
-                int bodyColor = (int)changedProps["bodyColor"];
-                int eyeColor = (int)changedProps["eyeColor"];
+                if (changedProps != null)
+                {
+                    int eyes = (int)changedProps["eyes"];
+                    int mouth = (int)changedProps["mouth"];
+                    int bodyColor = (int)changedProps["bodyColor"];
+                    int eyeColor = (int)changedProps["eyeColor"];
 
-                SetVisualCustomization(eyes, mouth, bodyColor, eyeColor);
+                    SetVisualCustomization(eyes, mouth, bodyColor, eyeColor);
+                }
             }
         }
         else if (!compMode && !defaultMode)
         {
-            if (!photonView.IsMine && targetPlayer == photonView.Owner && custManager.gameStarted && changedProps != null)
+            if (!photonView.IsMine && targetPlayer == photonView.Owner)// && custManager.gameStarted)
             {
                 int eyes = (int)changedProps["eyes"];
                 int mouth = (int)changedProps["mouth"];
@@ -150,14 +153,17 @@ public class CharacterSync : MonoBehaviourPunCallbacks
         }
         else
         {
-            if (!photonView.IsMine && targetPlayer == photonView.Owner && playerSpawner.Hearts > 0 && changedProps != null)
+            if (!photonView.IsMine && targetPlayer == photonView.Owner && playerSpawner.Hearts > 0)
             {
-                int eyes = (int)changedProps["eyes"];
-                int mouth = (int)changedProps["mouth"];
-                int bodyColor = (int)changedProps["bodyColor"];
-                int eyeColor = (int)changedProps["eyeColor"];
+                if (changedProps != null)
+                {
+                    int eyes = (int)changedProps["eyes"];
+                    int mouth = (int)changedProps["mouth"];
+                    int bodyColor = (int)changedProps["bodyColor"];
+                    int eyeColor = (int)changedProps["eyeColor"];
 
-                SetVisualCustomization(eyes, mouth, bodyColor, eyeColor);
+                    SetVisualCustomization(eyes, mouth, bodyColor, eyeColor);
+                }
             }
         }
     }

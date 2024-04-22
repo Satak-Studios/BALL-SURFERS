@@ -44,7 +44,7 @@ namespace Photon.Pun.UtilityScripts
         [Header("Countdown time in seconds")] 
         public float Countdown = 5.0f;
 
-        public bool isTimerRunning;
+        private bool isTimerRunning;
 
         private int startTime;
 

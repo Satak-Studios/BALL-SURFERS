@@ -128,4 +128,38 @@ public class playermovement : MonoBehaviour
     {
         transform.position = rs.katamPoint;
     }
+    private void Update()
+    {
+        Restart rs = FindObjectOfType<Restart>();
+        if (rb.position.y < -1f)
+        {
+            if (!rs.isGodMode)
+            {
+                rs.EndGames(transform.position.z);
+            }
+            else
+            {
+                Transform pm = gameObject.transform;
+                float x = 0f;
+                float y = 1f;
+                float z = pm.position.z;
+                pm.position = new Vector3(x, y, z);
+            }
+        }
+    }
+    GameObject _obj;
+    public void OnCollisionEnter(Collision collisionInfo)
+    {
+        if (collisionInfo.collider.tag == "Obsticle")
+        {
+            FindObjectOfType<Restart>().EndGames(transform.position.z);
+            _obj = collisionInfo.collider.gameObject;
+            Invoke("Magic", 1f);
+        }
+    }
+
+    void Magic()
+    {
+        Destroy(_obj);
+    }
 }

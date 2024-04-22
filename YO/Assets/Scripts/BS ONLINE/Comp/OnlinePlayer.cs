@@ -3,7 +3,7 @@ using Photon.Pun;
 
 public class OnlinePlayer : MonoBehaviourPunCallbacks
 {
-    public Camera PlayerCam;
+    public GameObject PlayerCam;
     public GameObject Char;
 
     public Rigidbody rb;
@@ -26,6 +26,8 @@ public class OnlinePlayer : MonoBehaviourPunCallbacks
     //Magic
     public bool Magic = false;
     public int numberOfKatams = 0;
+    public GameObject Controls;
+    public bool _disappear = false;
 
     private void Start()
     {
@@ -34,8 +36,7 @@ public class OnlinePlayer : MonoBehaviourPunCallbacks
             Destroy(PlayerCam);
             Destroy(movement);
         }
-
-        cam = PlayerCam.GetComponent<Animator>();
+        _disappear = false;
         LoadRoomProps();
     }
 
@@ -64,6 +65,7 @@ public class OnlinePlayer : MonoBehaviourPunCallbacks
             if (Magic == false)
             {
                 Movement();
+                cam = PlayerCam.GetComponent<Animator>();
             }
             else
             {
@@ -179,6 +181,7 @@ public class OnlinePlayer : MonoBehaviourPunCallbacks
         }
 
         compManager = FindObjectOfType<CompManager>();
+        ChangeUI();
     }
 
     public void KatamOnCollision()
@@ -190,6 +193,25 @@ public class OnlinePlayer : MonoBehaviourPunCallbacks
                 compManager.EndGaming();
                 numberOfKatams++;
             }
+        }
+    }
+
+    public void ChangeUI()
+    {
+        if (SystemInfo.deviceType == DeviceType.Handheld)
+        {
+            if (_disappear)
+            {
+                Controls.SetActive(false);
+            }
+            else
+            {
+                Controls.SetActive(true);
+            }
+        }
+        else
+        {
+            Controls.SetActive(false);
         }
     }
 }

@@ -26,6 +26,8 @@ public class PlayerOnline : MonoBehaviourPunCallbacks
 
     //Photon View
     public PhotonView PV;
+    public GameObject Controls;
+    public bool _disappear;
 
     private void Start()
     {
@@ -58,12 +60,12 @@ public class PlayerOnline : MonoBehaviourPunCallbacks
         rb.AddForce(0, 0, forwardForce * Time.deltaTime);
 
         //Controls for A & D
-        if (Input.GetKey("d"))
+        if (Input.GetKey(KeyCode.D))
         {
             rb.AddForce(sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
         }
 
-        if (Input.GetKey("a"))
+        if (Input.GetKey(KeyCode.A))
         {
             rb.AddForce(-sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
         }
@@ -125,7 +127,7 @@ public class PlayerOnline : MonoBehaviourPunCallbacks
     {
         if (PV.IsMine)
         {
-            if (collisionInfo.collider.tag == "Obsticle")
+            if (collisionInfo.collider.CompareTag("Obsticle"))
             {
                 movement.enabled = false;
                 RSO.EndGaming();
@@ -155,6 +157,7 @@ public class PlayerOnline : MonoBehaviourPunCallbacks
         else
         {
             RSO.enabled = true;
+            ChangeUI();
         }
     }
 
@@ -168,4 +171,22 @@ public class PlayerOnline : MonoBehaviourPunCallbacks
         }
     }
 
+    public void ChangeUI()
+    {
+        if (SystemInfo.deviceType == DeviceType.Handheld)
+        {
+            if (_disappear)
+            {
+                Controls.SetActive(false);
+            }
+            else
+            {
+                Controls.SetActive(true);
+            }
+        }
+        else
+        {
+            Controls.SetActive(false);
+        }
+    }
 }

@@ -5,23 +5,37 @@ public class EndTrigger : MonoBehaviour {
 
 	public GameManager gameManager;
     public bool BenchMark = false;
+    public GameObject compuBench;
 
     private void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
-    }
-    void OnTriggerEnter ()
-	{
         if (BenchMark)
         {
-            Back();
+            compuBench.SetActive(false);
         }
-        else
+        gameManager = FindObjectOfType<GameManager>();
+    }
+    private void OnTriggerEnter(Collider other)
+	{
+        if (other.CompareTag("Player"))
         {
-            gameManager.CompleteLevel();
+            if (BenchMark)
+            {
+                BackAnim();
+            }
+            else
+            {
+                gameManager.CompleteLevel();
+            }
         }
 	}
 
+    public void BackAnim()
+    {
+        compuBench.SetActive(true);
+        FindObjectOfType<BenchMark>().CompleteBench();
+    }
+    
     public void Back()
     {
         SceneManager.LoadScene(0);

@@ -10,7 +10,6 @@ public class PlayerSpawner : MonoBehaviourPunCallbacks
     public Transform[] spawnPoints;
     public GameObject[] Heart;
 
-    public GameObject Controlls;
     public GameObject Score;
     public GameObject REMENU;
 

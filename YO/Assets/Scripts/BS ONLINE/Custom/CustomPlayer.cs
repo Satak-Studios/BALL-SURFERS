@@ -8,7 +8,7 @@ using Utilities;
 
 public class CustomPlayer : MonoBehaviourPunCallbacks
 {
-    public Camera PlayerCam;
+    public GameObject PlayerCam;
     public GameObject Char;
 
     public Rigidbody rb;
@@ -30,6 +30,8 @@ public class CustomPlayer : MonoBehaviourPunCallbacks
 
     //Magic
     public bool Magic = false;
+    public GameObject Controls;
+    public bool _disappear = false;
 
     private void Start()
     {
@@ -38,7 +40,7 @@ public class CustomPlayer : MonoBehaviourPunCallbacks
             Destroy(PlayerCam);
             Destroy(movement);
         }
-
+        _disappear = false;
         cam = PlayerCam.GetComponent<Animator>();
         LoadRoomProps();
     }
@@ -85,12 +87,12 @@ public class CustomPlayer : MonoBehaviourPunCallbacks
         rb.AddForce(0, 0, forwardForce * Time.deltaTime);
 
         //Controls for A & D
-        if (Input.GetKey("d"))
+        if (Input.GetKey(KeyCode.D))
         {
             rb.AddForce(sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
         }
 
-        if (Input.GetKey("a"))
+        if (Input.GetKey(KeyCode.A))
         {
             rb.AddForce(-sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
         }
@@ -181,7 +183,8 @@ public class CustomPlayer : MonoBehaviourPunCallbacks
         {
             Destroy(PlayerCam);
             Destroy(movement);
-        }     
+        }
+        ChangeUI();
     }
 
     public void KatamOnCollision()
@@ -192,6 +195,25 @@ public class CustomPlayer : MonoBehaviourPunCallbacks
             {
                 customManager.EndGame();
             }
+        }
+    }
+
+    public void ChangeUI()
+    {
+        if (SystemInfo.deviceType == DeviceType.Handheld)
+        {
+            if (_disappear)
+            {
+                Controls.SetActive(false);
+            }
+            else
+            {
+                Controls.SetActive(true);
+            }
+        }
+        else
+        {
+            Controls.SetActive(false);
         }
     }
 }

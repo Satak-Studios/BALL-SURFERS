@@ -32,7 +32,7 @@ public class RestartOnline : MonoBehaviour
             if (gameHasEnded == false)
             {
                 gameHasEnded = true;
-                rs.controls.SetActive(false);
+                rs._disapper = true;
 
                 Time.timeScale = 1f;
 

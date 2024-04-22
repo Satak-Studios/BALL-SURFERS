@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CamManager : MonoBehaviour
 {
-    public GameObject[] cams;
+    public Camera[] cams;
     public int activeCam = 0;
 
     public void SwitchCamera()
@@ -14,15 +14,14 @@ public class CamManager : MonoBehaviour
         activeCam += 1;
         if (activeCam >= cams.Length)
         {
-            cams[cams.Length - 1].SetActive(false);
+            cams[cams.Length - 1].gameObject.SetActive(false);
             activeCam = 0;
         }
-        cams[activeCam].SetActive(true);
+        cams[activeCam].gameObject.SetActive(true);
         if (activeCam != 0)
         {
             int pre = activeCam - 1;
-            cams[pre].SetActive(false);
-        }
-        
+            cams[pre].gameObject.SetActive(false);
+        } 
     }
 }

@@ -14,14 +14,16 @@ public class FollowPlayer : MonoBehaviour
     public bool exception = false;
     public bool isOnline = false;
 
-    void Update()
+    void Start()
     {
         if (player == null)
         {
             player = FindObjectOfType<playermovement>().transform;
             return;
         }
-
+    }
+    private void Update()
+    {
         transform.position = player.position + offset;
 
         if (!exception && !isOnline)

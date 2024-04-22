@@ -3,6 +3,7 @@ using Photon.Pun;
 
 public class Device : MonoBehaviour
 {
+    public bool isInvsible = false;
     public bool pauseLevel = false;
     public string unlockKey;
 
@@ -25,10 +26,7 @@ public class Device : MonoBehaviour
         {
             isHavingKey = false;
         }
-    }
 
-    void Update()
-    {
         if (!pauseLevel)
         {
             dialogmobile.SetActive(false);
@@ -42,7 +40,10 @@ public class Device : MonoBehaviour
                 }
             }
         }
+    }
 
+    void Update()
+    {
         if (SystemInfo.deviceType == DeviceType.Desktop)
         {
             if (pauseLevel)
@@ -50,31 +51,22 @@ public class Device : MonoBehaviour
                 if (!isHavingKey)
                 {
                     dialogpc.SetActive(true);
-                    dialogmobile.SetActive(false);
-                    m_DeviceType = "Desktop";
-                    controls.SetActive(false);
                     Player.SetActive(false);
                 }
                 else
                 {
                     dialogpc.SetActive(false);
-                    dialogmobile.SetActive(false);
-                    controls.SetActive(false);
-                    Player = FindObjectOfType<playermovement>().gameObject;
-                    if (!(Player == null))
-                    {
-                        Player.SetActive(true);
-                    }
-                    m_DeviceType = "Desktop";
-                    FindObjectOfType<Restart>()._disapper = false;
+                    Player.SetActive(true);
                 }
             }
             else
             {
                 dialogpc.SetActive(false);
-                dialogmobile.SetActive(false);
-                controls.SetActive(false);
+                Player.SetActive(true);
             }
+            m_DeviceType = "Desktop";
+            dialogmobile.SetActive(false);
+            controls.SetActive(false);
         }
 
         if (SystemInfo.deviceType == DeviceType.Handheld)
@@ -83,33 +75,31 @@ public class Device : MonoBehaviour
             {
                 if (!isHavingKey)
                 {
-                    dialogpc.SetActive(false);
                     dialogmobile.SetActive(true);
-                    m_DeviceType = "HandHeld";
-                    controls.SetActive(false);
                     Player.SetActive(false);
                 }
                 else
                 {
-                    dialogpc.SetActive(false);
                     dialogmobile.SetActive(false);
-                    controls.SetActive(true);
-                    m_DeviceType = "HandHeld";
                     Player.SetActive(true);
                 }
             }
             else
             {
-                dialogpc.SetActive(false);
                 dialogmobile.SetActive(false);
-                controls.SetActive(true);
-                m_DeviceType = "HandHeld";
-                Player = FindObjectOfType<playermovement>().gameObject;
-                if (!(Player == null))
-                {
-                    Player.SetActive(true);
-                }
+                Player.SetActive(true);
             }
+
+            if (!isInvsible)
+            {
+                controls.SetActive(true);
+            }
+            else
+            {
+                controls.SetActive(false);
+            }
+            dialogpc.SetActive(false);
+            m_DeviceType = "HandHeld";
         }
     }
     public void OnClickOk()

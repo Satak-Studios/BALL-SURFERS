@@ -45,8 +45,7 @@ public class CompManager : MonoBehaviourPunCallbacks
     public string screenshotFolder;
 
     //EndScreen
-    public GameObject Controls;
-    public int PlayerPosition = 100;
+    public int PlayerPosition = 1;
     public Text FeedBackText;
     public GameObject CompPanel;
     public bool _GodMod = false;
@@ -70,7 +69,7 @@ public class CompManager : MonoBehaviourPunCallbacks
             return;
         }
     }
-    
+
     public void Update()
     {
         myPlayer = FindObjectOfType<OnlinePlayer>();
@@ -98,6 +97,17 @@ public class CompManager : MonoBehaviourPunCallbacks
                 ClockRunning();
             }
         }
+        FeedBackText.text = PlayerPosition switch
+        {
+            0 => "Next time!",
+            1 => "Winner!",
+            2 => "The Veiled Challenger",
+            3 => "Close, but Cigar!",
+            4 => "Better efforts, Next time!",
+            5 => "You Noob",
+            _ => ""
+        };
+
 
         #region extra
         timerText.text = Mathf.RoundToInt(currentTime).ToString();
@@ -141,7 +151,7 @@ public class CompManager : MonoBehaviourPunCallbacks
             {
                 PlayerPrefs.SetInt("fps", 0);
                 changedFPS = true;
-            }        
+            }
         }
 
         PlayerPosition = SatakExtensions.GetPlayerPosition(myPlayer.PV.Owner);
@@ -243,7 +253,8 @@ public class CompManager : MonoBehaviourPunCallbacks
             compTimer.StopTimer();
             koText.gameObject.SetActive(false);
             progressText.gameObject.SetActive(false);  
-            myPlayer.cam.SetBool("compu", true);
+            //myPlayer.cam.SetBool("compu", true);
+            Camera.main.GetComponent<Animator>().SetBool("compu", true);
             string _message = "\n has completed the race!";
             FindObjectOfType<Notifier>().SendInfo(_message);
             progressObj.SetActive(false);
@@ -251,18 +262,8 @@ public class CompManager : MonoBehaviourPunCallbacks
     }
     public void CompleteComp()
     {
-        Controls.SetActive(false);
+        myPlayer._disappear = true;
         CompPanel.SetActive(true);
-        FeedBackText.text = PlayerPosition switch
-        {
-            0 => "Better efforts, Next time!",
-            1 => "Winner!",
-            2 => "The Veiled Challenger",
-            3 => "Close, but Cigar!",
-            4 => "Better efforts, Next time!",
-            5 => "You Noob",
-            _ => ""
-        };
 
         switch (PlayerPosition)
         {
@@ -334,7 +335,7 @@ public class CompManager : MonoBehaviourPunCallbacks
     public void LeaveGameFake()
     {
         leaveGameObj[0].text = "Confirm?";
-        tempStore++;
+        
         if (tempStore == 1)
         {
             PhotonNetwork.DestroyAll(true);
@@ -342,6 +343,7 @@ public class CompManager : MonoBehaviourPunCallbacks
             string _message = "\n has left the game.";
             FindObjectOfType<Notifier>().SendInfo(_message);
         }
+        tempStore++;
     }
 
     public void LeaveGame(int x)

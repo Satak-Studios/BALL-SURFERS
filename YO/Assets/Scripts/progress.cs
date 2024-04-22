@@ -27,6 +27,7 @@ public class progress : MonoBehaviour
     public bool rotate180 = true;
 
     public GameObject ImpMark;
+    public SaveSystem saveSystem;
 
     void Start()
     {
@@ -40,16 +41,32 @@ public class progress : MonoBehaviour
     void Update()
     {
         int hScoreInt = (int)PlayerPrefs.GetFloat("hiScore", 1);
-        hScore.text = "HighScore: " + hScoreInt.ToString();
-        cLevel.text = "Levels: " + PlayerPrefs.GetInt("levelsUnlocked").ToString();
-        PlayerName.text = PlayerPrefs.GetString("PlayerName").ToString();
-        achText.text = "Achievements:" + PlayerPrefs.GetInt("totalAch").ToString();
-        CalcXP();
+        if (hScore != null)
+        {
+            hScore.text = "HighScore: " + hScoreInt.ToString();
+        }
+        if (cLevel != null)
+        {
+            cLevel.text = "Levels: " + PlayerPrefs.GetInt("levelsUnlocked").ToString();
+        }
+        if (PlayerName != null)
+        {
+            PlayerName.text = PlayerPrefs.GetString("PlayerName").ToString();
+        }
+        if (achText != null)
+        {
+            achText.text = "Achievements:" + PlayerPrefs.GetInt("totalAch").ToString();
+        }
+        if (Status != null)
+        {
+            CalcXP();
+        }
         
-        if (PlayerPrefs.GetInt("ImpMark") >= 1)
+        if (PlayerPrefs.GetInt("ImpMark") >= 1 && ImpMark != null)
         {
             ImpMark.SetActive(true);
-        }else
+        }
+        else if (PlayerPrefs.GetInt("ImpMark") !>= 1 && ImpMark != null)
         {
             ImpMark.SetActive(false);
         }
@@ -59,6 +76,8 @@ public class progress : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.SetInt("levelsUnlocked", 1);
+        PlayerPrefs.SetFloat("hiScore", 1);
+        FindObjectOfType<Achiever>().DeleteAllAchievements();
         SetPlayerName();
    }
 
@@ -169,8 +188,11 @@ public class progress : MonoBehaviour
 				FindObjectOfType<Achiever>().AchievementUnlocked(15);
 			}
         }
-        xpText.text = "Xp: " + XP;
-        PlayerPrefs.SetInt("xp", XP);
+        if (xpText != null)
+        {
+            xpText.text = "Xp: " + XP;
+            PlayerPrefs.SetInt("xp", XP);
+        }
     }  
 
     public void CH()
@@ -186,5 +208,26 @@ public class progress : MonoBehaviour
     public void RemoveImp()
     {
         PlayerPrefs.SetInt("ImpMark", 0);
+    }
+
+    public void LoadGameFile()
+    {
+        SaveData data = saveSystem.LoadGame();
+        nameField.text = data._userName;
+        PlayerPrefs.SetString("PlayerName", data._userName);
+        PlayerPrefs.SetInt("levelsUnlocked", data._level);
+        PlayerPrefs.SetFloat("hiScore", data._hScore);
+        FindObjectOfType<Achiever>().DeleteAllAchievements();
+        for (int i = 1; i <= 25; i++)
+        {
+            FindObjectOfType<Achiever>().LoadAllAchievements(i, data.ach[i-1]);
+        }
+        PlayerPrefs.SetInt("eyes", data.selectedEyes);
+        PlayerPrefs.SetInt("eyeColor", data.selectedEyeColor);
+        PlayerPrefs.SetInt("bodyColor", data.selectedBodyColor);
+        PlayerPrefs.SetInt("mouth", data.selectedMouth);
+        PlayerPrefs.SetInt("band", data.band);
+        PlayerPrefs.SetFloat("TotalPlaytime", data.timePlayed);
+        FindObjectOfType<PlaytimeCalculator>().totalPlaytime = data.timePlayed;
     }
 }

@@ -23,12 +23,17 @@ public class GameManager : MonoBehaviour
 	}
     public void EndGame()
     {
-		rs.EndGames();
+		rs.EndGames(FindObjectOfType<playermovement>().transform.position.z);
     }
 	public void Restart()
 	{
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
+
+	public void Home()
+    {
+		SceneManager.LoadScene(0);
+    }
 
 	void Update()
 	{

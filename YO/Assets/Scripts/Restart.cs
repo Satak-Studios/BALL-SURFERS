@@ -10,28 +10,24 @@ public class Restart : MonoBehaviour
 	[SerializeField] public GameObject Restartmenu;
 	public float restartDelay = 1f;
 	public bool gameHasEnded = false;
-	public Rigidbody rb;
-	public GameObject controls;
 	public bool rscreen;
 	public GameObject pauseButton;
+	public GameObject cameraBtn;
 
 	public bool _disapper = false;
+	public bool isOnline = false;
 
 	public ScoreOnline sco;
 
 	public bool cl = false;
     public bool isGodMode = false;
-    public playermovement movement;
+	Device _device;
 
 	public Vector3 katamPoint;
 
     private void Start()
     {
-        movement = FindObjectOfType<playermovement>();
-		if (movement != null)
-		{
-			rb = movement.rb;
-		}
+		_device = FindObjectOfType<Device>();
 	}
 
 
@@ -41,23 +37,23 @@ public class Restart : MonoBehaviour
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 
-	public void EndGames()
+	public void EndGames(float z)
 	{
-	  if(cl == false)
-        {
-            if (isGodMode == false)
-            {
+		if (cl == false)
+		{
+			if (isGodMode == false)
+			{
 				if (gameHasEnded == false)
 				{
-					SavePos();
+					SavePos(z);
 					gameHasEnded = true;
 					_disapper = true;
+					_device.isInvsible = true;
 
 					Time.timeScale = 0.5f;
 					new WaitForSeconds(5f);
 					Restartmenu.SetActive(true);
 					PlayerPrefs.SetInt("sdrn", 0);
-					movement.enabled = false;
 					int band = PlayerPrefs.GetInt("band", 0) + 1;
 					PlayerPrefs.SetInt("band", band);
 
@@ -71,55 +67,41 @@ public class Restart : MonoBehaviour
 						Restartmenu.SetActive(true);
 					}
 				}
-            }
-        }
-        else
-        {
-
-        }
+			}
+		}
 	}
+
 	public void Update()
 	{
-		if (rb.position.y < -1f)
+		if (!isOnline)
 		{
-            if (!isGodMode)
-            {
-				EndGames();
-            }
-            else
-            {
-                Transform pm = movement.gameObject.transform;
-                float x = 0f;
-                float y = 1f;
-                float z = pm.position.z;
-                pm.position = new Vector3(x, y, z);
-            }
-		}
-
-		if (_disapper)
-		{
-			controls.SetActive(false);
-			pauseButton.SetActive(false);
-		}
-		else
-		{
-			if (SystemInfo.deviceType == DeviceType.Handheld)
+			if (_disapper)
 			{
-				controls.SetActive(true);
-            }
-            else
-            {
-				controls.SetActive(false);
+				_device.isInvsible = true;
+				pauseButton.SetActive(false);
+				cameraBtn.SetActive(false);
 			}
-			pauseButton.SetActive(true);
+			else
+			{
+				if (SystemInfo.deviceType == DeviceType.Handheld)
+				{
+					_device.isInvsible = false;
+				}
+				else
+				{
+					_device.isInvsible = true;
+				}
+				pauseButton.SetActive(true);
+				cameraBtn.SetActive(true);
+			}
 		}
 	}
 
-	void SavePos()
+	void SavePos(float z)
     {
 		katamPoint.x = 0f;
 		katamPoint.y = 1.5f;
-		katamPoint.z = movement.transform.position.z;
+		katamPoint.z = z;
 	}
 }
 

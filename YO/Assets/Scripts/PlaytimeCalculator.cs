@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlaytimeCalculator : MonoBehaviour
 {
-    [SerializeField]private float totalPlaytime;
+    public float totalPlaytime;
 
     private void Start()
     {

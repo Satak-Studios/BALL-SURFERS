@@ -1,133 +1,100 @@
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-using UnityEngine.UI;
-using Firebase.Firestore;
-using Photon.Chat.UtilityScripts;
 
 public class SaveSystem : MonoBehaviour
 {
-    private FirebaseFirestore firestore;
-    public InputField secretKeyHolder;
-    public Toggle _remember;
+    static string fileName = "0";
+    public GameObject newGameWarn;
     public GameObject saveWarn;
     public GameObject loadWarn;
-    public GameObject mainWarn;
-    private string secretKey = "0";
-
+    public GameObject delWarn;
+    static string _title;
     public ErrorThrower errorThrower;
+    public progress _progress;
+    string _path;
 
-    void Awake()
-    {
-        firestore = FirebaseFirestore.DefaultInstance;
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if (_remember.isOn)
-        {
-            PlayerPrefs.SetString("secretKey", secretKey);
-        }else
-        {
-            PlayerPrefs.DeleteKey("secretKey");
-        }
+        _title = (PlayerPrefs.GetInt("xp") / 300).ToString("F2");
     }
 
-    public void SecretKey()
+    public static void SaveGame()
     {
-        if (secretKeyHolder.text == "")
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        string path = Application.persistentDataPath + fileName + ".satak";
+        FileStream stream = new FileStream(path, FileMode.Create);
+        SaveData data = new SaveData();
+        formatter.Serialize(stream, data);
+        stream.Close();
+        if (File.Exists(Application.persistentDataPath + fileName + ".txt"))
         {
-            errorThrower.ThrowError("Save:(", "Make sure you have entered the secret key.", "Oops!");
+            File.Delete(Application.persistentDataPath + fileName + ".txt");
+            StreamWriter writer = new StreamWriter(Application.persistentDataPath + fileName + ".txt", true);
+            writer.WriteLine(_title + "% Complete");
+            writer.Close();
+            Debug.Log("Deleting");
         }
         else
         {
-            secretKey = secretKeyHolder.text;
+            StreamWriter writer = new StreamWriter(Application.persistentDataPath + fileName + ".txt", true);
+            writer.WriteLine(_title + "% Complete");
+            writer.Close();
         }
+        fileName = "/PlayerData";
     }
 
-    public void SaveFake()
+    public SaveData LoadGame()
     {
-        if (PlayerPrefs.HasKey("secretKey"))
-        {
-            secretKey = PlayerPrefs.GetString("secretKey");
-            CheckNetwork(false);
-            saveWarn.SetActive(false);
-        }else
-        {
-            saveWarn.SetActive(true);
-            mainWarn.SetActive(true);
-        }
+        string path = Application.persistentDataPath + fileName + ".satak";
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream stream = new FileStream(path, FileMode.Open);
+        SaveData data = formatter.Deserialize(stream) as SaveData;
+        stream.Close();
+        FindObjectOfType<Achiever>().Notify("Yay!", "Welcome back " + data._userName);
+        fileName = "/PlayerData";
+        return data;   
     }
 
-    public void CheckNetwork(bool toDoLoad)
+    public void SaveGameFile()
     {
-        NetworkReachability reachability = Application.internetReachability;
+        SaveGame();
+        FindObjectOfType<Achiever>().Notify("Done!", "Game Saved Sucessfully!");
+        //errorThrower.ThrowError("111111", "Game Saved Sucessfully!", "Done!");
+    }   
 
-        switch (reachability)
-        {
-            case NetworkReachability.NotReachable:
-                errorThrower.ThrowError("404_:(", "Make sure you are connected to the internet.", "Oops!");
-            break;
-
-            case NetworkReachability.ReachableViaCarrierDataNetwork:
-                errorThrower.ThrowError("🤨DataNetwork?🤨", "Are you sure to play BALL SURFERS using your Mobile Data?", "Sure?");
-                if (toDoLoad)
-                {
-                    LoadFromCloud();
-                }else
-                {
-                    SaveToCloud();
-                }
-            break;
-
-            case NetworkReachability.ReachableViaLocalAreaNetwork:
-                if (toDoLoad)
-                {
-                    LoadFromCloud();
-                }else
-                {
-                    SaveToCloud();
-                }
-            break;
-        }
+    public void SaveGameFake(int saveSlot)
+    {
+        fileName = "/PlayerData" + saveSlot.ToString();
+        Debug.Log("FileName = " + fileName);
+        saveWarn.SetActive(true);
     }
 
-    public async void SaveToCloud()
+    public void LoadGameFake(int saveSlot)
     {
-        if (errorThrower.networkAvailable)
-        {
-            SaveData saveData = new SaveData();
-            await firestore.Document($"save_data/" + secretKey).SetAsync(saveData);
-            FindObjectOfType<Achiever>().Notify("Done!", "Game Saved Sucessfully!");
-            errorThrower.ThrowError("111111", "Game Saved Sucessfully!", "Done!");
-        }else
-        {
-            errorThrower.CheckInternet();
-        }
+        fileName = "/PlayerData" + saveSlot.ToString();
+        if (File.Exists(Application.persistentDataPath + fileName + ".satak"))
+            loadWarn.SetActive(true);
+        else
+            newGameWarn.SetActive(true);
     }
 
-    public async void LoadFromCloud()
+    public void LoadGameFile()
     {
-        var snapshot = await firestore.Document($"save_data/" + secretKey).GetSnapshotAsync();
-        if (snapshot.Exists)
-        {
-            var data = snapshot.ConvertTo<SaveData>();
-            SaveData saveData = new SaveData();
-            saveData.UserName = data.UserName;
-            saveData.Level = data.Level;
-            saveData.HighScore = data.HighScore;
-            saveData.Achievements = data.Achievements;
-            saveData.Eye = data.Eye;
-            saveData.EyeColor = data.EyeColor;
-            saveData.BodyColor = data.BodyColor;
-            saveData.Mouth = data.Mouth;
-            saveData.Bandage = data.Bandage;
-            FindObjectOfType<Achiever>().Notify("Done!", "Game Loaded Sucessfully!");
-            FindObjectOfType<Achiever>().Notify("Yay!", "Welcome back " + data.UserName);
-            errorThrower.ThrowError("111111", "Game Loaded Sucessfully!", "Done!");
-        }else
-        {
-            FindObjectOfType<Achiever>().Notify("Error!", "No such game progress");
-            errorThrower.ThrowError("Game404", "No such game progress", "Error");
-        }
+        LoadGame();
+    }
+
+    public void DeleteSaveFake(int saveSlot)
+    {
+        _path = Application.persistentDataPath + "/PlayerData" + saveSlot.ToString();
+        delWarn.SetActive(true);
+    }
+
+    public void DeleteSaveFile()
+    {
+        File.Delete(_path + ".satak");
+        File.Delete(_path + ".txt");
+        FindObjectOfType<Achiever>().Notify("Done!", "Deleted Sucessfully!");
     }
 }

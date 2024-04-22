@@ -62,7 +62,7 @@ public class Achiever : MonoBehaviour
         if(totalAch >= 15 && achIndex[24] == 0)
         {
             AchievementUnlocked(24);
-        }else if (totalAch == 25 && achIndex[4] == 0)//MasterCollector
+        }else if (totalAch == 25 && achIndex[25] == 0)//MasterCollector
         {
             AchievementUnlocked(25);
         }
@@ -94,7 +94,7 @@ public class Achiever : MonoBehaviour
         else
         {
             QualitySettings.vSyncCount = 1;
-            Application.targetFrameRate = targetFPS;
+            //Application.targetFrameRate = targetFPS;
         }
     }
 
@@ -157,6 +157,21 @@ public class Achiever : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    public void LoadAllAchievements(int index, int value)
+    {
+        string achievementKey = "Achievement_" + index.ToString();
+        PlayerPrefs.SetInt(achievementKey, value);
+        achIndex[index] = value;
+        Debug.Log("Achievement_" + index + " = " + value);
+        if (value == 1)
+        {
+            totalAch = 1 + PlayerPrefs.GetInt("totalAch");
+        }
+        PlayerPrefs.SetInt("totalAch", totalAch);
+        Debug.Log(totalAch);
+        PlayerPrefs.Save();
+    }
+
     public void LoadAchievements()
     {
         for (int i = 1; i <= 25; i++)
@@ -181,6 +196,18 @@ public class Achiever : MonoBehaviour
         Subj.text = "All Deleted!";
     }
 
+    public void DeleteAllAchievements()
+    {
+        for (int i = 1; i <= 25; i++)
+        {
+            string achievementKey = "Achievement_" + i.ToString();
+            PlayerPrefs.DeleteKey(achievementKey);
+            PlayerPrefs.DeleteKey("totalAch");
+            LockAchievements(i);
+            achIndex[i] = 0;
+        }
+    }
+
     public void LockAchievements(int index)
     {
         string achievementKey = "Achievement_" + index.ToString();
@@ -197,5 +224,10 @@ public class Achiever : MonoBehaviour
         _anim.SetBool("achUn", true);
         Title.text = _Title;
         Subj.text = _Subject;
+    }
+
+    public int ReturnAchs(int i)
+    {
+        return achIndex[i];
     }
 }

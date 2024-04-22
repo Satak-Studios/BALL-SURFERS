@@ -66,7 +66,7 @@ public class AchievementManager : MonoBehaviour
 
         for (int i = 1; i <= 25; i++)
         {
-            if (_achiever.achIndex[i] == 1)
+            if (_achiever.ReturnAchs(i) == 1)
             {
                 UnlockAchievement(i);
             }else
@@ -93,6 +93,17 @@ public class AchievementManager : MonoBehaviour
     {
         CompleteObjects[index].SetActive(false);
         Icons[index].sprite = DefaultSprites[index];
+    }
+
+    public void LockAllAchievement()
+    {
+        for (int i = 1; i <= 25; i++)
+        {
+            string achievementKey = "Achievement_" + i.ToString();
+            PlayerPrefs.DeleteKey(achievementKey);
+            LockAchievement(i);
+            FindObjectOfType<Achiever>().LockAchievements(i);
+        }
     }
 
     public void Claim()

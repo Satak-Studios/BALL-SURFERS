@@ -12,7 +12,10 @@ public class LevelScript : MonoBehaviour
         if (currentLevel == 6)
         {
             int cLevel = PlayerPrefs.GetInt("levelsUnlocked");
-            PlayerPrefs.SetInt("levelsUnlocked", cLevel + 1);
+            if (PlayerPrefs.GetInt("levelsUnlocked") != 100)
+            {
+                PlayerPrefs.SetInt("levelsUnlocked", cLevel + 1);
+            }
         }
         if (currentLevel < 6)
         {
@@ -28,5 +31,4 @@ public class LevelScript : MonoBehaviour
         }
         SceneManager.LoadScene("levelmanager");
     }
-
 }

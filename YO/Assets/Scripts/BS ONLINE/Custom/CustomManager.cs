@@ -48,7 +48,6 @@ public class CustomManager : MonoBehaviourPunCallbacks
     public string screenshotFolder;
 
     //EndScreen
-    public GameObject Controls;
     public int PlayerPosition = 100;
     public Text FeedBackText;
     public GameObject CompPanel;
@@ -221,7 +220,7 @@ public class CustomManager : MonoBehaviourPunCallbacks
             Hearts[1].SetActive(false);
             Hearts[2].SetActive(false);
         }
-        if (lives <= 0 && !gameCompleted)
+        if (lives == 0 && !gameCompleted)
         {
             GodMode();
             gameStarted = false;
@@ -254,6 +253,16 @@ public class CustomManager : MonoBehaviourPunCallbacks
             }
         }
         #endregion
+        FeedBackText.text = PlayerPosition switch
+        {
+            0 => "Next time!",
+            1 => "Winner!",
+            2 => "The Veiled Challenger",
+            3 => "Close, but Cigar!",
+            4 => "Better efforts, Next time!",
+            5 => "You Noob",
+            _ => ""
+        };
     }
 
     void ClockRunning()
@@ -297,6 +306,10 @@ public class CustomManager : MonoBehaviourPunCallbacks
                 ReSpawnPlayer();           
                 NumberOfKatams++;
             }
+            else if(lives == 0)
+            {
+                PhotonNetwork.Destroy(myPlayer.Char);
+            }
         }
     }
 
@@ -320,18 +333,8 @@ public class CustomManager : MonoBehaviourPunCallbacks
     }
     public void CompleteComp()
     {
-        Controls.SetActive(false);
+        myPlayer._disappear = true;
         CompPanel.SetActive(true);
-        FeedBackText.text = PlayerPosition switch
-        {
-            0 => "Better efforts, Next time!",
-            1 => "Winner!",
-            2 => "The Veiled Challenger",
-            3 => "Close, but Cigar!",
-            4 => "Better efforts, Next time!",
-            5 => "You Noob",
-            _ => ""
-        };
 
         switch (PlayerPosition)
         {
