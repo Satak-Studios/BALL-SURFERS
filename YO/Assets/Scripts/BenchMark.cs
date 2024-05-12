@@ -1,13 +1,21 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Satak.Utilities;
 
 public class BenchMark : MonoBehaviour
 {
+   //public GameObject StartScreen;
+    public GameObject[] oldBench;
+    public GameObject[] newBench;
+    public GameObject completeBench;
+    public bool _regular = true;
+    public GameObject _obsticle;
     public Text players_txt;
     public int spawnedPlayer = 0;
     public GameObject mainPlayer;
+    public GameObject sidePlayer;
     public GameObject[] playerPrefab;
     public GameObject[] spawnedPlayers;
     public GameObject[] buttons;
@@ -20,6 +28,15 @@ public class BenchMark : MonoBehaviour
     public Text MinFPS;
     public Text MaxFPS;
     public Text AvgFPS;
+
+    private void Start()
+    {
+        //StartScreen.SetActive(true);
+        //Time.timeScale = 0f;
+        Regular();
+        completeBench.SetActive(false);
+        minFPS = float.MaxValue;
+    }
 
     public void IncreasePlayer()
     {
@@ -54,9 +71,17 @@ public class BenchMark : MonoBehaviour
             accumFPS += currentFPS;
             totalFrames++;
             maxFPS = Mathf.Max(maxFPS, currentFPS);
-            if (accumFPS >= totalFrames + currentFPS)
+            if (accumFPS >= totalFrames + currentFPS && minFPS > 0)
             {
-                minFPS = Mathf.Min(minFPS, (2 * (accumFPS / totalFrames) - maxFPS));
+                if (minFPS > 0)
+                {
+                    //minFPS = Mathf.Min(minFPS, (2 * (accumFPS / totalFrames) - maxFPS));
+                    if (currentFPS < minFPS)
+                    {
+
+                        minFPS = Mathf.Min(currentFPS);
+                    }
+                }
             }
         }
         MinFPS.text = "Min : " + minFPS.ToString("0") + " FPS";
@@ -72,6 +97,13 @@ public class BenchMark : MonoBehaviour
         {
             spawnedPlayer = 0;
         }
+
+        if (!_regular)
+        {
+            Instantiate(_obsticle,
+                new Vector3(sidePlayer.transform.position.x, 10f, sidePlayer.transform.position.z + 15),
+                Quaternion.identity);
+        }
     }
 
     public void CompleteBench()
@@ -81,5 +113,38 @@ public class BenchMark : MonoBehaviour
             buttons[i].SetActive(false);
             players_txt.gameObject.SetActive(false);
         }
+        completeBench.SetActive(true);
+    }
+
+    public void StressTest()
+    {
+        for (int i = 0; i < oldBench.Length; i++)
+        {
+            oldBench[i].SetActive(false);
+        }
+
+        for (int i = 0; i < newBench.Length; i++)
+        {
+            newBench[i].SetActive(true);
+        }
+        _regular = false;
+        sidePlayer.SetActive(true);
+        sidePlayer.GetComponent<BSSAI>().ShouldIMove = true;
+    }
+
+    public void Regular()
+    {
+        for (int i = 0; i < oldBench.Length; i++)
+        {
+            oldBench[i].SetActive(true);
+        }
+        
+        for (int i = 0; i < newBench.Length; i++)
+        {
+            newBench[i].SetActive(false);
+        }
+        _regular = true;
+        sidePlayer.SetActive(false);
+        sidePlayer.GetComponent<BSSAI>().ShouldIMove = false;
     }
 }

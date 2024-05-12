@@ -51,7 +51,11 @@ namespace Chat
             {
                 SendMessage();
             }
-
+            string achievementKey = "Achievement_23";
+            if (PlayerPrefs.GetInt(achievementKey) == 0)
+            {
+                FindObjectOfType<Achiever>().AchievementUnlocked(23);
+            }
             messageInput.text = string.Empty;
             EventSystem.current.SetSelectedGameObject(null);
         }

@@ -253,15 +253,29 @@ public class CustomManager : MonoBehaviourPunCallbacks
             }
         }
         #endregion
-        FeedBackText.text = PlayerPosition switch
+        switch (PlayerPosition)
         {
-            0 => "Next time!",
-            1 => "Winner!",
-            2 => "The Veiled Challenger",
-            3 => "Close, but Cigar!",
-            4 => "Better efforts, Next time!",
-            5 => "You Noob",
-            _ => ""
+            case 0:
+                if (!compTimer.Time_)
+                {
+                    FeedBackText.text = "Next Time!";
+                }
+                break;
+            case 1:
+                FeedBackText.text = "Winner!";
+                break;
+            case 2:
+                FeedBackText.text = "The Veiled Challenger";
+                break;
+            case 3:
+                FeedBackText.text = "Close, but Cigar!";
+                break;
+            case 4:
+                FeedBackText.text = "Better efforts, Next time!";
+                break;
+            default:
+                FeedBackText.text = "";
+                break;
         };
     }
 

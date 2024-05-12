@@ -25,9 +25,9 @@ public class Multiplayer : MonoBehaviourPunCallbacks
         }
     }
 
-    public void NoInternet()
+    public void BackToMenu()
     {
-        PhotonNetwork.OfflineMode = true;
+        SceneManager.LoadScene(0);
     }
 
     public override void OnConnectedToMaster()

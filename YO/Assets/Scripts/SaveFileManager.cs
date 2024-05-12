@@ -27,11 +27,10 @@ public class SaveFileManager : MonoBehaviour
             }
             else
             {
-                LoadFiles[i].GetComponentInChildren<Text>().text = "New Game";
+                LoadFiles[i].GetComponentInChildren<Text>().text = "Empty";
                 SaveFiles[i].GetComponentInChildren<Text>().text = "Empty";
                 deleteFiles[i].SetActive(false);
-                //LoadFiles[i].interactable = false;
-                LoadFiles[i].image.color = Color.gray;
+                LoadFiles[i].interactable = false;
             }
         }
     }

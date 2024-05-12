@@ -39,7 +39,6 @@ public class FollowPlayer : MonoBehaviour
     {
         Vector3 playerPosition = player.position;
         RaycastHit hit;
-
         float startAngle = Mathf.PI - Mathf.PI / 6;
         float endAngle = Mathf.PI + Mathf.PI / 6;
         int rayCount = 7;

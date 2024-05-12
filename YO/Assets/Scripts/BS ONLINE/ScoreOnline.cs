@@ -17,7 +17,7 @@ public class ScoreOnline : MonoBehaviourPunCallbacks
 
     public Text PlayerName;
     public InputField nameField;
-    public string[] names;
+    public string[] names; //Bye Bye
     public LobbyManager1 lManager;
 
     //Room Options
@@ -95,6 +95,68 @@ public class ScoreOnline : MonoBehaviourPunCallbacks
     "EmpyreanEden"
     };
 
+    #region roomNames
+    string[] roomNames = new string[]
+{
+    // General Room Names
+    "Nexus", "Arena", "Vault", "Haven", "Abyss", "Citadel", "Maze", "Grove", "Summit", "Den",
+    "Oasis", "Cove", "Forge", "Spire", "Echo", "Lair", "Rift", "Tower", "Crypt", "Temple",
+    "Crag", "Henge", "Lagoon", "Grotto", "Frost", "Vortex", "Shard", "Sphinx", "Blaze",
+    "Chasm", "Ridge", "Bloom", "Harbor", "Sanctum", "Quarry", "Shrine", "Dusk", "Vale",
+    "Canyon", "Pulse", "Whirl", "Crown", "Shadow", "Oracle", "Crux", "Empyrean", "Horizon",
+    "Pantheon", "Rapture", "Halo", "Obelisk", "Rune", "Loom", "Delta", "Zenith", "Monolith",
+    "Sage", "Chapel", "Nova", "Vertex", "Spiral", "Arcane", "Nebula", "Ascend", "Typhoon",
+    "Vista", "Cascade", "Labyrinth", "Celestial", "Aurora", "Genesis", "Mirage", "Zephyr",
+    "Avalanche", "Frostbite", "Torrent", "Blizzard", "Thunder", "Whisper", "Eclipse", "Radiant",
+    "Spectra", "Elysium", "Nimbus", "Aether", "Fortress", "Sanctuary", "Zen", "Vortex",
+
+    // Among Us Inspired Names
+    "Impasta", "SussyBaka", "Crewmate", "NotAnImpostor", "SusLord", "RedIsSus", "BlueIsSus", "YellowIsSus", "GreenIsSus", "PinkIsSus",
+    "OrangeIsSus", "PurpleIsSus", "BrownIsSus", "WhiteIsSus", "BlackIsSus", "Impostor", "VentMaster", "TaskNinja", "EmergencyMeet", "SabotageKing",
+    "KillTimer", "Innocent", "CrewPal", "EjectButton", "DeadBodyReport", "VotedOut", "EmergencyMeeting", "ImpostorSyndrome", "SneakySaboteur", "AmongUsFan",
+    "VentChamp", "TaskSlayer", "SneakyImp", "MasterSchemer", "Taskinator", "SuspiciouslyInnocent", "LoneWolf", "TrustNoOne", "EmergencyCrew", "SabotageExpert",
+    "DoubleAgent", "ImposterImposter", "Unsuspecting", "UndercoverCrew", "FakingTasks", "Impersonator", "DeceptionMaster", "CunningCrew", "ImpendingDoom",
+    "ChaosCatalyst", "BetrayalBuddy", "SneakySneak", "ShiftySham", "TrickyTraitor", "CunningCriminal", "SabotageSavant", "TaskFaker", "EmergencyLover",
+    "ImpostorPal", "VentedVictor", "SneakySnitch", "TaskAvoider", "SabotageMaestro", "ImpersonatingImposter", "DeviousDeceiver", "FurtiveFaker", "CrewMateMate",
+    "SuspiciousSteve", "BetrayedBuddy", "EvasiveEvader", "ImpendingImpostor", "FickleFaker", "SneakySteve", "TaskMaster", "SabotageSensei", "ImpostorInDisguise",
+    "TaskTroubler", "DeviousDoppelganger", "CrewCulprit", "ShiftySneaker", "TraitorousTasker", "ImposterPro", "SabotageSneaker", "CraftyCrew", "ImposterInTraining",
+    "TaskTerrorizer", "ImposterInsider", "UndercoverUrsula", "SabotageSyndicate", "ImposterInPlainSight", "SabotageSchemer", "TaskTickler", "EmergencyErik",
+    "ImposterInAction", "CrewmateCriminal", "SuspiciousSally", "SabotageSpecialist", "ImposterIntern", "TaskTerminator", "DeviousDuke", "InnocentIan", "SneakySam",
+
+    // Racing Themed Names
+    "NitroSpeed", "TurboCharge", "ApexRacer", "VelocityX", "AdrenalineRush", "GearShift", "PitStop", "TrackMaster", "RaceFuel", "CheckeredFlag",
+    "Dragster", "SpeedDemon", "FastLane", "PowerDrift", "CornerCarver", "GrandPrix", "Burnout", "Redline", "GearHead", "RaceTrack",
+    "PolePosition", "FinishLine", "RallyRacer", "HotRod", "ShiftGear", "Boosted", "RaceReady", "RevvedUp", "ThunderRoad", "Slipstream",
+    "StreetRacer", "HighOctane", "FormulaX", "TurboBoost", "NitrousNinja", "VelocityViper", "Accelerator", "RapidRider", "ChampionChaser", "FuelInjected",
+    "Speedster", "TrackStar", "AdrenalineJunkie", "RoadRunner", "TopGear", "SpeedBlitz", "VictoryLane", "DriftKing", "BurnRubber", "GearGrinder",
+    "RaceAce", "FastTrack", "PitCrew", "TrackTycoon", "AsphaltAssassin", "SpeedSprinter", "DragStrip", "ShiftMaster", "RaceRocket", "NascarNinja",
+    "GripGuru", "LaneLancer", "SpeedStriker", "BlitzBoost", "TurboTwist", "VelocityVoyager", "NitroNinja", "RapidRacer", "HighSpeedHero", "RevolutionRacer",
+    "Supercharged", "SlipperySlider", "CornerCarver", "ApexPredator", "SpeedSurge", "RapidRider", "TurboTitan", "NitroKnight", "VelocityVindicator", "RallyRebel",
+    "SpeedSpecter", "TrackTyrant", "FuelFury", "ShiftStorm", "GearGlider", "AdrenalineAdmiral", "DragDynamo", "RaceReaper", "HighGearHero", "PitPatrol",
+    "GripGlider", "LaneLunatic", "SpeedSpire", "BlitzBlaster", "TurboThrasher", "VelocityViper", "NitroNomad", "RapidRanger", "HighSpeedHawk", "Revolution",
+    "Rebel", "SpeedSpecter", "TrackTyrant", "FuelFury", "ShiftStorm", "GearGlider", "AdrenalineAdmiral", "DragDynamo", "RaceReaper", "HighGearHero", "PitPatrol",
+    "GripGlider", "LaneLunatic", "SpeedSpire", "BlitzBlaster", "TurboThrasher", "VelocityViper", "NitroNomad", "RapidRanger", "HighSpeedHawk", "RevolutionRebel",
+
+    // Student Inspired Names
+    "Bookworm", "StudyBuddy", "Classmate", "HomeworkHero", "ProfessorX", "TestTaker", "LabPartner", "GradeGetter", "ScholarlySage", "KnowledgeKing",
+    "WisdomWhiz", "CramMaster", "NoteNinja", "QuizQuasar", "ResearchRanger", "PaperProdigy", "ProjectPro", "AssignmentAce", "ExamExpert", "ThesisTitan",
+    "StudySavant", "LearningLion", "IntellectualInnovator", "BookishBard", "AcademicAdept", "GeniusGuru", "SchoolSavvy", "SeminarSorcerer", "DegreeDynamo", "GraduationGuru",
+    "SemesterSage", "LibraryLion", "LectureLegend", "TutorTornado", "DissertationDuke", "ScholasticSpecter", "TestimonyTitan", "StudyStorm", "QuizQuester", "CapstoneChampion",
+    "AcademicAdventurer", "GraduateGiant", "PedagogyPro", "TermTrainer", "IntellectualIcon", "ValedictorianVoyager", "ClassroomConqueror", "KnowledgeKnight", "ScholarlySiren", "CurriculumCaptain",
+    "ThesisThrasher", "QuizQuestor", "StudentSultan", "SchoolyardSavant", "AcademicAvenger", "GradeGalloper", "SemesterSprinter", "ExaminationExpert", "CrammingCrusader", "GraduationGoliath",
+    "ScholarlySuperstar", "StudyStallion", "LearningLuminary", "TestTakingTerminator", "TutoringTycoon", "EducationalEmissary", "PedagogicalPowerhouse", "AcademicAdonis", "GraduationGladiator", "SchoolyardSage",
+    "ClassroomChampion", "GradeGrabber", "SemesterSupreme", "ExaminationEliminator", "CrammingCommander", "GraduationGuardian", "ScholarlySovereign", "StudySultan", "LearningLiberator", "TestTakingTyrant",
+    "TutoringTactician", "EducationalEmperor", "PedagogicalProdigy", "AcademicArbiter", "GraduationGuru", "SchoolyardSavant", "ClassroomChampion", "GradeGetter", "SemesterSage", "ExaminationExemplar",
+    "CrammingConqueror", "GraduationGenius", "ScholarlySavant", "StudySultan", "LearningLuminary", "TestTakingTitan", "TutoringTycoon", "EducationalEmissary", "PedagogicalPowerhouse", "AcademicAdonis",
+
+    // Math Inspired Names
+    "GeometryGladiator", "AlgebraicAdventurer", "CalculusCommander", "StatisticsSorcerer", "ArithmeticArcher", "NumberNoble", "TrigonometryTornado", "MathematicalMarvel", "DataDuke", "EquationEmperor",
+    "FractionFinesse", "VariableVirtuoso", "IntegerInsurgent", "FunctionFencer", "ProbabilityProdigy", "MatrixMonarch", "GeometryGuru", "AlgebraicArtist", "CalculusCrusader", "StatisticsSuperstar",
+    "ArithmeticAssassin", "NumberNinja", "TrigonometryTactician", "MathematicalMaestro", "DataDynamo", "EquationEinstein", "FractionFury", "VariableVindicator", "IntegerIcon", "FunctionFalcon",
+    "ProbabilityPioneer", "MatrixMaverick"
+};
+#endregion
+
     public void Start()
     {
         if (!PlayerPrefs.HasKey("PlayerName"))
@@ -104,10 +166,17 @@ public class ScoreOnline : MonoBehaviourPunCallbacks
         else
         {
             PlayerName.text = PlayerPrefs.GetString("PlayerName");
+            PhotonNetwork.NickName = PlayerPrefs.GetString("PlayerName");
         }
         if (PhotonNetwork.InRoom)
         {
             LoadRoomProps();
+        }
+
+        string achievementKey = "Achievement_4";
+        if (PlayerPrefs.GetInt(achievementKey) == 0)
+        {
+            FindObjectOfType<Achiever>().AchievementUnlocked(4);
         }
     }
 
@@ -151,8 +220,8 @@ public class ScoreOnline : MonoBehaviourPunCallbacks
             }
             else
             {
-                int randRoomN = Random.Range(0, randRoomName.Length - 1);
-                PhotonNetwork.CreateRoom(randRoomName[randRoomN], new RoomOptions()
+                int randRoomN = Random.Range(0, roomNames.Length - 1);
+                PhotonNetwork.CreateRoom(roomNames[randRoomN], new RoomOptions()
                 {
                     MaxPlayers = players,
                     BroadcastPropsChangeToAll = true,
@@ -355,11 +424,15 @@ public class ScoreOnline : MonoBehaviourPunCallbacks
     //Random PlayerName
     public void SetPlayerName()
     {
-        string[] nouns = { "Gamer", "Explorer", "Adventurer", "Hero", "Champion", "Pioneer", "Detective", "Scholar", "Artist", "Musician", "Scientist", "Engineer", "Captain", "Pirate", "Wizard", "Warrior", "Athlete", "Leader", "Dreamer", "Traveler", "Nomad", "Guardian", "Hunter", "Knight", "Jester", "Acrobat", "Magician", "Guardian", "Gladiator", "Spy", "Sailor", "Astronaut", "Pirate", "Viking", "Explorer", "Samurai", "Ninja", "Archer", "Scribe", "Sage", "Gladiator" };
+        //string[] nouns = { "Gamer", "Explorer", "Adventurer", "Hero", "Champion", "Pioneer", "Detective", "Scholar", "Artist", "Musician", "Scientist", "Engineer", "Captain", "Pirate", "Wizard", "Warrior", "Athlete", "Leader", "Dreamer", "Traveler", "Nomad", "Guardian", "Hunter", "Knight", "Jester", "Acrobat", "Magician", "Guardian", "Gladiator", "Spy", "Sailor", "Astronaut", "Pirate", "Viking", "Explorer", "Samurai", "Ninja", "Archer", "Scribe", "Sage", "Gladiator" };
+        string[] nouns = FindObjectOfType<Achiever>().playerNameSuffix;
+        string[] _names = FindObjectOfType<Achiever>().playerNames;
+
         int randNoun = Random.Range(0, nouns.Length);
         int rand = Random.Range(0, 10000);
-        int randName = Random.Range(0, names.Length);
-        string player_name = names[randName] + nouns[randNoun] + rand.ToString("0000");
+        //int randName = Random.Range(0, names.Length);
+        int randName = Random.Range(0, _names.Length);
+        string player_name = _names[randName] + nouns[randNoun] + rand.ToString("0000");
         if (player_name.Length > 15)
         {
             string playerName = player_name.Substring(0, 15);

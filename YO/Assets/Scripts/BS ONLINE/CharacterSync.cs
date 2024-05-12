@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
@@ -53,7 +54,7 @@ public class CharacterSync : MonoBehaviourPunCallbacks
             transform.rotation = Quaternion.Euler(newRotation);
         }
 
-        if (!(selectedEyes + selectedMouth == 0))
+        if (!(selectedEyes + selectedMouth == 0) && SceneManager.GetActiveScene().buildIndex > 0)
         {
             if (PlayerPrefs.GetInt("Achievement_2") == 0)
             {
@@ -80,8 +81,8 @@ public class CharacterSync : MonoBehaviourPunCallbacks
     {
         tempBody.GetComponent<MeshRenderer>().material.color = bodyColorIndex switch
         {
-            0 => Color.black,
-            1 => Color.red,
+            0 => Color.red,
+            1 => Color.black,
             2 => Color.green,
             3 => Color.blue,
             4 => Color.yellow,

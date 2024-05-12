@@ -1,9 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Playables;
-using UnityEngine.UI;
-using UnityEngine.Animations;
-using UnityEngine.Audio;
 
 public class Restart : MonoBehaviour
 {
@@ -33,7 +29,7 @@ public class Restart : MonoBehaviour
 
     public void RestartGame ()
 	{
-		PlayerPrefs.SetInt("sdrn", 0);
+		//PlayerPrefs.SetInt("sdrn", 0);
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 
@@ -48,7 +44,7 @@ public class Restart : MonoBehaviour
 					SavePos(z);
 					gameHasEnded = true;
 					_disapper = true;
-					_device.isInvsible = true;
+					_device.isInvisible = true;
 
 					Time.timeScale = 0.5f;
 					new WaitForSeconds(5f);
@@ -77,7 +73,7 @@ public class Restart : MonoBehaviour
 		{
 			if (_disapper)
 			{
-				_device.isInvsible = true;
+				_device.isInvisible = true;
 				pauseButton.SetActive(false);
 				cameraBtn.SetActive(false);
 			}
@@ -85,11 +81,11 @@ public class Restart : MonoBehaviour
 			{
 				if (SystemInfo.deviceType == DeviceType.Handheld)
 				{
-					_device.isInvsible = false;
+					_device.isInvisible = false;
 				}
 				else
 				{
-					_device.isInvsible = true;
+					_device.isInvisible = true;
 				}
 				pauseButton.SetActive(true);
 				cameraBtn.SetActive(true);

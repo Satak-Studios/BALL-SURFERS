@@ -18,8 +18,6 @@ public class progress : MonoBehaviour
     public Text xpText;
     public Text achText;
 
-    public GameObject resetObj;
-
     public string[] Names;
 
     public Text Status;
@@ -27,6 +25,7 @@ public class progress : MonoBehaviour
     public bool rotate180 = true;
 
     public GameObject ImpMark;
+    public GameObject ImpMarkFake;
     public SaveSystem saveSystem;
 
     void Start()
@@ -61,14 +60,19 @@ public class progress : MonoBehaviour
         {
             CalcXP();
         }
-        
-        if (PlayerPrefs.GetInt("ImpMark") >= 1 && ImpMark != null)
+
+        if (ImpMark != null)
         {
-            ImpMark.SetActive(true);
-        }
-        else if (PlayerPrefs.GetInt("ImpMark") !>= 1 && ImpMark != null)
-        {
-            ImpMark.SetActive(false);
+            if (PlayerPrefs.GetInt("ImpMark") >= 1)
+            {
+                ImpMark.SetActive(true);
+                ImpMarkFake.SetActive(true);
+            }
+            else
+            {
+                ImpMark.SetActive(false);
+                ImpMarkFake.SetActive(false);
+            }
         }
     }
 
@@ -78,27 +82,45 @@ public class progress : MonoBehaviour
         PlayerPrefs.SetInt("levelsUnlocked", 1);
         PlayerPrefs.SetFloat("hiScore", 1);
         FindObjectOfType<Achiever>().DeleteAllAchievements();
+        FindObjectOfType<Achiever>().AchievementUnlocked(1);
+        ResetCharacterCustomizaions();
+        FindObjectOfType<PlaytimeCalculator>().totalPlaytime = 0f;
         SetPlayerName();
-   }
+    }
 
-   //Random PlayerName
+    public void ResetCharacterCustomizaions()
+    {
+        PlayerPrefs.SetInt("eyes", 0);
+        PlayerPrefs.SetInt("mouth", 0);
+        PlayerPrefs.SetInt("eyeColor", 0);
+        PlayerPrefs.SetInt("bodyColor", 0);
+        PlayerPrefs.Save();
+    }
+
+    //Random PlayerName
     public void SetPlayerName()
     {
-        string[] nouns = { "Gamer", "Explorer", "Adventurer", "Hero", "Champion", "Pioneer", "Detective", "Scholar", "Artist", "Musician", "Scientist", "Engineer", "Captain", "Pirate", "Wizard", "Warrior", "Athlete", "Leader", "Dreamer", "Traveler", "Nomad", "Guardian", "Hunter", "Knight", "Jester", "Acrobat", "Magician", "Guardian", "Gladiator", "Spy", "Sailor", "Astronaut", "Pirate", "Viking", "Explorer", "Samurai", "Ninja", "Archer", "Scribe", "Sage", "Gladiator" };
-        int randNoun = Random.Range(0, nouns.Length);         
+        //string[] nouns = { "Gamer", "Explorer", "Adventurer", "Hero", "Champion", "Pioneer", "Detective", "Scholar", "Artist", "Musician", "Scientist", "Engineer", "Captain", "Pirate", "Wizard", "Warrior", "Athlete", "Leader", "Dreamer", "Traveler", "Nomad", "Guardian", "Hunter", "Knight", "Jester", "Acrobat", "Magician", "Guardian", "Gladiator", "Spy", "Sailor", "Astronaut", "Pirate", "Viking", "Explorer", "Samurai", "Ninja", "Archer", "Scribe", "Sage", "Gladiator" };
+        string[] nouns = FindObjectOfType<Achiever>().playerNameSuffix;
+        string[] names = FindObjectOfType<Achiever>().playerNames;
+
+        int randNoun = Random.Range(0, nouns.Length);
         int rand = Random.Range(0, 10000);
-        int randName = Random.Range(0, Names.Length);
-        string player_name = Names[randName] + nouns[randNoun] + rand.ToString("0000");
+        //int randName = Random.Range(0, names.Length);
+        int randName = Random.Range(0, names.Length);
+        string player_name = names[randName] + nouns[randNoun] + rand.ToString("0000");
         if (player_name.Length > 15)
         {
             string playerName = player_name.Substring(0, 15);
             PlayerPrefs.SetString("PlayerName", playerName);
+            PhotonNetwork.NickName = playerName;
             PlayerName.text = PlayerPrefs.GetString("PlayerName");
             nameField.text = PlayerPrefs.GetString("PlayerName");
         }
         else
         {
             PlayerPrefs.SetString("PlayerName", player_name);
+            PhotonNetwork.NickName = player_name;
             PlayerName.text = PlayerPrefs.GetString("PlayerName");
             nameField.text = PlayerPrefs.GetString("PlayerName");
         }
@@ -109,7 +131,10 @@ public class progress : MonoBehaviour
         if (nameField.text.Length >= 1)
         {
             PlayerPrefs.SetString("PlayerName", nameField.text);
-        }else
+            PhotonNetwork.NickName = nameField.text;
+            nameField.text = PlayerPrefs.GetString("PlayerName");
+        }
+        else
         {
             FindObjectOfType<ErrorThrower>().ThrowError("9898", "Your name cannot be empty", "Check!");
         }

@@ -8,6 +8,8 @@ public class BSSAI : MonoBehaviour
     public bool ShouldIMove;
     public GameObject Point;
 
+    public bool isNotRegular = false;
+
     // Update is called once per frame
     void Update()
     {
@@ -20,6 +22,14 @@ public class BSSAI : MonoBehaviour
         {
             Destroy(gameObject);
             FindObjectOfType<BenchMark>().spawnedPlayer--;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (isNotRegular && other.CompareTag("StressBench"))
+        {
+            Destroy(other.gameObject, 0f);
         }
     }
 }

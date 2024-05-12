@@ -16,13 +16,20 @@ public class RestartMenu : MonoBehaviour
     private void Update()
     {
         katam = PlayerPrefs.GetInt("band");
-        if (katam >= 3 && SceneManager.GetActiveScene().buildIndex <= 2)
+        if (!playerMovement.isIntro)
         {
-            Continue_btn.SetActive(true);
+            if (katam >= 3 && SceneManager.GetActiveScene().buildIndex <= 2)
+            {
+                Continue_btn.SetActive(true);
+            }
+            else
+            {
+                Continue_btn.SetActive(false);
+            }
         }
         else
         {
-            Continue_btn.SetActive(false);
+            Continue_btn.SetActive(true);
         }
     }
 

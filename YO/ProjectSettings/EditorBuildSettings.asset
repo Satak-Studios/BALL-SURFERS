@@ -32,9 +32,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/LevelS/Crazy.unity
     guid: 20ebc9624921a1f44b77a9e4e3fa9c17
+  - enabled: 0
+    path: Assets/LevelS/Benchmark_Old.unity
+    guid: 4d6dc075240b6764398bd4736ebbd5db
   - enabled: 1
     path: Assets/LevelS/Benchmark.unity
-    guid: 4d6dc075240b6764398bd4736ebbd5db
+    guid: cded213648752bf498792efc617d4884
   - enabled: 1
     path: Assets/Scenes/levelmanager.unity
     guid: 4e93a269cd9540f44ab9cb794b97eb36
@@ -65,7 +68,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/BS ONLINE/Trailer.unity
     guid: de4cc5fab63009147a690414c8bb10d5
-  - enabled: 1
+  - enabled: 0
     path: Assets/Photon Multiplayer/connecttoserver.unity
     guid: ae9bd964ea93ea84ebec7346d724cab5
   - enabled: 0
@@ -77,4 +80,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CH.unity
     guid: 7d93c1db25025c747a389bfc8b3b71f5
+  - enabled: 1
+    path: Assets/BSS2/Welcome.unity
+    guid: 70eb63f1099bf6549a4af415b36b6342
   m_configObjects: {}

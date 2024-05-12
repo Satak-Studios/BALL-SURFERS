@@ -24,7 +24,7 @@ public class settingmenu : MonoBehaviour
     public Toggle FPST;
     public Toggle LFPS;
     public Toggle fsn;
-    public Toggle sRun;
+    //public Toggle sRun;
 
     public Dropdown DMode;
     public Dropdown Qindex;
@@ -36,7 +36,7 @@ public class settingmenu : MonoBehaviour
     int fScreen;
     bool isFScreen;
     int Dval;
-    int Srun;
+    //int Srun;
 
     private void Start()
     {
@@ -51,15 +51,15 @@ public class settingmenu : MonoBehaviour
             FPST.isOn = false;
         }
 
-        //SpeedRun
-        if (PlayerPrefs.GetInt("sdrn") == 1)
+        //RIP In-built SpeedRun Timer
+        /*if (PlayerPrefs.GetInt("sdrn") == 1)
         {
             sRun.isOn = true;
         }
         if (PlayerPrefs.GetInt("sdrn") == 0)
         {
             sRun.isOn = false;
-        }
+        }*/
         
         //Getting Value
         bolume = PlayerPrefs.GetFloat("volume");
@@ -71,7 +71,7 @@ public class settingmenu : MonoBehaviour
         fScreen = PlayerPrefs.GetInt("fScreen");
         lFPS = PlayerPrefs.GetInt("lfps");
         DMode.value = PlayerPrefs.GetInt("dmode");
-        Srun = PlayerPrefs.GetInt("sdrn");
+        //Srun = PlayerPrefs.GetInt("sdrn");
         //FPS
         if (FPS == 1)
         {
@@ -206,8 +206,8 @@ public class settingmenu : MonoBehaviour
         }
     }
 
-    //Set Speedrun
-    public void SetSpeedRun()
+    //Set RIP Speedrun
+    /*public void SetSpeedRun()
     {
         if (sRun.isOn == true)
         {
@@ -220,7 +220,7 @@ public class settingmenu : MonoBehaviour
             PlayerPrefs.SetInt("sdrn", Srun);
             PlayerPrefs.DeleteKey("cTimer");
         }
-    }
+    }*/
 
     private void Update()
     {
@@ -234,8 +234,8 @@ public class settingmenu : MonoBehaviour
             FPST.isOn = false;
         }
 
-        //SpeedRun
-        PlayerPrefs.SetInt("sdrn", Srun);
+        //RIP SpeedRun
+        //PlayerPrefs.SetInt("sdrn", Srun);
     }
 
     public void SetDMode()
@@ -322,13 +322,12 @@ public class settingmenu : MonoBehaviour
         PlayerPrefs.SetInt("fps", FPS);
         PlayerPrefs.SetInt("fScreen", fScreen);
         PlayerPrefs.SetInt("dmode", DMode.value);
-        PlayerPrefs.SetInt("sdrn", Srun);
+        //PlayerPrefs.SetInt("sdrn", Srun);
         PlayerPrefs.Save();
     }
 
     public void Back()
     {
         PauseMenu.isOptions = false;
-
     }
 }

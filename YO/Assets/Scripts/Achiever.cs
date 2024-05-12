@@ -16,7 +16,10 @@ public class Achiever : MonoBehaviour
     private static Achiever instance;
     public bool delete = false;
 
+    //Others
     public int targetFPS = 60;
+    public string[] playerNames;
+    public string[] playerNameSuffix;
 
     void Awake()
     {

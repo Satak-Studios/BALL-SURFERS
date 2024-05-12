@@ -110,7 +110,7 @@ public class AchievementManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("Welcomed", 1);
         PlayerPrefs.SetInt("eyes", 1);
-        PlayerPrefs.SetInt("mouth", 2);       
+        PlayerPrefs.SetInt("mouth", 1);       
         PlayerPrefs.SetInt("bodyColor", 0);
         PlayerPrefs.SetInt("eyeColor", 0);
     }

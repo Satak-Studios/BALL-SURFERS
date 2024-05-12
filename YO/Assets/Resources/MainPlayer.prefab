@@ -15278,7 +15278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 3243727180431584093}
   offset: {x: 0, y: 1, z: -5}
-  Comp: 1
+  Comp: 0
   Custom: 0
   defaultObstacleMaterial: {fileID: 0}
   fadedObstacleMaterial: {fileID: 0}

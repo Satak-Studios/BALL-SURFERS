@@ -97,4 +97,28 @@ public class SaveSystem : MonoBehaviour
         File.Delete(_path + ".txt");
         FindObjectOfType<Achiever>().Notify("Done!", "Deleted Sucessfully!");
     }
+
+    public static void SaveCustomData(SaveData data)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        string path = Application.persistentDataPath + "PlayerData1.satak";
+        FileStream stream = new FileStream(path, FileMode.Create);
+        formatter.Serialize(stream, data);
+        stream.Close();
+        if (File.Exists(Application.persistentDataPath + "PlayerData1.txt"))
+        {
+            File.Delete(Application.persistentDataPath + fileName + ".txt");
+            StreamWriter writer = new StreamWriter(Application.persistentDataPath + "PlayerData1.txt", true);
+            writer.WriteLine(_title + "% Complete");
+            writer.Close();
+            Debug.Log("Deleting");
+        }
+        else
+        {
+            StreamWriter writer = new StreamWriter(Application.persistentDataPath + "PlayerData1.txt", true);
+            writer.WriteLine(_title + "% Complete");
+            writer.Close();
+        }
+    }
 }

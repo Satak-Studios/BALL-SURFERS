@@ -13,7 +13,7 @@ public class MainMenu : MonoBehaviour
         string _version = Application.version;
         if (PlayerPrefs.HasKey("sk"))
         {
-            version.text =  _version.Substring(1) + " (Sathvik Edition)"; //Version = 2.X.XX
+            version.text =  _version.Substring(1) + " (Developer Edition)"; //Version = 2.X.XX
         }
         else
         {
@@ -22,12 +22,15 @@ public class MainMenu : MonoBehaviour
 
         if (!PlayerPrefs.HasKey("v2.0"))
         {
+            Play2Footage();
+        }
+        else
+        {
             string achievementKey = "Achievement_1";
             if (PlayerPrefs.GetInt(achievementKey) == 0)
-			{
-				FindObjectOfType<Achiever>().AchievementUnlocked(1);
-			}
-            Play2Footage();
+            {
+                FindObjectOfType<Achiever>().AchievementUnlocked(1);
+            }
         }
     }
 
@@ -61,7 +64,8 @@ public class MainMenu : MonoBehaviour
 
     public void Play2Footage()
     {
-        Debug.Log("Play Footage!!!!!!!!!!!!!!!!");
+        //Debug.Log("Play Footage!!!!!!!!!!!!!!!!");
+        SceneManager.LoadScene("Welcome");
     }
 
     void Update()

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
@@ -12,6 +13,10 @@ public class KatamTrigger : MonoBehaviour
     public GameObject Heart;
     //public Player _player;
 
+    //Others
+    public GameObject nameScreen = null;
+    public InputField nameField = null;
+
     void Start()
     {
         if (PhotonNetwork.InRoom == true)
@@ -21,7 +26,10 @@ public class KatamTrigger : MonoBehaviour
         }
         else
         {
-            Heart.SetActive(false);
+            if (Heart != null)
+            {
+                Heart.SetActive(false);
+            }
         }
 
         if (SceneManager.GetActiveScene().name == "Game")
@@ -57,7 +65,8 @@ public class KatamTrigger : MonoBehaviour
         }
     }
 
-    public void Connect()
+    #region Trailer_Scene
+    public void ConnectOld()
     {
         PlayerPrefs.SetString("intro", "katam");
         string achievementKey = "Achievement_4";
@@ -67,4 +76,53 @@ public class KatamTrigger : MonoBehaviour
         }
         SceneManager.LoadScene("connecttoserver");
     }
+
+    public void Connect()
+    {
+        nameScreen.SetActive(true);
+    }
+
+    //Random PlayerName
+    public void SetPlayerName()
+    {
+        string[] nouns = FindObjectOfType<Achiever>().playerNameSuffix;
+        string[] names = FindObjectOfType<Achiever>().playerNames;
+
+        int randNoun = Random.Range(0, nouns.Length);
+        int rand = Random.Range(0, 10000);
+        int randName = Random.Range(0, names.Length);
+        string player_name = names[randName] + nouns[randNoun] + rand.ToString("0000");
+        if (player_name.Length > 15)
+        {
+            string playerName = player_name.Substring(0, 15);
+            PlayerPrefs.SetString("PlayerName", playerName);
+            PhotonNetwork.NickName = playerName;
+            nameField.text = PlayerPrefs.GetString("PlayerName");
+        }
+        else
+        {
+            PlayerPrefs.SetString("PlayerName", player_name);
+            PhotonNetwork.NickName = player_name;
+            nameField.text = PlayerPrefs.GetString("PlayerName");
+        }
+    }
+
+    public void SavePlayerName()
+    {
+        if (nameField.text.Length >= 1)
+        {
+            PlayerPrefs.SetString("PlayerName", nameField.text);
+            PhotonNetwork.NickName = nameField.text;
+            nameField.text = PlayerPrefs.GetString("PlayerName");
+            PlayerPrefs.SetString("intro", "katam");
+            SceneManager.LoadScene("Lobby 1");
+        }
+        else
+        {
+            SetPlayerName();
+            PlayerPrefs.SetString("intro", "katam");
+            SceneManager.LoadScene("Lobby 1");
+        }
+    }
+    #endregion
 }
