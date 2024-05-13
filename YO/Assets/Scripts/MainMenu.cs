@@ -8,18 +8,8 @@ public class MainMenu : MonoBehaviour
     public Text version;
     public GameObject Imp;
 
-    public void Start()
+    private void Awake()
     {
-        string _version = Application.version;
-        if (PlayerPrefs.HasKey("sk"))
-        {
-            version.text =  _version.Substring(1) + " (Developer Edition)"; //Version = 2.X.XX
-        }
-        else
-        {
-            version.text = _version.Substring(1);//Version = 2.X.XX
-        }
-
         if (!PlayerPrefs.HasKey("v2.0"))
         {
             Play2Footage();
@@ -31,6 +21,19 @@ public class MainMenu : MonoBehaviour
             {
                 FindObjectOfType<Achiever>().AchievementUnlocked(1);
             }
+        }
+    }
+
+    public void Start()
+    {
+        string _version = Application.version;
+        if (PlayerPrefs.HasKey("sk"))
+        {
+            version.text =  _version.Substring(1) + " (Developer Edition)"; //Version = 2.X.XX
+        }
+        else
+        {
+            version.text = _version.Substring(1);//Version = 2.X.XX
         }
     }
 

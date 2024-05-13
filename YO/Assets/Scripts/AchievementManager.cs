@@ -28,7 +28,16 @@ public class AchievementManager : MonoBehaviour
     void Start()
     {       
         _achiever = FindObjectOfType<Achiever>();
-        GoToAch();
+        
+        if (PlayerPrefs.HasKey("Welcomed"))
+        {
+            GoToAch();
+        }
+        else
+        {
+            AchPanels[1].SetActive(true);
+            AchDetails[1].SetActive(true);
+        }
     }
 
     void Update()
@@ -113,6 +122,7 @@ public class AchievementManager : MonoBehaviour
         PlayerPrefs.SetInt("mouth", 1);       
         PlayerPrefs.SetInt("bodyColor", 0);
         PlayerPrefs.SetInt("eyeColor", 0);
+        FindObjectOfType<CharacterLoader>().Start();
     }
 
     public void Claimed()

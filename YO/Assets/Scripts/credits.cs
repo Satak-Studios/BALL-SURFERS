@@ -15,8 +15,9 @@ public class credits : MonoBehaviour
         
     }
 
-    public void LoadLevelManager()
+    public void LoadLevelManagerBecauseCreditsAreOver()
     {
         SceneManager.LoadScene("levelmanager");
+        PlayerPrefs.SetString("credits", "credits");
     }
 }

@@ -20,6 +20,52 @@ public class Achiever : MonoBehaviour
     public int targetFPS = 60;
     public string[] playerNames;
     public string[] playerNameSuffix;
+    string[] playerNameSuffixPrivate = {
+    "Craft",
+    "Forge",
+    "Works",
+    "Labs",
+    "Studios",
+    "Inc",
+    "Tech",
+    "Industries",
+    "Gaming",
+    "Solutions",
+    "Corp",
+    "Enterprises",
+    "Group",
+    "Systems",
+    "Hub",
+    "Net",
+    "Lab",
+    "Co",
+    "Zone",
+    "Ware",
+    "Warehouse",
+    "Source",
+    "Way",
+    "Point",
+    "Gate",
+    "Sphere",
+    "Nexus",
+    "Matrix",
+    "Ville",
+    "Nation",
+    "World",
+    "House",
+    "Foundry",
+    "Shop",
+    "Outlet",
+    "Market",
+    "Store",
+    "Tower",
+    "Castle",
+    "Fortress",
+    "Emporium",
+    "Bazaar",
+    "Plaza",
+    "Quarter"
+};
 
     void Awake()
     {
@@ -33,6 +79,8 @@ public class Achiever : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        playerNameSuffix = playerNameSuffixPrivate;
     }
 
     void Start()

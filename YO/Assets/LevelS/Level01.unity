@@ -2369,6 +2369,9 @@ MonoBehaviour:
   rs: {fileID: 0}
   level: 0
   ls: {fileID: 873582478}
+  isBenchMark: 0
+  _intro: {fileID: 0}
+  isIntro: 0
 --- !u!114 &1077296294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2381,6 +2384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d49354a375d3da4b97d804bdb27b5ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _a: {fileID: 0}
 --- !u!1001 &1108018661
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2980,11 +2984,6 @@ GameObject:
 --- !u!4 &1181529329 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7237166922004781652, guid: 23989c4be5eded542a34f31701ea5b09, type: 3}
-  m_PrefabInstance: {fileID: 7237166922975014565}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &1181529330 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 7237166922004781655, guid: 23989c4be5eded542a34f31701ea5b09, type: 3}
   m_PrefabInstance: {fileID: 7237166922975014565}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1181529332 stripped
@@ -5456,15 +5455,14 @@ MonoBehaviour:
   Restartmenu: {fileID: 1778900641}
   restartDelay: 1
   gameHasEnded: 0
-  rb: {fileID: 1181529330}
   rscreen: 0
   pauseButton: {fileID: 1865181243}
   cameraBtn: {fileID: 82766887}
   _disapper: 1
+  isOnline: 0
   sco: {fileID: 0}
   cl: 0
   isGodMode: 0
-  movement: {fileID: 0}
   katamPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &1778900641 stripped
 GameObject:
@@ -6390,15 +6388,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4190b7f5632721f4aa071e99f642ef9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isInvsible: 0
-  pauseLevel: 1
-  unlockKey: level01
-  isHavingKey: 0
+  isInvisible: 0
   m_DeviceType: 
-  dialogpc: {fileID: 1595915602}
-  dialogmobile: {fileID: 1241449890}
   controls: {fileID: 1420755514}
-  Player: {fileID: 1181529328}
 --- !u!4 &2096562992
 Transform:
   m_ObjectHideFlags: 0
@@ -7321,6 +7313,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7073614516694204809, guid: 23989c4be5eded542a34f31701ea5b09, type: 3}
+      propertyPath: _okay
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7237166922004781652, guid: 23989c4be5eded542a34f31701ea5b09, type: 3}
       propertyPath: m_RootOrder
       value: 5

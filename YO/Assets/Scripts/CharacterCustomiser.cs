@@ -9,11 +9,12 @@ public class CharacterCustomiser : MonoBehaviour
 
     public GameObject[] eyes;
     public GameObject[] mouth;
+    public GameObject[] hats;
 
     public int selectedEyes = 0;
     public int selectedMouth = 0;
     public int selectedBodyColor = 0;
-    public int selectedEyeColor = 0;
+    public int selectedHat = 0;
 
     public GameObject[] Skins;
     public GameObject[] NotSkins;
@@ -24,27 +25,38 @@ public class CharacterCustomiser : MonoBehaviour
         selectedEyes = PlayerPrefs.GetInt("eyes");
         selectedMouth = PlayerPrefs.GetInt("mouth");       
         selectedBodyColor = PlayerPrefs.GetInt("bodyColor");
-        selectedEyeColor = PlayerPrefs.GetInt("eyeColor");
+        selectedHat = PlayerPrefs.GetInt("eyeColor");
 
-        eyes[selectedEyes].SetActive(true);
-        mouth[selectedMouth].SetActive(true);
-        BodyColor.color = selectedBodyColor switch
+        if (selectedMouth >= 1)
         {
-            0 => Color.black,
-            1 => Color.red,
-            2 => Color.green,
-            3 => Color.blue,
-            4 => Color.yellow,
-            5 => Color.magenta,
-            _ => BodyColor.color,
-        };
-
-        EyeColor.color = selectedEyeColor switch
+            mouth[selectedMouth].SetActive(true);
+            BodyColor.color = selectedBodyColor switch
+            {
+                0 => Color.red,
+                1 => Color.black,
+                2 => Color.green,
+                3 => Color.blue,
+                4 => Color.yellow,
+                5 => Color.magenta,
+                _ => BodyColor.color,
+            };
+        }
+        else
         {
-            0 => Color.black,
-            1 => Color.white,
-            _ => EyeColor.color,
-        };
+            eyes[selectedEyes].SetActive(true);
+            mouth[selectedMouth].SetActive(true);
+            BodyColor.color = selectedBodyColor switch
+            {
+                0 => Color.red,
+                1 => Color.black,
+                2 => Color.green,
+                3 => Color.blue,
+                4 => Color.yellow,
+                5 => Color.magenta,
+                _ => BodyColor.color,
+            };
+            hats[selectedHat].SetActive(true);
+        }
     }
 
     public void Eyes()
@@ -80,6 +92,23 @@ public class CharacterCustomiser : MonoBehaviour
         }
         SaveCustomizations();
     }
+    
+    public void Hat()
+    {
+        selectedHat += 1;
+        if (selectedHat >= hats.Length)
+        {
+            hats[hats.Length - 1].SetActive(false);
+            selectedHat = 0;
+        }
+        hats[selectedHat].SetActive(true);
+        int pre = selectedHat - 1;
+        if (selectedHat != 0)
+        {
+            hats[pre].SetActive(false);
+        }
+        SaveCustomizations();
+    }
 
     public void ChangeBodyColor(int colorIndex)
     {
@@ -97,26 +126,11 @@ public class CharacterCustomiser : MonoBehaviour
         SaveCustomizations();
     }
 
-    public void ChangeEyeColor(int colorIndex)
-    {
-        if (selectedEyes != 1)
-        {
-            EyeColor.color = colorIndex switch
-            {
-                0 => Color.black,
-                1 => Color.white,
-                _ => BodyColor.color,
-            };
-            selectedEyeColor = colorIndex;
-            SaveCustomizations();
-        }
-    }
-
     void SaveCustomizations()
     {
         PlayerPrefs.SetInt("eyes", selectedEyes);
         PlayerPrefs.SetInt("mouth", selectedMouth);
-        PlayerPrefs.SetInt("eyeColor", selectedEyeColor);
+        PlayerPrefs.SetInt("eyeColor", selectedHat);
         PlayerPrefs.SetInt("bodyColor", selectedBodyColor);
         PlayerPrefs.Save();
     }
@@ -125,6 +139,10 @@ public class CharacterCustomiser : MonoBehaviour
     {
         selectedMouth = 0;
         mouth[selectedMouth].SetActive(false);
+        BodyColorObj.SetActive(true);
+        hats[selectedHat].SetActive(true);
+        ChangeBodyColor(PlayerPrefs.GetInt("bodyColor"));
+        eyes[selectedMouth].SetActive(true);
         PlayerPrefs.SetInt("mouth", selectedMouth);
     }
 
@@ -138,6 +156,7 @@ public class CharacterCustomiser : MonoBehaviour
         if (selectedMouth == 0)
         {
             BodyColorObj.SetActive(true);
+            hats[selectedHat].SetActive(true);
             ChangeBodyColor(PlayerPrefs.GetInt("bodyColor"));
             eyes[selectedMouth].SetActive(true);
             for (int i = 0; i < NotSkins.Length; i++)
@@ -150,6 +169,7 @@ public class CharacterCustomiser : MonoBehaviour
         {
             BodyColorObj.SetActive(false);
             eyes[selectedEyes].SetActive(false);
+            hats[selectedHat].SetActive(false);
             for (int i = 0; i < NotSkins.Length; i++)
             {
                 Skins[0].SetActive(true);

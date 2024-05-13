@@ -1267,6 +1267,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7073614516694204809, guid: 23989c4be5eded542a34f31701ea5b09, type: 3}
+      propertyPath: _okay
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7237166922004781652, guid: 23989c4be5eded542a34f31701ea5b09, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -1324,11 +1328,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23989c4be5eded542a34f31701ea5b09, type: 3}
---- !u!1 &735101697 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7237166922004781653, guid: 23989c4be5eded542a34f31701ea5b09, type: 3}
-  m_PrefabInstance: {fileID: 735101696}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &735101698 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7237166922004781652, guid: 23989c4be5eded542a34f31701ea5b09, type: 3}
@@ -1339,7 +1338,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7237166922004781649, guid: 23989c4be5eded542a34f31701ea5b09, type: 3}
   m_PrefabInstance: {fileID: 735101696}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 735101697}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a431ee9b083d807448b41cebf4954db5, type: 3}
@@ -1907,6 +1906,9 @@ MonoBehaviour:
   rs: {fileID: 0}
   level: 0
   ls: {fileID: 873582478}
+  isBenchMark: 0
+  _intro: {fileID: 0}
+  isIntro: 0
 --- !u!114 &1077296294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1919,6 +1921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d49354a375d3da4b97d804bdb27b5ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _a: {fileID: 0}
 --- !u!1001 &1149524603
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3346,15 +3349,14 @@ MonoBehaviour:
   Restartmenu: {fileID: 1778900641}
   restartDelay: 1
   gameHasEnded: 0
-  rb: {fileID: 0}
   rscreen: 0
   pauseButton: {fileID: 163428912}
   cameraBtn: {fileID: 8880115056316905174}
   _disapper: 0
+  isOnline: 0
   sco: {fileID: 0}
   cl: 0
   isGodMode: 0
-  movement: {fileID: 0}
   katamPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &1778900641 stripped
 GameObject:
@@ -3880,15 +3882,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4190b7f5632721f4aa071e99f642ef9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isInvsible: 0
-  pauseLevel: 0
-  unlockKey: 
-  isHavingKey: 0
+  isInvisible: 0
   m_DeviceType: 
-  dialogpc: {fileID: 1033421476}
-  dialogmobile: {fileID: 1033421476}
   controls: {fileID: 1420755514}
-  Player: {fileID: 735101697}
 --- !u!4 &2096562992
 Transform:
   m_ObjectHideFlags: 0

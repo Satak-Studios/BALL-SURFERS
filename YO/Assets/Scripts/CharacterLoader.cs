@@ -9,41 +9,52 @@ public class CharacterLoader : MonoBehaviour
 
     public GameObject[] eyes;
     public GameObject[] mouth;
+    public GameObject[] hats;
 
     public int selectedEyes = 0;
     public int selectedMouth = 0;
     public int selectedBodyColor = 0;
-    public int selectedEyeColor = 0;
-
+    public int selectedHat = 0;
     public bool lockRotation = true;
+    public bool _okay = false;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         selectedEyes = PlayerPrefs.GetInt("eyes");
-        selectedMouth = PlayerPrefs.GetInt("mouth");       
+        selectedMouth = PlayerPrefs.GetInt("mouth");
         selectedBodyColor = PlayerPrefs.GetInt("bodyColor");
-        selectedEyeColor = PlayerPrefs.GetInt("eyeColor");
+        selectedHat = PlayerPrefs.GetInt("eyeColor");
 
-        eyes[selectedEyes].SetActive(true);
-        mouth[selectedMouth].SetActive(true);
-        BodyColor.color = selectedBodyColor switch
+        if (selectedMouth >= 1)
         {
-            0 => Color.red,
-            1 => Color.black,
-            2 => Color.green,
-            3 => Color.blue,
-            4 => Color.yellow,
-            5 => Color.magenta,
-            _ => BodyColor.color,
-        };
-
-        EyeColor.color = selectedEyeColor switch
+            mouth[selectedMouth].SetActive(true);
+            BodyColor.color = selectedBodyColor switch
+            {
+                0 => Color.red,
+                1 => Color.black,
+                2 => Color.green,
+                3 => Color.blue,
+                4 => Color.yellow,
+                5 => Color.magenta,
+                _ => BodyColor.color,
+            };
+        }
+        else
         {
-            0 => Color.black,
-            1 => Color.white,
-            _ => EyeColor.color,
-        };
+            eyes[selectedEyes].SetActive(true);
+            mouth[selectedMouth].SetActive(true);
+            BodyColor.color = selectedBodyColor switch
+            {
+                0 => Color.red,
+                1 => Color.black,
+                2 => Color.green,
+                3 => Color.blue,
+                4 => Color.yellow,
+                5 => Color.magenta,
+                _ => BodyColor.color,
+            };
+            hats[selectedHat].SetActive(true);
+        }
     }
 
     void Update()
@@ -57,7 +68,7 @@ public class CharacterLoader : MonoBehaviour
             transform.rotation = Quaternion.Euler(newRotation);
         }
 
-        if (!(selectedEyes + selectedMouth == 0) && SceneManager.GetActiveScene().buildIndex > 0)
+        if (SceneManager.GetActiveScene().name == "CH")
         {
             if (PlayerPrefs.GetInt("Achievement_2") == 0)
             {
@@ -65,7 +76,7 @@ public class CharacterLoader : MonoBehaviour
             }
         }
 
-        if (selectedMouth <= 0)
+        if (selectedMouth < 1)
         {
             BodyColorObj.SetActive(true);
             eyes[selectedMouth].SetActive(true);
@@ -74,6 +85,20 @@ public class CharacterLoader : MonoBehaviour
         {
             BodyColorObj.SetActive(false);
             eyes[selectedEyes].SetActive(false);
+            hats[selectedHat].SetActive(false);
+        }
+
+        if (selectedMouth > 2 && _okay)
+        {
+            lockRotation = false;
+        }
+        else if (_okay && selectedMouth < 3)
+        {
+            lockRotation = true;
+        }
+        else
+        {
+            lockRotation = false;
         }
     }
 }

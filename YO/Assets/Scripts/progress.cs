@@ -1,11 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
 using Photon.Pun;
-using Photon.Chat.UtilityScripts;
-using Utilities.General;
-using Utilities;
 
 public class progress : MonoBehaviour
 {
@@ -36,7 +32,6 @@ public class progress : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         int hScoreInt = (int)PlayerPrefs.GetFloat("hiScore", 1);
@@ -54,7 +49,7 @@ public class progress : MonoBehaviour
         }
         if (achText != null)
         {
-            achText.text = "Achievements:" + PlayerPrefs.GetInt("totalAch").ToString();
+            achText.text = "Achievements:" + PlayerPrefs.GetInt("totalAch", 1).ToString();
         }
         if (Status != null)
         {
@@ -78,14 +73,16 @@ public class progress : MonoBehaviour
 
     public void DeleteProgress()
     {
+        SceneManager.LoadScene("Welcome");
         PlayerPrefs.DeleteAll();
+        ResetCharacterCustomizaions();
+        SetPlayerName();
         PlayerPrefs.SetInt("levelsUnlocked", 1);
         PlayerPrefs.SetFloat("hiScore", 1);
+        
         FindObjectOfType<Achiever>().DeleteAllAchievements();
-        FindObjectOfType<Achiever>().AchievementUnlocked(1);
-        ResetCharacterCustomizaions();
-        FindObjectOfType<PlaytimeCalculator>().totalPlaytime = 0f;
-        SetPlayerName();
+        //FindObjectOfType<Achiever>().AchievementUnlocked(1);       
+        FindObjectOfType<PlaytimeCalculator>().totalPlaytime = 0f;       
     }
 
     public void ResetCharacterCustomizaions()
@@ -108,7 +105,7 @@ public class progress : MonoBehaviour
         int rand = Random.Range(0, 10000);
         //int randName = Random.Range(0, names.Length);
         int randName = Random.Range(0, names.Length);
-        string player_name = names[randName] + nouns[randNoun] + rand.ToString("0000");
+        string player_name = names[randName] + nouns[randNoun] + rand.ToString();
         if (player_name.Length > 15)
         {
             string playerName = player_name.Substring(0, 15);

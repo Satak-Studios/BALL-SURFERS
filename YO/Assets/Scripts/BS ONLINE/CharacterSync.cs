@@ -10,18 +10,18 @@ public class CharacterSync : MonoBehaviourPunCallbacks
 {
     public new PhotonView photonView;
     public Material BodyColor;
-    public Material EyeColor;
     public GameObject tempBody;
-    public GameObject[] tempEye;
     public GameObject[] eyes;
+    public GameObject[] hats;
     public GameObject[] mouth;
 
     public int selectedEyes = 0;
     public int selectedMouth = 0;
     public int selectedBodyColor = 0;
-    public int selectedEyeColor = 0;
+    public int selectedHat = 0;
 
     public bool lockRotation = true;
+    public bool _okay = false;
     CompManager compManager;
     CustomManager custManager;
     PlayerSpawner playerSpawner;
@@ -32,7 +32,7 @@ public class CharacterSync : MonoBehaviourPunCallbacks
     {
         LoadPlayerCustomization();
         SyncCharacter();
-        SetVisualCustomization(selectedEyes, selectedMouth, selectedBodyColor, selectedEyeColor);
+        SetVisualCustomization(selectedEyes, selectedMouth, selectedBodyColor, selectedHat);
     }
 
     private void LoadPlayerCustomization()
@@ -40,7 +40,7 @@ public class CharacterSync : MonoBehaviourPunCallbacks
         selectedEyes = PlayerPrefs.GetInt("eyes");
         selectedMouth = PlayerPrefs.GetInt("mouth");
         selectedBodyColor = PlayerPrefs.GetInt("bodyColor");
-        selectedEyeColor = PlayerPrefs.GetInt("eyeColor");
+        selectedHat = PlayerPrefs.GetInt("eyeColor");
     }
 
     private void Update()
@@ -62,6 +62,19 @@ public class CharacterSync : MonoBehaviourPunCallbacks
             }
         }
 
+        if (selectedMouth > 2 && _okay)
+        {
+            lockRotation = false;
+        }
+        else if (_okay && selectedMouth < 3)
+        {
+            lockRotation = true;
+        }
+        else
+        {
+            lockRotation = false;
+        }
+
         if (compMode)
         {
             compManager = FindObjectOfType<CompManager>();
@@ -77,7 +90,7 @@ public class CharacterSync : MonoBehaviourPunCallbacks
         SyncCharacter();
     }
 
-    private void SetVisualCustomization(int eyesIndex, int mouthIndex, int bodyColorIndex, int eyeColorIndex)
+    private void SetVisualCustomization(int eyesIndex, int mouthIndex, int bodyColorIndex, int hatIndex)
     {
         tempBody.GetComponent<MeshRenderer>().material.color = bodyColorIndex switch
         {
@@ -88,18 +101,10 @@ public class CharacterSync : MonoBehaviourPunCallbacks
             4 => Color.yellow,
             5 => Color.magenta,
             _ => Color.red
-        };
-        if (tempEye[eyeColorIndex].GetComponent<Material>() != null)
-        {
-            tempEye[eyesIndex].GetComponent<Material>().color = eyeColorIndex switch
-            {
-                0 => Color.black,
-                1 => Color.white,
-                _ => Color.black
-            };
-        }
+        };       
         SetActiveGameObject(eyes, eyesIndex);
         SetActiveGameObject(mouth, mouthIndex);
+        SetActiveGameObject(hats, hatIndex);
     }
 
     void SyncCharacter()
@@ -110,7 +115,7 @@ public class CharacterSync : MonoBehaviourPunCallbacks
             hash.Add("eyes", selectedEyes);
             hash.Add("mouth", selectedMouth);
             hash.Add("bodyColor", selectedBodyColor);
-            hash.Add("eyeColor", selectedEyeColor);
+            hash.Add("eyeColor", selectedHat);
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
         }
     }
@@ -134,9 +139,9 @@ public class CharacterSync : MonoBehaviourPunCallbacks
                     int eyes = (int)changedProps["eyes"];
                     int mouth = (int)changedProps["mouth"];
                     int bodyColor = (int)changedProps["bodyColor"];
-                    int eyeColor = (int)changedProps["eyeColor"];
+                    int hat = (int)changedProps["eyeColor"];
 
-                    SetVisualCustomization(eyes, mouth, bodyColor, eyeColor);
+                    SetVisualCustomization(eyes, mouth, bodyColor, hat);
                 }
             }
         }
@@ -147,9 +152,9 @@ public class CharacterSync : MonoBehaviourPunCallbacks
                 int eyes = (int)changedProps["eyes"];
                 int mouth = (int)changedProps["mouth"];
                 int bodyColor = (int)changedProps["bodyColor"];
-                int eyeColor = (int)changedProps["eyeColor"];
+                int hat = (int)changedProps["eyeColor"];
 
-                SetVisualCustomization(eyes, mouth, bodyColor, eyeColor);
+                SetVisualCustomization(eyes, mouth, bodyColor, hat);
             }
         }
         else
@@ -161,9 +166,9 @@ public class CharacterSync : MonoBehaviourPunCallbacks
                     int eyes = (int)changedProps["eyes"];
                     int mouth = (int)changedProps["mouth"];
                     int bodyColor = (int)changedProps["bodyColor"];
-                    int eyeColor = (int)changedProps["eyeColor"];
+                    int hat = (int)changedProps["eyeColor"];
 
-                    SetVisualCustomization(eyes, mouth, bodyColor, eyeColor);
+                    SetVisualCustomization(eyes, mouth, bodyColor, hat);
                 }
             }
         }

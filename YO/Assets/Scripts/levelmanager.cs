@@ -71,9 +71,9 @@ public class levelmanager : MonoBehaviour
             if (PlayerPrefs.HasKey("credits") == false)
             {
                 Credits.SetActive(true);
-                PlayerPrefs.SetString("credits", "credits");
             }else
             {
+                Credits.SetActive(false);
                 switch (slPanel)
                 {
                     case 2: Next_btn.SetActive(false); break;

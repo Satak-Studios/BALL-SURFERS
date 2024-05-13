@@ -109,7 +109,7 @@ public class settingmenu : MonoBehaviour
 
         List<string> options = new List<string>();
 
-        int currentResolutionIndex = 0;
+        int currentResolutionIndex = -1;
         for (int i = 0; i < resolutions.Length; i++)
         {
             string option = resolutions[i].width + "x" + resolutions[i].height;
@@ -124,6 +124,7 @@ public class settingmenu : MonoBehaviour
         reslutionDropdown.AddOptions(options);
         reslutionDropdown.value = currentResolutionIndex;
         reslutionDropdown.RefreshShownValue();
+        SetResolution(res);
     }
 
     public void SetResolution(int resolutionIndex)
@@ -329,5 +330,10 @@ public class settingmenu : MonoBehaviour
     public void Back()
     {
         PauseMenu.isOptions = false;
+    }
+
+    public void LoadBenchMarkScene()
+    {
+        SceneManager.LoadScene("Benchmark");
     }
 }
