@@ -35,7 +35,7 @@ public class AchievementManager : MonoBehaviour
         }
         else
         {
-            AchPanels[1].SetActive(true);
+            AchPanels[0].SetActive(true);
             AchDetails[1].SetActive(true);
         }
     }

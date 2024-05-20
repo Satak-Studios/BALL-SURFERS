@@ -6282,7 +6282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6986483396998839844, guid: e63ffd578fc64ef44ba26c6e40a72649, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6986483396998839864, guid: e63ffd578fc64ef44ba26c6e40a72649, type: 3}
       propertyPath: m_SortingOrder
@@ -6375,7 +6375,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: e63ffd578fc64ef44ba26c6e40a72649, type: 3}
 --- !u!1 &528623538 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 6986483396998839844, guid: e63ffd578fc64ef44ba26c6e40a72649, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2162854035298951855, guid: e63ffd578fc64ef44ba26c6e40a72649, type: 3}
   m_PrefabInstance: {fileID: 528623537}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &543867617
@@ -20819,7 +20819,7 @@ GameObject:
   - component: {fileID: 1823207965}
   - component: {fileID: 1823207964}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

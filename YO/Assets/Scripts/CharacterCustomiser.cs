@@ -83,6 +83,7 @@ public class CharacterCustomiser : MonoBehaviour
         {
             mouth[mouth.Length - 1].SetActive(false);
             selectedMouth = 0;
+            ResetSkins();
         }
         mouth[selectedMouth].SetActive(true);
         int pre = selectedMouth - 1;
@@ -142,7 +143,7 @@ public class CharacterCustomiser : MonoBehaviour
         BodyColorObj.SetActive(true);
         hats[selectedHat].SetActive(true);
         ChangeBodyColor(PlayerPrefs.GetInt("bodyColor"));
-        eyes[selectedMouth].SetActive(true);
+        eyes[selectedEyes].SetActive(true);
         PlayerPrefs.SetInt("mouth", selectedMouth);
     }
 
@@ -155,15 +156,7 @@ public class CharacterCustomiser : MonoBehaviour
     {
         if (selectedMouth == 0)
         {
-            BodyColorObj.SetActive(true);
-            hats[selectedHat].SetActive(true);
-            ChangeBodyColor(PlayerPrefs.GetInt("bodyColor"));
-            eyes[selectedMouth].SetActive(true);
-            for (int i = 0; i < NotSkins.Length; i++)
-            {
-                Skins[0].SetActive(false);
-                NotSkins[i].SetActive(true);
-            }
+            ResetSkins();
         }
         else if (selectedMouth > 0)
         {

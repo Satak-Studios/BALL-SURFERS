@@ -9,7 +9,7 @@ public class PauseMenu : MonoBehaviour
     public static bool GameIsPaused = false;
     public bool test = false;
     public GameObject pauseMenuUI = null;
-    public GameObject option = null;
+    private GameObject option = null;
 
     public GameObject Score = null;
 
@@ -24,8 +24,9 @@ public class PauseMenu : MonoBehaviour
         }
         if (option == null)
         {
-            option = FindObjectOfType<settingmenu>().gameObject;
+            option = FindObjectOfType<settingmenu>()._panel;
         }
+        option = FindObjectOfType<settingmenu>()._panel;
     }
 
     // Update is called once per frame

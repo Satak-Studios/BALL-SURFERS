@@ -60,6 +60,11 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Stats");
     }
 
+    public void Costumes()
+    {
+        SceneManager.LoadScene("CH");
+    }
+
     public void Exit()
     {
         Application.Quit();

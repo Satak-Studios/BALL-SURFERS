@@ -28,6 +28,7 @@ public class Multiplayer : MonoBehaviourPunCallbacks
     public void BackToMenu()
     {
         SceneManager.LoadScene(0);
+        PhotonNetwork.Disconnect();
     }
 
     public override void OnConnectedToMaster()

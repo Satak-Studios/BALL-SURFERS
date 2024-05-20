@@ -27,6 +27,10 @@ namespace UpdateChecker
         static bool isAlreadyCheckedForUpdates = false;
         GameData latestGameData;
 
+        public GameObject UpdateBtn;
+        public GameObject NotNowBtn;
+        public GameObject OkayBtn;
+
         private void Start()
         {
             if (!isAlreadyCheckedForUpdates)
@@ -62,6 +66,9 @@ namespace UpdateChecker
                     }
                     descriptionText.text = latestGameData.Description;
                     versionText.text = "v" + latestGameData.Version;
+                    UpdateBtn.SetActive(true);
+                    NotNowBtn.SetActive(true);
+                    OkayBtn.SetActive(false);
                     ShowPopUp();
                     Debug.Log("Update Available = " + latestGameData.Version + ", version = " + Application.version);
                 }
@@ -70,7 +77,10 @@ namespace UpdateChecker
                 {
                     titleText.text = latestGameData.Title;
                     descriptionText.text = latestGameData.Description;
-                    versionText.text = "News." + latestGameData.newsVersion;
+                    versionText.text = "News." + latestGameData.newsVersion[0] + "." + latestGameData.newsVersion[1];
+                    UpdateBtn.SetActive(false);
+                    NotNowBtn.SetActive(false);
+                    OkayBtn.SetActive(true);
                     ShowPopUp();
                     Debug.Log("News Available = " + latestGameData.newsVersion);
                 }
