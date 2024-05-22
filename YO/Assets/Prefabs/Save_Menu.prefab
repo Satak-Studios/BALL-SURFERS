@@ -192,9 +192,9 @@ RectTransform:
   - {fileID: 2010301361802249429}
   m_Father: {fileID: 5530186050679001777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -647.6079}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 330.6245, y: 78.1763}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8130313818685326196
@@ -281,7 +281,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 526174565624462413}
         m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
-        m_MethodName: DeleteSaveFake
+        m_MethodName: SaveGameFake
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1095,7 +1095,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5600735138385533208
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2331,7 +2331,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -171.14407}
+  m_AnchoredPosition: {x: 400, y: -423.1383}
   m_SizeDelta: {x: 330.6245, y: 78.1763}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1167795887092302352
@@ -3867,7 +3867,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -386.0028}
+  m_AnchoredPosition: {x: 400, y: -973.9894}
   m_SizeDelta: {x: 330.6245, y: 78.1763}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &56784589097715132
@@ -5179,7 +5179,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4927411674304921774
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5405,9 +5405,9 @@ RectTransform:
   - {fileID: 1007763605092656414}
   m_Father: {fileID: 5530186050679001777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -902.6511}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 330.6245, y: 78.1763}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5106315396101056282
@@ -5494,7 +5494,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 526174565624462413}
         m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
-        m_MethodName: DeleteSaveFake
+        m_MethodName: SaveGameFake
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8240,9 +8240,9 @@ RectTransform:
   - {fileID: 2222916383677492520}
   m_Father: {fileID: 5530186050679001777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -392.56476}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 330.6245, y: 78.1763}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2073497174831437086
@@ -8329,7 +8329,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 526174565624462413}
         m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
-        m_MethodName: DeleteSaveFake
+        m_MethodName: SaveGameFake
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9307,7 +9307,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -278.57346}
+  m_AnchoredPosition: {x: 400, y: -698.56384}
   m_SizeDelta: {x: 330.6245, y: 78.1763}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8359556353898252790
@@ -10671,7 +10671,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -63.71469}
+  m_AnchoredPosition: {x: 400, y: -147.71277}
   m_SizeDelta: {x: 330.6245, y: 78.1763}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8852657900844779724
@@ -11227,9 +11227,9 @@ RectTransform:
   - {fileID: 2886792539719739878}
   m_Father: {fileID: 5530186050679001777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -137.52159}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 330.6245, y: 78.1763}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2912414106163914743
@@ -11316,7 +11316,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 526174565624462413}
         m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
-        m_MethodName: DeleteSaveFake
+        m_MethodName: SaveGameFake
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
