@@ -41,10 +41,12 @@ public class Introduction : MonoBehaviour
         if (SystemInfo.deviceType == DeviceType.Desktop)
         {
             dialogPC.SetActive(true);
+            dialogMobile.SetActive(false);
         }
         else
         {
-            dialogMobile.SetActive(false);
+            dialogPC.SetActive(false);
+            dialogMobile.SetActive(true);
         }
         PlayerObj.SetActive(false);
         _device.isInvisible = true;
@@ -79,9 +81,9 @@ public class Introduction : MonoBehaviour
         saveData._hScore = Mathf.RoundToInt(data.HighScore);
         saveData._userName = data.PlayerName;
         saveData._level = data.Level;
+        File.Move(path, Application.persistentDataPath + "/PlayerDataOld.satak");
         FindObjectOfType<Achiever>().Notify("Yay!", "Welcome back " + saveData._userName);
         SaveSystem.SaveCustomData(saveData);
-        File.Move("PlayerData.satak", "PlayerDataOld.satak");
         LoadMainMenu();
         return saveData;
     }

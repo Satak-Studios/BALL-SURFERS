@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public Text version;
     public GameObject Imp;
+    public GameObject creditsPanel;
 
     private void Awake()
     {
@@ -72,8 +73,12 @@ public class MainMenu : MonoBehaviour
 
     public void Play2Footage()
     {
-        //Debug.Log("Play Footage!!!!!!!!!!!!!!!!");
         SceneManager.LoadScene("Welcome");
+    }
+
+    public void Credits()
+    {
+        creditsPanel.SetActive(true);
     }
 
     void Update()

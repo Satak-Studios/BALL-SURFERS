@@ -17,6 +17,7 @@ public class Restart : MonoBehaviour
 
 	public bool cl = false;
     public bool isGodMode = false;
+    public bool isInv = false;
 	Device _device;
 
 	public Vector3 katamPoint;
@@ -39,7 +40,7 @@ public class Restart : MonoBehaviour
 		{
 			if (isGodMode == false)
 			{
-				if (gameHasEnded == false)
+				if (gameHasEnded == false && !isInv)
 				{
 					SavePos(z);
 					gameHasEnded = true;

@@ -63,7 +63,7 @@ public class CompManager : MonoBehaviourPunCallbacks
         SpawnPlayer();
         currentTime = startTime;
         timerStarted = true;
-        myPlayer = FindAnyObjectByType<OnlinePlayer>();
+        myPlayer = FindObjectOfType<OnlinePlayer>();
         if (myPlayer == null)
         {
             return;

@@ -37,9 +37,18 @@ public class RestartMenu : MonoBehaviour
     {
         playerMovement.LoadPos();
         FindObjectOfType<playermovement>().enabled = true;
+        FindObjectOfType<playermovement>().rb.velocity = new Vector3(0,0,0);
         Restart rs = FindObjectOfType<Restart>();
         rs.Restartmenu.SetActive(false);
         rs.gameHasEnded = false;
+        Time.timeScale = 1;
+        rs.isInv = true;
+        Invoke("NoInv", 3f);
+    }
+
+    public void NoInv()
+    {
+        FindObjectOfType<Restart>().isInv = false;
     }
 
     public void RestartGame()
